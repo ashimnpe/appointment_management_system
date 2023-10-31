@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('education', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('doctor_id')->constrained('doctors');
-            $table->string('level');
-            $table->string('institution');
-            $table->string('board');
-            $table->date('completion_date');
-            $table->string('marks');
+            $table->string('department_name');
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('education');
+        Schema::dropIfExists('departments');
     }
 };

@@ -10,12 +10,6 @@
                     <div class="col-sm-8  mx-auto ">
                         <h1>Create Doctor</h1>
                     </div>
-                    {{-- <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Create User</li>
-                        </ol>
-                    </div> --}}
                 </div>
             </div><!-- /.container-fluid -->
         </section>
@@ -34,7 +28,7 @@
                             {{-- {{ $errors }} --}}
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form" method="POST" action="{{ route('doctor.store') }}"
+                            <form role="form" method="POST" action="{{ route('doctors.store') }}"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-body">
@@ -85,25 +79,25 @@
 
                                     </div>
 
-                                   <div class="row">
-                                    <div class="col group-form">
-                                        <div class="form-group">
-                                            <label for="email">Email address</label>
-                                            <input type="email" class="form-control" id="email" name="email"
-                                                placeholder="Enter email">
+                                    <div class="row">
+                                        <div class="col group-form">
+                                            <div class="form-group">
+                                                <label for="email">Email address</label>
+                                                <input type="email" class="form-control" id="email" name="email"
+                                                    placeholder="Enter email">
                                                 @error('email')
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @enderror
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
-                                   </div>
 
                                     <div class="row">
                                         <div class="col form-group">
                                             <label for="password">Password</label>
                                             <input type="password" class="form-control" id="password" name="password"
                                                 placeholder="Password">
-                                                @error('password')
+                                            @error('password')
                                                 <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
@@ -111,7 +105,7 @@
                                             <label for="confirm password">Confirm Password</label>
                                             <input type="password" class="form-control" id="confirmpassword"
                                                 name="password_confirmation" placeholder="confirm password">
-                                                @error('password')
+                                            @error('password')
                                                 <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
@@ -121,10 +115,16 @@
 
                                     <div class="row">
                                         <div class="col form-group">
-                                            <label for="department">Department</label>
-                                            <input type="text" class="form-control" id="department" name="department"
-                                                placeholder="Department">
-                                            @error('department')
+                                            <div class="form-group">
+                                                <label for="department_id">Select Department</label>
+                                                <select name="department_id" id="department_id" class="form-control" required>
+                                                    <option value="">Select Department</option>
+                                                    @foreach($departments as $department)
+                                                        <option value="{{ $department->id }}">{{ $department->department_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            @error('department_id')
                                                 <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
@@ -144,8 +144,8 @@
 
                                         <div class="col form-group">
                                             <label for="date">Date of Birth</label>
-                                            <input type="date" class="form-control" id="nepali-datepicker" name="nepali_dob"
-                                                placeholder="Date of Birth">
+                                            <input type="date" class="form-control" id="nepali-datepicker"
+                                                name="nepali_dob" placeholder="Date of Birth">
                                             @error('nepali_dob')
                                                 <p class="text-danger">{{ $message }}</p>
                                             @enderror
@@ -153,8 +153,9 @@
 
                                         <div class="col form-group">
                                             <label for="date">Date of Birth</label>
-                                            <input type="date" class="form-control" id="english_dob" name="english_dob"
-                                                placeholder="Date of Birth" onclick="return getDate()">
+                                            <input type="date" class="form-control" id="english_dob"
+                                                name="english_dob" placeholder="Date of Birth"
+                                                onclick="return getDate()">
                                             @error('english_dob')
                                                 <p class="text-danger">{{ $message }}</p>
                                             @enderror
@@ -234,8 +235,8 @@
                                     <div class="row">
                                         <div class="col form-group">
                                             <label for="municipality">Municipality</label>
-                                            <input type="text" class="form-control" id="municipality" name="municipality"
-                                                placeholder="Municipality">
+                                            <input type="text" class="form-control" id="municipality"
+                                                name="municipality" placeholder="Municipality">
                                             @error('municipality')
                                                 <p class="text-danger">{{ $message }}</p>
                                             @enderror

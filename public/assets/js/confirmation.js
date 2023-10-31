@@ -31,24 +31,26 @@ selectImage.onchange = (evt) => {
 // };
 
 // nepali date
-window.onload = function () {
-    year = NepaliFunctions.GetCurrentBsYear();
-    month = NepaliFunctions.GetCurrentBsMonth();
-    day = NepaliFunctions.GetCurrentBsDay();
-    var currentdate = year + "-" + month + "-" + day;
-    var nep_dob = document.getElementById("nepali-datepicker");
-    nep_dob.nepaliDatePicker();
-    console.log(currentdate);
-};
+window.onload = function() {
 
-setInterval(() => {
-    getDate();
-}, 10);
+    var elm = document.getElementById("nepali-datepicker");
 
-function getDate() {
-    var nepali = document.getElementById("nepali-datepicker").value;
-    converted = NepaliFunctions.BS2AD(nepali);
+    elm.nepaliDatePicker({
+        ndpYear: true,
+        ndpMonth: true,
+        ndpYearCount: 10,
 
-    var english = document.getElementById("english_dob");
-    english.value = converted;
+    });
+ };
+
+ function bsToAd() {
+  var bsDate = document.getElementById("nepali-datepicker").value;
+  var englishdate = document.getElementById("english_dob");
+console.log( bsDate)
+var adDate = NepaliFunctions.BS2AD(bsDate)
+
+englishdate.value = adDate
 }
+setInterval(() => {
+bsToAd()
+}, 30);

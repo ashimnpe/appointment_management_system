@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Education extends Model
+class Department extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'doctor_id',
-        'level',
-        'institution',
-        'completion_date',
-        'board',
-        'marks'
+        'department_name'
     ];
+
+    public function doctor(){
+        return $this->hasMany(Doctor::class);
+    }
 }

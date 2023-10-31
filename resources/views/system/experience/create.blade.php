@@ -10,12 +10,6 @@
                     <div class="col-sm-8  mx-auto ">
                         <h1>Create Doctor</h1>
                     </div>
-                    {{-- <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Create User</li>
-                        </ol>
-                    </div> --}}
                 </div>
             </div><!-- /.container-fluid -->
         </section>
@@ -31,10 +25,10 @@
                             <div class="card-header">
                                 <h3 class="card-title">Experience</h3>
                             </div>
-                            {{-- {{ $errors }} --}}
                             <!-- /.card-header -->
+
                             <!-- form start -->
-                            <form role="form" method="POST" action="{{ route('experience.store') }}"
+                            <form role="form" method="POST" action="{{ route('doctorExperience.store') }}"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-body">

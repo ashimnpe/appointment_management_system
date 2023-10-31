@@ -11,6 +11,7 @@ class Doctor extends Model
 
     protected $fillable = [
         'user_id',
+        'department_id',
         'image',
         'first_name',
         'middle_name',
@@ -21,7 +22,6 @@ class Doctor extends Model
         'nepali_dob',
         'english_dob',
         'gender',
-        'department',
         'specialization',
         'qualification',
         'province',
@@ -37,4 +37,8 @@ class Doctor extends Model
     // protected $hidden = [
     //     'password',
     // ];
+
+    public function department(){
+        return $this->belongsTo(Department::class);
+    }
 }

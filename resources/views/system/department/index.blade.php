@@ -2,7 +2,7 @@
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <h3 class="pl-3 mb-0">Doctors</h3>
+        <h3 class="pl-3 mb-0">Department</h3>
         <!-- Main content -->
         <section class="content">
             <x-alerts-box>
@@ -12,8 +12,8 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">List of all Doctors</h3>
-                            <a href="{{ route('doctors.create') }}">
+                            <h3 class="card-title">List of Department</h3>
+                            <a href="{{ route('department.create') }}">
                                 <button class="btn btn-primary btn-sm float-right"><i class="fa fa-plus"></i> Add
                                     New</button>
                             </a>
@@ -25,41 +25,31 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>License No</th>
-                                        <th>Full Name</th>
-                                        <th>Department</th>
-                                        <th>Role</th>
-                                        <th>Contact</th>
-                                        <th>Status</th>
+                                        <th>Department Name</th>
+                                        <th>Members</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($doctors as $doctor)
+                                    @foreach ($departments as $dept)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $doctor->license_no }}</td>
-                                            <td>{{ $doctor->first_name . ' ' . $doctor->middle_name . ' ' . $doctor->last_name}}</td>
+                                            <td>{{ $dept->department_name }}</td>
                                             <td>
-                                                    {{ $doctor->department->department_name }}
+                                                {{ $dept->doctor->count() }}
                                             </td>
-                                            <td>{{ $doctor->role }}</td>
-                                            <td>{{ $doctor->contact }}</td>
-                                            <td>{{ $doctor->status == 1 ? 'Active' : 'Inactive' }}</td>
                                             <td class="d-flex">
-                                                <a href="{{ route('doctors.profile', $doctor->id) }}">
-                                                    <button class="btn btn-success btn-sm m-1"><i class="fa fa-eye"></i>
-                                                        View</button>
-                                                </a>
-                                                <a href="{{ route('doctors.edit', $doctor->id) }}">
-                                                    <button class="btn btn-warning btn-sm m-1"><i class="fa fa-edit"></i>
+                                                <a href="{{ route('department.edit', $dept->id) }}" class="m-1">
+                                                    <button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>
                                                         Edit</button>
                                                 </a>
-
-                                                <form action="{{ route('doctors.delete', ['id' => $doctor->id]) }}" method="POST" >
+                                                <form action="{{ route('department.destroy', $dept->id) }}"
+                                                    method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn btn-danger btn-sm m-1" onclick="return deleteConfirm('delete doctor')"><i class="fa fa-trash"></i>
+                                                    <button class="btn btn-danger btn-sm m-1"
+                                                        onclick="return deleteConfirm('delete department')"><i
+                                                            class="fa fa-trash"></i>
                                                         Delete
                                                     </button>
                                                 </form>

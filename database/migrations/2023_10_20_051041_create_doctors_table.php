@@ -16,15 +16,15 @@ return new class extends Migration
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('department_id')->constrained('departments');
             $table->string('image')->nullable();
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
             $table->string('email')->unique();
             $table->integer('license_no');
-            $table->date('nepali_dob');
-            $table->date('english_dob');
-            $table->string('department');
+            $table->string('nepali_dob');
+            $table->string('english_dob');
             $table->string('specialization');
             $table->enum('gender',['male','female','others']);
             $table->string('contact');

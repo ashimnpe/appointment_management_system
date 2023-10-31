@@ -13,7 +13,7 @@
 <script src="{{ asset('assets/js/confirmation.js') }}"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
 
-<script src="{{ asset('assets/js/nepali.datepicker.v4.0.1.min.js') }}"></script>
+<script src="http://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/js/nepali.datepicker.v4.0.1.min.js" type="text/javascript"></script>
 
 
 

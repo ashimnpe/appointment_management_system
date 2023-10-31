@@ -43,7 +43,7 @@
                     </tr>
                     <tr>
                         <td><label for="Department">Department</label></td>
-                        <td>{{ $doctor->department }}</td>
+                        <td>{{ $doctor->department->department_name }}</td>
                     </tr>
                     <tr>
                         <td><label for="Role">Role</label></td>

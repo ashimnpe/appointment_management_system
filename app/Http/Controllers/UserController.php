@@ -16,6 +16,11 @@ class UserController extends Controller
         return view('system.user.index', compact('users'));
     }
 
+    public function count(){
+        $userCount = User::count();
+        return $userCount;
+
+    }
 
     public function create()
     {

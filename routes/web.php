@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Models\Department;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,17 +44,29 @@ Route::middleware('auth')->group(function () {
     Route::delete('/users/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
 
     // Doctors
-    Route::get('/doctors', [DoctorController::class, 'index'])->name('doctor.index');
-    Route::get('/doctors/create', [DoctorController::class, 'create'])->name('doctor.create');
-    Route::post('/doctors/store', [DoctorController::class, 'store'])->name('doctor.store');
-    Route::get('/doctors/profile/{id}', [DoctorController::class, 'show'])->name('doctor.profile');
-    Route::get('/doctors/edit/{id}', [DoctorController::class, 'edit'])->name('doctor.edit');
-    Route::put('/doctors/update/{id}', [DoctorController::class, 'update'])->name('doctor.update');
-    Route::delete('/doctors/delete/{id}', [DoctorController::class, 'destroy'])->name('doctor.delete');
+    Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
+    Route::get('/doctors/create', [DoctorController::class, 'create'])->name('doctors.create');
+    Route::post('/doctors/store', [DoctorController::class, 'store'])->name('doctors.store');
+    Route::get('/doctors/profile/{id}', [DoctorController::class, 'show'])->name('doctors.profile');
+    Route::get('/doctors/edit/{id}', [DoctorController::class, 'edit'])->name('doctors.edit');
+    Route::put('/doctors/update/{id}', [DoctorController::class, 'update'])->name('doctors.update');
+    Route::delete('/doctors/delete/{id}', [DoctorController::class, 'destroy'])->name('doctors.delete');
 
     // Department
-    Route::resource('education', EducationController::class);
-    Route::resource('experience', ExperienceController::class);
+    Route::resource('department', DepartmentController::class);
+
+    // Route::resource('education', EducationController::class);
+    Route::get('/doctor/store', [DoctorController::class, 'doctorStore'])->name('doctor.store');
+
+    Route::get('/education/create', [DoctorController::class, 'educationCreate'])->name('doctorEducation.create');
+    Route::post('/education/store', [DoctorController::class, 'educationStore'])->name('doctorEducation.store');
+
+    Route::get('/experience/create', [DoctorController::class, 'experienceCreate'])->name('doctorExperience.create');
+    Route::post('/experience/store', [DoctorController::class, 'experienceStore'])->name('doctorExperience.store');
+
+
+
+    // Route::resource('experience', ExperienceController::class);
 
 
 

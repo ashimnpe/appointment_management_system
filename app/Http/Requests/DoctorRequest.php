@@ -25,7 +25,7 @@ class DoctorRequest extends FormRequest
      */
     public function rules()
     {
-        // $doctors = $this->route('id');
+
         $rules = [
             'first_name' => 'required|string',
             'middle_name' => 'string',
@@ -34,9 +34,8 @@ class DoctorRequest extends FormRequest
             'email' => 'required|email',
             'password' => 'required|confirmed',
             'license_no' => 'required|integer',
-            'nepali_dob'=> 'required|date',
-            'english_dob'=> 'required|date',
-            'department'=> 'required|string',
+            'nepali_dob'=> 'required',
+            'english_dob'=> 'required',
             'specialization'=> 'required|string',
             'province'=> 'required|string',
             'district'=> 'required|string',
@@ -50,8 +49,7 @@ class DoctorRequest extends FormRequest
             'status' => 'required',
         ];
 
-
-        if (!$this->isMethod('post')) {
+        if (!$this->isMethod('PUT')) {
             // Remove the 'password' rule for non-POST requests (editing)
             unset($rules['password']);
             unset($rules['image']);
