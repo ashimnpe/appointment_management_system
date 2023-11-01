@@ -1,3 +1,7 @@
+.card-footer{
+    background-color: #fff;
+}
+
 .brand{
     font-size: 15px;
 }
@@ -5,4 +9,11 @@
 .profile-pic{
 width: 150px;
 height: auto;
+}
+
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
 }

@@ -1,10 +1,11 @@
 @extends('layout.app')
 @section('content')
-    <!-- Content Wrapper. Contains page content -->
+    <!-- Content Wrapper -->
     <div class="content-wrapper">
-        <h3 class="pl-3 mb-0">Department</h3>
+        <h3 class="p-3 mb-0">Department</h3>
         <!-- Main content -->
         <section class="content">
+            {{-- alert box --}}
             <x-alerts-box>
 
             </x-alerts-box>
@@ -21,6 +22,8 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
+
+                            {{-- table --}}
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -43,8 +46,7 @@
                                                     <button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>
                                                         Edit</button>
                                                 </a>
-                                                <form action="{{ route('department.destroy', $dept->id) }}"
-                                                    method="POST">
+                                                <form action="{{ route('department.destroy', $dept->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-danger btn-sm m-1"
@@ -57,8 +59,9 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
-                                </tfoot>
                             </table>
+                            {{-- table --}}
+
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -69,7 +72,6 @@
             <!-- /.row -->
         </section>
         <!-- /.content -->
-
     </div>
     <!-- ./wrapper -->
 @endsection

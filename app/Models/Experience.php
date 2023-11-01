@@ -17,4 +17,8 @@ class Experience extends Model
         'start_date',
         'end_date',
     ];
+
+    public function doctor(){
+        return $this->belongsTo(Doctor::class);
+    }
 }

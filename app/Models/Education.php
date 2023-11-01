@@ -17,4 +17,8 @@ class Education extends Model
         'board',
         'marks'
     ];
+
+    public function doctor(){
+        return $this->belongsTo(Doctor::class);
+    }
 }

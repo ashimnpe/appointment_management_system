@@ -1,33 +1,20 @@
 @extends('layout.app')
 @section('content')
-    <!-- Content Wrapper. Contains page content -->
+    <!-- Content Wrapper -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header pb-2">
-
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-8  mx-auto ">
-                        <h1>Edit Doctor</h1>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </section>
-
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <!-- /.row -->
+                {{-- row --}}
                 <div class="row">
-                    <!-- left column -->
-                    <div class="col-md-8 mx-auto">
-                        <!-- general form elements -->
+                    <div class="col-md-8 mx-auto mt-5">
+                        {{-- card --}}
                         <div class="card card-info">
                             <div class="card-header">
-                                <h3 class="card-title">Doctor</h3>
+                                <h3 class="card-title">Edit Department</h3>
                             </div>
-                            <!-- /.card-header -->
-                            <!-- form start -->
+
+                            {{-- Form Start --}}
                             <form role="form" method="POST"
                                 action="{{ route('department.update',$dept->id) }}">
                                 @csrf
@@ -54,15 +41,16 @@
                                         onclick="return editConfirm('edit doctor')">Edit</button>
                                 </div>
                             </form>
-                            <!-- form end -->
+                            {{-- Form End --}}
+
                         </div>
-                        <!-- /.card -->
+                        {{-- card end --}}
                     </div>
-                    <!--/.left column end -->
                 </div>
-                <!-- /.row end -->
-            </div><!-- /.container-fluid -->
+                {{-- row end --}}
+            </div>
         </section>
-        <!-- /.content -->
+        <!-- Main content End -->
     </div>
+        <!-- Content Wrapper End -->
 @endsection

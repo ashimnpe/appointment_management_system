@@ -25,32 +25,20 @@ selectImage.onchange = (evt) => {
     }
 };
 
-// window.onload = function () {
-//     var nep_dob = document.getElementById("nepali-datepicker");
-//     nep_dob.nepaliDatePicker();
-// };
-
 // nepali date
-window.onload = function() {
+window.onload = function () {
+    var elm = document.getElementById("nepali_dob");
 
-    var elm = document.getElementById("nepali-datepicker");
+    elm.nepaliDatePicker();
+};
 
-    elm.nepaliDatePicker({
-        ndpYear: true,
-        ndpMonth: true,
-        ndpYearCount: 10,
+function bsToAd() {
+    var bsDate = document.getElementById("nepali_dob").value;
+    var englishdate = document.getElementById("english_dob");
+    var adDate = NepaliFunctions.BS2AD(bsDate);
 
-    });
- };
-
- function bsToAd() {
-  var bsDate = document.getElementById("nepali-datepicker").value;
-  var englishdate = document.getElementById("english_dob");
-console.log( bsDate)
-var adDate = NepaliFunctions.BS2AD(bsDate)
-
-englishdate.value = adDate
+    englishdate.value = adDate;
 }
 setInterval(() => {
-bsToAd()
+    bsToAd();
 }, 30);

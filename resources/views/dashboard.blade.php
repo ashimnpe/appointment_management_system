@@ -37,9 +37,9 @@
                                 <p>Doctors</p>
                             </div>
                             <div class="icon">
-                                <i class="fa fa-user-doctor"></i>
+                                <i class="fa fa-stethoscope"></i>
                             </div>
-                            <a href="{{ route('doctors.index') }}" class="small-box-footer">More info <i
+                            <a href="{{ route('doctor.index') }}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                                 <p>Departments</p>
                             </div>
                             <div class="icon">
-                                <i class="fa-solid fa-bed"></i>
+                                <i class="fa-solid fa-building"></i>
                             </div>
                             <a href="{{ route('department.index') }}" class="small-box-footer text-white">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>

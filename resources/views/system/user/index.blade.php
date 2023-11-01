@@ -2,7 +2,7 @@
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <h3 class="pl-3 mb-0">Users</h3>
+        <h3 class="p-3 mb-0">Users</h3>
         <!-- Main content -->
         <section class="content">
             <x-alerts-box>
@@ -38,7 +38,15 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
-                                            <td>{{ $user->role }}</td>
+                                            <td>
+                                                @if ($user->role == 0)
+                                                    Superadmin
+                                                @elseif ($user->role == 1)
+                                                    Admin
+                                                @else
+                                                    Doctor
+                                                @endif
+                                            </td>
                                             <td>
                                                 {{ $user->status == 1 ? 'Active' : 'Inactive' }}
                                             </td>

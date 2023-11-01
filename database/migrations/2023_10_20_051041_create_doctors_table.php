@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('middle_name')->nullable();
             $table->string('last_name');
             $table->string('email')->unique();
+            $table->string('password');
             $table->integer('license_no');
             $table->string('nepali_dob');
             $table->string('english_dob');
@@ -34,7 +35,7 @@ return new class extends Migration
             $table->integer('ward');
             $table->string('city');
             $table->string('tole')->nullable();
-            $table->string('role');
+            $table->integer('role');
             $table->boolean('status')->default(0);
             $table->timestamps();
         });

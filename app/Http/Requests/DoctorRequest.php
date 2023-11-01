@@ -28,9 +28,9 @@ class DoctorRequest extends FormRequest
 
         $rules = [
             'first_name' => 'required|string',
-            'middle_name' => 'string',
-            'image' => 'file|mimes:jpeg,png,jpg,gif|max:2048',
+            'middle_name' => 'nullable|string',
             'last_name' => 'required|string',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
             'email' => 'required|email',
             'password' => 'required|confirmed',
             'license_no' => 'required|integer',
@@ -47,11 +47,21 @@ class DoctorRequest extends FormRequest
             'role' => 'required|string',
             'gender' => 'required',
             'status' => 'required',
+            'level' => 'required',
+            'institution' => 'required|string',
+            'completion_date' => 'required',
+            'board' => 'required|string',
+            'marks' => 'required|string',
+            'organization_name' => 'required|string',
+            'position' => 'required|string',
+            'job_description' => 'required|string',
+            'start_date' => 'required',
+            'end_date' => 'required',
         ];
 
         if (!$this->isMethod('PUT')) {
             // Remove the 'password' rule for non-POST requests (editing)
-            unset($rules['password']);
+            // unset($rules['password']);
             unset($rules['image']);
         }
 

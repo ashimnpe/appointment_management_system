@@ -18,6 +18,7 @@ class Doctor extends Model
         'last_name',
         'license_no',
         'email',
+        'password',
         'role',
         'nepali_dob',
         'english_dob',
@@ -38,7 +39,19 @@ class Doctor extends Model
     //     'password',
     // ];
 
+    public function user(){
+        return $this->hasOne(User::class);
+    }
+
     public function department(){
         return $this->belongsTo(Department::class);
+    }
+
+    public function education(){
+        return $this->hasMany(Education::class);
+    }
+
+    public function experience(){
+        return $this->hasMany(Experience::class);
     }
 }

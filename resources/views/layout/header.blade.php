@@ -18,12 +18,14 @@
 
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
 
-    <link href="http://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/css/nepali.datepicker.v4.0.1.min.css" rel="stylesheet" type="text/css"/>
     <script src="https://kit.fontawesome.com/4233d9ac79.js" crossorigin="anonymous"></script>  <!-- summernote -->
 
     {{-- <link rel="stylesheet" href="{{ asset('assets/plugins/summernote/summernote-bs4.css') }}"> --}}
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link href="http://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/css/nepali.datepicker.v4.0.1.min.css" rel="stylesheet" type="text/css"/>
+
 
 </head>
 

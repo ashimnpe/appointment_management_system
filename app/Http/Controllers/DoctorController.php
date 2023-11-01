@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DoctorRequest;
-use App\Http\Requests\EducationRequest;
-use App\Http\Requests\ExperienceRequest;
 use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class DoctorController extends Controller
 {
@@ -29,6 +27,49 @@ class DoctorController extends Controller
         return view('system.doctor.create', compact('departments'));
     }
 
+    public function store(DoctorRequest $request)
+    {
+        $validate = $request->validated();
+        $validate['department_id'] = $request->department_id;
+
+        $user = User::create([
+            'name' => $validate['first_name'] . ' ' . $validate['middle_name'] . ' ' . $validate['last_name'],
+            'email' => $validate['email'],
+            'password' => Hash::make($validate['password']),
+            'role' => $validate['role'],
+            'status' => $validate['status'],
+        ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image');
+            $fileName = $imagePath->getClientOriginalName();
+            $validate['image'] = 'storage/img/' . $fileName;
+            $imagePath->storeAs('public/img', $fileName);
+        }
+
+        $validate['user_id'] = $user->id;
+        $doctor = Doctor::create($validate);
+
+        Education::create([
+            'institution' => $validate['institution'],
+            'level' => $validate['level'],
+            'marks' => $validate['marks'],
+            'board' => $validate['board'],
+            'completion_date' => $validate['completion_date'],
+            'doctor_id' => $doctor->id
+        ]);
+
+        Experience::create([
+            'organization_name' => $validate['organization_name'],
+            'position' => $validate['position'],
+            'job_description' => $validate['job_description'],
+            'start_date' => $validate['start_date'],
+            'end_date' => $validate['end_date'],
+            'doctor_id' => $doctor->id
+        ]);
+
+        return redirect()->route('doctor.index')->with('create', 'doctor created successfully');
+    }
 
     public function show($id)
     {
@@ -74,8 +115,25 @@ class DoctorController extends Controller
             'status' => $validate['status'],
         ]);
 
-        $doctor->update($validate);
+        $doctor->education->update([
+            'institution' => $validate['institution'],
+            'level' => $validate['level'],
+            'marks' => $validate['marks'],
+            'board' => $validate['board'],
+            'completion_date' => $validate['completion_date'],
+            'doctor_id' => $doctor->id
+        ]);
 
+        $doctor->experience->update([
+            'organization_name' => $validate['organization_name'],
+            'position' => $validate['position'],
+            'job_description' => $validate['job_description'],
+            'start_date' => $validate['start_date'],
+            'end_date' => $validate['end_date'],
+            'doctor_id' => $doctor->id
+        ]);
+
+        $doctor->update($validate);
         return redirect()->route('doctor.index')->with('update', 'Doctor Updated Successfully');
     }
 
@@ -85,80 +143,8 @@ class DoctorController extends Controller
         // findOrFail() => 404 page
         // find() => error page
         $doctor = Doctor::findOrFail($id);
+        // $doctor->user->delete();
         $doctor->delete();
         return redirect()->route('doctor.index')->with('delete', 'Doctor deleted successfully');
-    }
-
-
-    // multi
-    public function store(DoctorRequest $request)
-    {
-        $validate = $request->validated();
-        // $request->session()->put('doctor', $validate);
-        // return redirect()->route('doctorEducation.create');
-
-
-        // doctor-store-start
-        $validate['department_id'] = $request->department_id;
-
-        $user = User::create([
-            'name' => $validate['first_name'] . ' ' . $validate['middle_name'] . ' ' . $validate['last_name'],
-            'email' => $validate['email'],
-            'password' => bcrypt($validate['password']),
-            'role' => $validate['role'],
-            'status' => $validate['status'],
-        ]);
-
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image');
-            $fileName = $imagePath->getClientOriginalName();
-            $validate['image'] = 'storage/img/' . $fileName;
-            $imagePath->storeAs('public/img', $fileName);
-        }
-
-
-        $validate['user_id'] = $user->id;
-        // dd($validate);
-        Doctor::create($validate);
-        // doctor-store-end
-
-        return redirect()->route('doctors.index')->with('create','doctor created successfully');
-
-
-    }
-
-    // Doctor Education
-    public function educationCreate(Request $request)
-    {
-        return view('system.education.create');
-    }
-
-
-    public function educationStore(EducationRequest $request)
-    {
-        $validateEducation = $request->all();
-        $request->session()->put('education',$validateEducation);
-        $data = $request->session()->get('doctor','education');
-        dd($data);
-        return redirect()->route('doctorExperience.create');
-    }
-
-
-    // Doctor Experience
-    public function experienceCreate(Request $request)
-    {
-
-        // $validate = $request->all();
-        // $request->session()->get('doctor',$validate);
-        // dd($validate);
-        return view('system.experience.create');
-    }
-
-    public function experienceStore(ExperienceRequest $request)
-    {
-        $validate = $request->validated();
-        // dd($validate);
-        $request->session()->put('education', $validate);
-        return redirect()->route('');
     }
 }
