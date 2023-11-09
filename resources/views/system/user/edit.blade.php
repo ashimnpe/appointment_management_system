@@ -26,7 +26,7 @@
                                 <h3 class="card-title">Edit User</h3>
                             </div>
                             <!-- form start -->
-                            <form role="form" method="POST" action="{{ route('user.update', ['id' => $user->id]) }}">
+                            <form role="form" method="POST" action="{{ route('user.update',$user->id) }}">
                                 @csrf
                                 @method('PUT')
                                 <div class="card-body">
@@ -44,9 +44,9 @@
                                     <div class="col form-group">
                                         <label for="Role">Role</label><br>
                                         <input type="radio" name="role" value="Admin"
-                                            {{ $user->role == 'Admin' ? 'checked' : '' }}> Admin
+                                            {{ $user->role == '1' ? 'checked' : '' }}> Admin
                                         <input type="radio" name="role" value="Doctor"
-                                            {{ $user->role == 'Doctor' ? 'checked' : '' }}> Doctor
+                                            {{ $user->role == '2' ? 'checked' : '' }}> Doctor
                                     </div>
 
                                     <div class="row">

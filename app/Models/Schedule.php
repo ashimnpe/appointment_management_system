@@ -4,22 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Experience extends Model
+class Schedule extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
+        'date_bs',
+        'date_ad',
+        'start_time',
+        'end_time',
+        'limit',
         'doctor_id',
-        'organization_name',
-        'position',
-        'job_description',
-        'start_date',
-        'end_date',
+        'user_id',
     ];
 
     public function doctor(){
         return $this->belongsTo(Doctor::class);
     }
+
 }

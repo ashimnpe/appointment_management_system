@@ -6,27 +6,26 @@
         <section class="content-header pb-2">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-8  mx-auto ">
-                        <h1>Create Doctor</h1>
+                    <div class="col-sm-12  mx-auto ">
+                        <h1>Edit Doctor</h1>
                     </div>
                 </div>
             </div>
         </section>
         <!-- Content Header-->
-        {{ $errors }}
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-8 mx-auto">
+                    <div class="col-md-12 mx-auto">
                         <div class="card card-info">
                             {{-- Form Start --}}
-                            <form role="form" method="POST" action="{{ route('doctor.store') }}"
+                            <form role="form" method="POST" action="{{ route('doctor.update', $doctor->id) }}"
                                 enctype="multipart/form-data">
                                 @csrf
-
+                                @method('PUT')
                                 {{-- Doctor Form --}}
-                                <div class="doctor-form" id="basicinfo" style="display: block">
+                                <div class="doctorForm" id="basicinfo" style="display: block">
                                     <div class="card-header">
                                         <h3 class="card-title">Basic Info</h3>
                                     </div>
@@ -71,20 +70,18 @@
                                         </div>
 
                                         <div class="row">
-                                            {{-- <div class="col form-group">
+                                            <div class="col form-group">
                                                 <div class="form-group">
                                                     <label for="department_id">Select Department</label>
-                                                    <select name="department_id" id="department_id" class="form-control"
-                                                        required>
-                                                        <option value="">Select Department</option>
+                                                    <select name="department_id" id="department_id" class="form-control">
                                                         @foreach ($departments as $department)
                                                             <option value="{{ $department->id }}">
                                                                 {{ $department->department_name }}</option>
                                                         @endforeach
+
                                                     </select>
                                                 </div>
-
-                                            </div> --}}
+                                            </div>
                                             <div class="col form-group">
                                                 <label for="specialization">Specialization</label>
                                                 <input type="text" class="form-control" id="specialization"
@@ -116,9 +113,9 @@
                                         <div class="row">
                                             <div class="col form-group">
                                                 <label for="Role">Role</label><br>
-                                                <input type="radio" name="role" value="Admin"
+                                                <input type="radio" name="role" value="1"
                                                     {{ $doctor->role == '1' ? 'checked' : '' }}> Admin
-                                                <input type="radio" name="role" value="Doctor"
+                                                <input type="radio" name="role" value="2"
                                                     {{ $doctor->role == '2' ? 'checked' : '' }}> Doctor
                                             </div>
                                             <div class="col form-group">
@@ -135,7 +132,7 @@
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label>Status</label>
+                                                    <label>Status: </label>
                                                     <select class="form-control" name='status'>
                                                         @if ($doctor->status == 1)
                                                             <option value="1">Active</option>
@@ -150,12 +147,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="group-form">
-                                            <div class="form-group">
-                                                <label for="image">Image</label>
-                                                <input type="file" name="image" id="selectImage">
-                                            </div>
-                                        </div>
+
 
                                         <hr>
                                         {{-- address --}}
@@ -200,145 +192,187 @@
                                                     value="{{ $doctor->tole }}">
                                             </div>
                                         </div>
+                                        <div class="group-form">
+                                            <div class="form-group">
+                                                <label for="image">Image</label>
+                                                <input type="file" name="image" id="selectImage">
+                                            </div>
+                                        </div>
 
+                                        <img id="preview" src="{{ asset($doctor->image) }}" alt="profile" class="mt-3"/>
                                     </div>
-                                    <div class="card-footer">
-                                        <a href="#" class="btn btn-info btn-sm float-right"
-                                            onclick="toggleFormOne()" id="toggleFormOne">Next</a>
+                                    <div class="card-footer float-right">
+                                        <a href="#" class="btn btn-info btn-sm" onclick="toggleFormOne()"
+                                            id="toggleFormOne">Next</a>
                                     </div>
                                 </div>
 
                                 {{-- Education Form --}}
-                                <div class="education-form" id="education" style="display: none">
+                                <div class="educationForm" id="education" style="display: none">
                                     <div class="card-header">
                                         <h3 class="card-title">Education</h3>
+                                        <a href="#" id="addEducation" class="btn btn-primary btn-sm float-right">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col group-form">
-                                                <div class="form-group">
-                                                    <label for="institution">Institution</label>
-                                                    <input type="text" class="form-control" id="institution"
-                                                        name="institution" value="{{ $doctor->institution }}">
+                                    @foreach ($doctor->education as $item)
+                                        <div class="card-body">
+                                            <div class="row education-form">
+                                                <div class="col roup-form">
+                                                    <div class="form-group">
+                                                        <label for="institution">Institution</label>
+                                                        <input type="text" class="form-control" id="institution"
+                                                            name="institution[]" value="{{ $item->institution }}">
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div class="col group-form">
+                                                    <div class="form-group">
+                                                        <label for="board">Board/University</label>
+                                                        <input type="text" class="form-control" id="board"
+                                                            name="board[]" value="{{ $item->board }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col group-form">
+                                                    <div class="form-group">
+                                                        <label>Level</label>
+                                                        <select class="form-control" name='level[]'>
+                                                            @if ($item->level == 'SEE')
+                                                                <option value="SEE">SEE</option>
+                                                                <option value="+2">+2</option>
+                                                                <option value="Bachelor">Bachelor</option>
+                                                                <option value="Master">Master</option>
+                                                            @endif
+                                                            @if ($item->level == '+2')
+                                                                <option value="+2">+2</option>
+                                                                <option value="SEE">SEE</option>
+                                                                <option value="Bachelor">Bachelor</option>
+                                                                <option value="Master">Master</option>
+                                                            @endif
+                                                            @if ($item->level == 'Bachelor')
+                                                                <option value="Bachelor">Bachelor</option>
+                                                                <option value="SEE">SEE</option>
+                                                                <option value="+2">+2</option>
+                                                                <option value="Master">Master</option>
+                                                            @endif
+                                                            @if ($item->level == 'Master')
+                                                                <option value="Master">Master</option>
+                                                                <option value="SEE">SEE</option>
+                                                                <option value="+2">+2</option>
+                                                                <option value="Bachelor">Bachelor</option>
+                                                            @endif
+                                                        </select>
+                                                    </div>
 
-                                        </div>
-                                        <div class="row">
-                                            <div class="col group-form">
-                                                <div class="form-group">
-                                                    <label for="board">Board</label>
-                                                    <input type="text" class="form-control" id="board"
-                                                        name="board" value="{{ $doctor->board }}">
                                                 </div>
-                                            </div>
-                                            <div class="col group-form">
-                                                <div class="form-group">
-                                                    <label for="level">Level</label>
-                                                    <input type="text" class="form-control" id="level"
-                                                        name="level" value="{{ $doctor->level }}">
+                                                <div class="col group-form">
+                                                    <div class="form-group">
+                                                        <label for="marks">Marks</label>
+                                                        <input type="text" class="form-control" id="marks"
+                                                            name="marks[]" value="{{ $item->marks }}">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                                <div class="col group-form">
+                                                    <div class="form-group">
+                                                        <label for="completion_date">Completion Date</label>
+                                                        <input type="text" class="form-control" id="completion_date"
+                                                            name="completion_date[]" value="{{ $item->completion_date }}">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <a href="#"
+                                                            class="btn btn-danger btn-sm removeEducation">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
 
-                                        <div class="row">
-                                            <div class="col group-form">
-                                                <div class="form-group">
-                                                    <label for="marks">Marks</label>
-                                                    <input type="text" class="form-control" id="marks"
-                                                        name="marks" value="{{ $doctor->marks }}">
-                                                </div>
-                                            </div>
-                                            <div class="col group-form">
-                                                <div class="form-group">
-                                                    <label for="completion_date">Completion Date</label>
-                                                    <input type="date" class="form-control" id="completion_date"
-                                                        name="completion_date" value="{{ $doctor->completion_date }}">
-                                                </div>
                                             </div>
                                         </div>
-
-                                        <div class="card-footer">
-                                            <a href="#" class="btn btn-secondary btn-sm" onclick="toggleFormOne()"
-                                                id="toggleFormOne">Previous</a>
-                                            <a href="#" class="btn btn-info btn-sm" onclick="toggleFormTwo()"
-                                                id="toggleFormTwo">Next</a>
-                                        </div>
+                                    @endforeach
+                                    <div class="card-footer ">
+                                        <a href="#" class="btn btn-secondary btn-sm" onclick="toggleFormOne()"
+                                            id="toggleFormOne">Previous</a>
+                                        <a href="#" class="btn btn-info btn-sm float-right"
+                                            onclick="toggleFormTwo()" id="toggleFormTwo">Next</a>
                                     </div>
                                 </div>
 
                                 {{-- Experience Form --}}
-                                <div class="experience-form" id="experience" style="display: none">
+                                <div class="experienceForm" id="experience" style="display: none">
                                     <div class="card-header">
                                         <h3 class="card-title">Experience</h3>
+                                        <a href="#" id="addExperience" class="btn btn-primary btn-sm float-right">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col group-form">
-                                                <div class="form-group">
-                                                    <label for="organization_name">Organization Name</label>
-                                                    <input type="text" class="form-control" id="organization_name"
-                                                        name="organization_name" value="{{ $doctor->organization_name }}">
-                                                    @error('organization_name')
-                                                        <p class="text-danger">{{ $message }}</p>
-                                                    @enderror
+                                    @foreach ($doctor->experience as $item2)
+                                        <div class="card-body">
+                                            <div class="row experience-form">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="organization_name">Organization Name</label>
+                                                        <input type="text" class="form-control" id="organization_name"
+                                                            name="organization_name[]"
+                                                            value="{{ $item2->organization_name }}">
+                                                        @error('organization_name')
+                                                            <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="position">Position</label>
+                                                        <input type="text" class="form-control" id="position"
+                                                            name="position[]" value="{{ $item2->position }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="start_date">Start date</label>
+                                                        <input type="month" class="form-control" id="start_date"
+                                                            name="start_date[]" value="{{ $item2->start_date }}">
+                                                        @error('start_date')
+                                                            <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="end_date">End date</label>
+                                                        <input type="month" class="form-control" id="end_date"
+                                                            name="end_date[]" value="{{ $item2->end_date }}">
+                                                    </div>
                                                 </div>
                                             </div>
-
-                                        </div>
-                                        <div class="row">
-                                            <div class="col group-form">
-                                                <div class="form-group">
-                                                    <label for="position">Position</label>
-                                                    <input type="text" class="form-control" id="position"
-                                                        name="position" value="{{ $doctor->position }}">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="level">Job Description</label><br>
+                                                        <textarea name="job_description[]" id="job_description" rows="2">
+                                                            {{ $item2->job_description }}
+                                                        </textarea>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-
-
-                                        <div class="row">
-                                            <div class="col group-form">
-                                                <div class="form-group">
-                                                    <label for="start_date">Start date</label>
-                                                    <input type="date" class="form-control" id="start_date"
-                                                        name="start_date" value="{{ $doctor->start_date }}">
-                                                    @error('start_date')
-                                                        <p class="text-danger">{{ $message }}</p>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="col group-form">
-                                                <div class="form-group">
-                                                    <label for="end_date">End date</label>
-                                                    <input type="date" class="form-control" id="end_date"
-                                                        name="end_date" value="{{ $doctor->end_date }}">
-                                                </div>
+                                            <div class="form-group">
+                                                <a href="#" class="btn btn-danger btn-sm removeExperience">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
                                             </div>
                                         </div>
+                                    @endforeach
+                                    <div class="card-footer">
+                                        <a href="#" class="btn btn-secondary btn-sm" onclick="toggleFormTwo()"
+                                            id="toggleFormTwo">Previous</a>
+                                        <a href="#" class="btn btn-info btn-sm float-right"
+                                            onclick="toggleFormThree()" id="toggleFormTwo">Next</a>
 
-                                        <div class="row">
-                                            <div class="col group-form">
-                                                <div class="form-group">
-                                                    <label for="level">Job Description</label><br>
-                                                    <textarea name="job_description" id="job_description" rows="10">
-                                                        {{ $doctor->job_description }}
-                                                    </textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <a href="#" class="btn btn-secondary btn-sm" onclick="toggleFormTwo()"
-                                                id="toggleFormTwo">Previous</a>
-                                            <a href="#" class="btn btn-info btn-sm" onclick="toggleFormThree()"
-                                                id="toggleFormTwo">Next</a>
-
-                                        </div>
                                     </div>
                                 </div>
 
                                 {{-- Login Form --}}
-                                <div class="login-form" id="doctorlogin" style="display: none;">
+                                <div class="loginForm" id="doctorlogin" style="display: none;">
                                     <div class="card-header">
                                         <h3 class="card-title">Credentials</h3>
                                     </div>
@@ -356,30 +390,11 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="row">
-                                            <div class="col form-group">
-                                                <label for="password">Password</label>
-                                                <input type="password" class="form-control" id="password"
-                                                    name="password" value="{{ $doctor->password }}">
-                                                @error('password')
-                                                    <p class="text-danger">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                            <div class="col form-group">
-                                                <label for="confirm password">Confirm Password</label>
-                                                <input type="password" class="form-control" id="confirmpassword"
-                                                    name="password_confirmation" value="{{ $doctor->password }}">
-                                                @error('password')
-                                                    <p class="text-danger">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <a href="#" class="btn btn-secondary btn-sm"
-                                                onclick="toggleFormThree()" id="toggleFormTwo">Previous</a>
-                                            <button class="btn btn-info btn-sm" id="submitForm">Create</button>
-                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="#" class="btn btn-secondary btn-sm" onclick="toggleFormThree()"
+                                            id="toggleFormTwo">Previous</a>
+                                        <button class="btn btn-info btn-sm float-right" id="">Submit</button>
                                     </div>
 
                                 </div>

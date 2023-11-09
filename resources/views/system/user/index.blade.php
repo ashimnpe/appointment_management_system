@@ -24,7 +24,7 @@
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>Sn</th>
                                         <th>Full Name</th>
                                         <th>Email</th>
                                         <th>Role</th>
@@ -52,7 +52,7 @@
                                             </td>
                                             <td class="d-flex">
 
-                                                <a href="{{ route('user.profile', $user->id) }}" class="m-1">
+                                                <a href="{{ route('user.show', $user->id) }}" class="m-1">
                                                     <button class="btn btn-success btn-sm"><i class="fa fa-eye"></i>
                                                         View</button>
                                                 </a>
@@ -61,8 +61,7 @@
                                                     <button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>
                                                         Edit</button>
                                                 </a>
-                                                <form action="{{ route('user.delete', ['id' => $user->id]) }}"
-                                                    method="POST">
+                                                <form action="{{ route('user.destroy', $user->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-danger btn-sm m-1"
@@ -75,7 +74,6 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
-                                </tfoot>
                             </table>
                         </div>
                         <!-- /.card-body -->

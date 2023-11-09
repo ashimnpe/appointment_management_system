@@ -4,21 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Education extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 
     protected $fillable = [
         'doctor_id',
-        'level',
         'institution',
-        'completion_date',
+        'level',
         'board',
-        'marks'
+        'marks',
+        'completion_date',
+        'adcompletion_date',
     ];
 
     public function doctor(){
-        return $this->belongsTo(Doctor::class);
+        return $this->belongsTo(Doctor::class, 'doctor->id');
     }
 }

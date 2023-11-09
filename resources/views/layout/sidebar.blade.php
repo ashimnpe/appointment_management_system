@@ -18,7 +18,7 @@
                         alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="{{ route('dashboard') }}" class="d-block">{{ auth()->user()->name }}</a>
+                    <a href="{{ route('profile.show') }}" class="d-block">{{ auth()->user()->name }}</a>
 
                 </div>
             </div>
@@ -29,38 +29,126 @@
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
-                    <li class="nav-item has-treeview">
-                        <a href="{{ route('dashboard') }}" class="nav-link">
-                            <i class="fa fa-dashboard"></i>
-                            <p>
-                                Dashboard
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('doctor.index') }}" class="nav-link">
-                            <p>
-                                <i class="fa fa-stethoscope"></i>
-                                Doctors
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('user.index') }}" class="nav-link">
-                            <p>
-                                <i class="fa fa-user"></i>
-                                Users
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('department.index') }}" class="nav-link">
-                            <p>
-                                <i class="fa fa-building"></i>
-                                Department
-                            </p>
-                        </a>
-                    </li>
+
+                        {{-- Super Admin --}}
+                    @if (auth()->user()->role == 0)
+                        <div>
+                            <li class="nav-item has-treeview">
+                                <a href="{{ route('dashboard') }}" class="nav-link">
+                                    <i class="fa fa-clock"></i>
+                                    <p>
+                                        Dashboard
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('doctor.index') }}" class="nav-link">
+                                    <p>
+                                        <i class="fa fa-stethoscope"></i>
+                                        Doctors
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('user.index') }}" class="nav-link">
+                                    <p>
+                                        <i class="fa fa-user"></i>
+                                        Users
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('department.index') }}" class="nav-link">
+                                    <p>
+                                        <i class="fa fa-building"></i>
+                                        Department
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('schedule.index') }}" class="nav-link">
+                                    <p>
+                                        <i class="fa fa-calendar"></i>
+                                        Schedule
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('trash.index') }}" class="nav-link">
+                                    <p>
+                                        <i class="fa fa-trash"></i>
+                                        Trash
+                                    </p>
+                                </a>
+                            </li>
+                        </div>
+
+                        {{-- Admin --}}
+                    @elseif (auth()->user()->role == 1)
+                        <div>
+                            <li class="nav-item has-treeview">
+                                <a href="{{ route('dashboard') }}" class="nav-link">
+                                    <i class="fa fa-clock"></i>
+                                    <p>
+                                        Dashboard
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('doctor.index') }}" class="nav-link">
+                                    <p>
+                                        <i class="fa fa-stethoscope"></i>
+                                        Doctors
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('user.index') }}" class="nav-link">
+                                    <p>
+                                        <i class="fa fa-user"></i>
+                                        Users
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('department.index') }}" class="nav-link">
+                                    <p>
+                                        <i class="fa fa-building"></i>
+                                        Department
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('trash.index') }}" class="nav-link">
+                                    <p>
+                                        <i class="fa fa-trash"></i>
+                                        Trash
+                                    </p>
+                                </a>
+                            </li>
+                        </div>
+
+                        {{-- Doctor --}}
+                    @else
+                        <div>
+                            <li class="nav-item has-treeview">
+                                <a href="{{ route('dashboard') }}" class="nav-link">
+                                    <i class="fa fa-clock"></i>
+                                    <p>
+                                        Dashboard
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('schedule.index') }}" class="nav-link">
+                                    <p>
+                                        <i class="fa fa-calendar"></i>
+                                        Schedule
+                                    </p>
+                                </a>
+                            </li>
+                        </div>
+                    @endif
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

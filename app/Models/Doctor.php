@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Doctor extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'user_id',
@@ -35,10 +36,6 @@ class Doctor extends Model
         'status'
     ];
 
-    // protected $hidden = [
-    //     'password',
-    // ];
-
     public function user(){
         return $this->hasOne(User::class);
     }
@@ -54,4 +51,10 @@ class Doctor extends Model
     public function experience(){
         return $this->hasMany(Experience::class);
     }
+
+    public function schedule(){
+        return $this->hasMany(Schedule::class);
+    }
+
+
 }
