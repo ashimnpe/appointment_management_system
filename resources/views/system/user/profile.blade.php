@@ -25,10 +25,18 @@
                                             <label for="name">Email: </label> {{ $users->email }}
                                         </div>
                                         <div>
-                                            <label for="name">Role: </label> {{ $users->role }}
+                                            <label for="name">Role: </label>
+                                            @if ($users->role == 1)
+                                                Admin
+                                            @elseif($users->role == 2)
+                                                Doctor
+                                            @else
+                                                Superadmin
+                                            @endif
                                         </div>
                                         <div>
-                                            <label for="name">Status: </label> {{ $users->status == 1 ? 'Active' : 'Inactive' }}
+                                            <label for="name">Status: </label>
+                                            {{ $users->status == 1 ? 'Active' : 'Inactive' }}
                                         </div>
                                     </div>
                                 </div>

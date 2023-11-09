@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('tole')->nullable();
             $table->integer('role');
             $table->boolean('status')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

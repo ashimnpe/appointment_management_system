@@ -14,15 +14,26 @@
 
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
 
-<script src="http://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/js/nepali.datepicker.v4.0.1.min.js" type="text/javascript"></script>
+<script src="http://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/js/nepali.datepicker.v4.0.1.min.js"
+    type="text/javascript"></script>
 
 
-<script src="{{ asset('assets/js/confirmation.js') }}"></script>
 <script src="{{ asset('assets/js/doctorForm.js') }}"></script>
+<script src="{{ asset('assets/js/confirmation.js') }}"></script>
+<script src="{{ asset('assets/js/nepali.datepicker.v4.0.1.min.js') }}"></script>
 
 
+{{-- <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/fullcalendar/main.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/fullcalendar-daygrid/main.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/fullcalendar-timegrid/main.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/fullcalendar-interaction/main.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/fullcalendar-bootstrap/main.min.js') }}"></script> --}}
 
 
+<script>
+
+</script>
 </body>
 
 </html>

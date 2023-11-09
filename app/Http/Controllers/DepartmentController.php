@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DepartmentRequest;
 use App\Models\Department;
 use App\Models\Doctor;
+use App\Models\Experience;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -26,13 +27,6 @@ class DepartmentController extends Controller
             'department_name'  => $request['department_name']
         ]);
         return redirect()->route('department.index')->with('create', 'Department Created Successfully');
-    }
-
-    public function show($id)
-    {
-        $doctor = Doctor::all();
-        $dept = Department::findOrFail($id);
-        return view('system.department.profile', compact('dept','doctor'));
     }
 
     public function edit($id){
