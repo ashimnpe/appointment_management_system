@@ -1,92 +1,40 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Department;
+use App\Http\Requests\ScheduleRequest;
 use App\Models\Doctor;
-use Illuminate\Http\Request;
+use App\Models\Schedule;
 
 class ScheduleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $doctors = Doctor::get();
-        return view('system.schedule.index',compact('doctors'));
+        if (auth()->user()->role == 0 || auth()->user()->role == 1) {
+            $schedules = Schedule::get();
+            $doctors = Doctor::get();
+            return view('system.schedule.index', compact('schedules', 'doctors'));
+        } else if (auth()->user()->role == 2) {
+            $doctor = Doctor::where('user_id', auth()->user()->id)->first();
+            $schedules = Schedule::where('doctor_id', $doctor->id)->get();
+            return view('system.schedule.index', compact('schedules'));
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
+    public function store(ScheduleRequest $request)
     {
-        $departments = Department::all();
-        $selectedDepartmentId = $request->input('department');
-        $doctors = Doctor::when($selectedDepartmentId, function ($query) use ($selectedDepartmentId) {
-            $query->where('department_id', $selectedDepartmentId);
-        })->get();
-        return view('system.schedule.create',compact('departments','doctors'));
-    }
+        $user = auth()->user()->id;
+        $scheduleData = [
+            'user_id' => $user,
+            'doctor_id' => $request['doctor_id'],
+            'date_bs' => $request['date_bs'],
+            'date_ad' => $request['date_ad'],
+            'start_time' => $request['start_time'],
+            'end_time' => $request['end_time'],
+            'limit' => $request['limit'],
+            'available_limit' => $request['limit'],
+        ];
+        Schedule::create($scheduleData);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect()->route('schedule.index')->with('success', 'Schedule Created Successfully');
     }
 }

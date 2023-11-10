@@ -93,7 +93,7 @@
                                         <div class="row">
                                             <div class="col form-group">
                                                 <label for="date">Date of Birth</label>
-                                                <input type="text" class="form-control" id="nepali_dob" name="nepali_dob"
+                                                <input type="text" class="form-control" id="nepali_date" name="nepali_dob"
                                                     value="{{ $doctor->nepali_dob }}">
 
                                             </div>
@@ -105,7 +105,7 @@
                                             </div>
 
                                             <div class="col form-group" hidden>
-                                                <input type="date" id="english_dob" name="english_dob"
+                                                <input type="date" id="english_date" name="english_dob"
                                                     value="{{ $doctor->english_dob }}">
                                             </div>
                                         </div>
@@ -274,9 +274,11 @@
                                                 <div class="col group-form">
                                                     <div class="form-group">
                                                         <label for="completion_date">Completion Date</label>
-                                                        <input type="text" class="form-control" id="completion_date"
-                                                            name="completion_date[]" value="{{ $item->completion_date }}">
+                                                        <input type="text" class="form-control bscompletion_date" id="bscompletion_date_" name="completion_date[]" value="{{ $item->completion_date }}">
                                                     </div>
+                                                </div>
+                                                <div class="col form-group">
+                                                    <input type="date" id="adcompletion_date_" name="adcompletion_date[]">
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">

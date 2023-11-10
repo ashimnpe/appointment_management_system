@@ -23,6 +23,12 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+
+
+Route::get('/welcome', function () {
+    return view('welcome');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -37,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('doctor', DoctorController::class);
     Route::resource('department', DepartmentController::class);
     Route::resource('schedule', ScheduleController::class);
+
 
     Route::get('/trash', [TrashController::class, 'index'])->name('trash.index');
     Route::delete('/trash/delete/{id}', [TrashController::class, 'destroy'])->name('trash.destroy');

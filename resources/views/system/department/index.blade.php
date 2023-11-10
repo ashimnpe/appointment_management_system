@@ -30,7 +30,9 @@
                                         <th>Sn</th>
                                         <th>Department Name</th>
                                         <th>Members</th>
-                                        <th>Action</th>
+                                        @if (auth()->user()->role == 0 || auth()->user()->role == 1)
+                                            <th>Action</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,22 +43,25 @@
                                             <td>
                                                 {{ $dept->doctor->count() }}
                                             </td>
-                                            <td class="d-flex">
-                                                <a href="{{ route('department.edit', $dept->id) }}" class="m-1">
-                                                    <button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>
-                                                        Edit</button>
-                                                </a>
-                                                <form action="{{ route('department.destroy', $dept->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-danger btn-sm m-1"
-                                                        onclick="return deleteConfirm('delete department')"><i
-                                                            class="fa fa-trash"></i>
-                                                        Delete
-                                                    </button>
-                                                </form>
-                                            </td>
+                                            @if (auth()->user()->role == 0 || auth()->user()->role == 1)
+                                                <td class="d-flex">
+                                                    <a href="{{ route('department.edit', $dept->id) }}" class="m-1">
+                                                        <button class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>
+                                                            Edit</button>
+                                                    </a>
+                                                    <form action="{{ route('department.destroy', $dept->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger btn-sm m-1"
+                                                            onclick="return deleteConfirm('delete department')"><i
+                                                                class="fa fa-trash"></i>
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </td>
                                         </tr>
+                                    @endif
                                     @endforeach
                                 </tbody>
                             </table>

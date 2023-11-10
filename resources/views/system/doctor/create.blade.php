@@ -305,14 +305,14 @@
                                             {{-- 1st field --}}
                                             <div class="col form-group">
                                                 <label for="date">Completion Date</label>
-                                                <input type="text" class="form-control bscompletion_date" id="bscompletion_date" name="completion_date[]"
+                                                <input type="text" class="form-control bscompletion_date" id="bscompletion_date_" name="completion_date[]"
                                                     placeholder="Completion Date">
                                                 @error('completion_date')
                                                     <p class="text-danger">{{ $message }}</p>
                                                 @enderror
                                             </div>
                                             <div class="col form-group">
-                                                <input type="date" id="adcompletion_date" name="adcompletion_date[]">
+                                                <input type="date" id="adcompletion_date_" name="adcompletion_date[]">
                                             </div>
 
                                             <div>

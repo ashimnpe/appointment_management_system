@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Console\View\Components\Alert;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -39,7 +40,7 @@ class UserController extends Controller
             'password' => Hash::make($request['password']),
         ]);
 
-        // Alert::success('success!','User Created Successfully');
+        // Alert::success('Success!','User Created Successfully');
         return redirect()->route('user.index')->with('create', 'User Created Successfully');
     }
 

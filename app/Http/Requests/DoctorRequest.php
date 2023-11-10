@@ -36,7 +36,6 @@ class DoctorRequest extends FormRequest
                     'required',
                     Rule::unique('doctors')->ignore($doctor),
                 ],
-                'password' => 'required|confirmed',
                 'license_no' => 'required|integer',
                 'nepali_dob' => 'required',
                 'english_dob' => 'required',

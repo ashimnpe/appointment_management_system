@@ -8,8 +8,6 @@ use App\Models\Doctor;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\User;
-use Illuminate\Console\View\Components\Alert;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class DoctorController extends Controller

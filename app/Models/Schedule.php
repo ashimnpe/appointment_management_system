@@ -10,17 +10,22 @@ class Schedule extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
+        'doctor_id',
         'date_bs',
         'date_ad',
         'start_time',
         'end_time',
         'limit',
-        'doctor_id',
-        'user_id',
+        'available_limit',
     ];
 
     public function doctor(){
         return $this->belongsTo(Doctor::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 
 }

@@ -37,7 +37,11 @@ class Doctor extends Model
     ];
 
     public function user(){
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function schedule(){
+        return $this->hasMany(Schedule::class);
     }
 
     public function department(){
@@ -52,9 +56,6 @@ class Doctor extends Model
         return $this->hasMany(Experience::class);
     }
 
-    public function schedule(){
-        return $this->hasMany(Schedule::class);
-    }
 
 
 }

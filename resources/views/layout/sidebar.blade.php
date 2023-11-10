@@ -30,7 +30,7 @@
                     <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
 
-                        {{-- Super Admin --}}
+                    {{-- Super Admin --}}
                     @if (auth()->user()->role == 0)
                         <div>
                             <li class="nav-item has-treeview">
@@ -42,41 +42,43 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('doctor.index') }}" class="nav-link">
-                                    <p>
-                                        <i class="fa fa-stethoscope"></i>
-                                        Doctors
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{{ route('user.index') }}" class="nav-link">
+                                    <i class="fa fa-user"></i>
                                     <p>
-                                        <i class="fa fa-user"></i>
                                         Users
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('department.index') }}" class="nav-link">
+                                    <i class="fa fa-building"></i>
                                     <p>
-                                        <i class="fa fa-building"></i>
                                         Department
+                                    </p>
+                                </a>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a href="{{ route('doctor.index') }}" class="nav-link">
+                                    <i class="fa fa-stethoscope"></i>
+                                    <p>
+                                        Doctors
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('schedule.index') }}" class="nav-link">
+                                    <i class="fa fa-calendar"></i>
                                     <p>
-                                        <i class="fa fa-calendar"></i>
                                         Schedule
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('trash.index') }}" class="nav-link">
+                                    <i class="fa fa-trash"></i>
                                     <p>
-                                        <i class="fa fa-trash"></i>
                                         Trash
                                     </p>
                                 </a>
@@ -95,33 +97,33 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('doctor.index') }}" class="nav-link">
-                                    <p>
-                                        <i class="fa fa-stethoscope"></i>
-                                        Doctors
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{{ route('user.index') }}" class="nav-link">
+                                    <i class="fa fa-user"></i>
                                     <p>
-                                        <i class="fa fa-user"></i>
                                         Users
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('department.index') }}" class="nav-link">
+                                    <i class="fa fa-building"></i>
                                     <p>
-                                        <i class="fa fa-building"></i>
                                         Department
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('trash.index') }}" class="nav-link">
+                                <a href="{{ route('schedule.index') }}" class="nav-link">
+                                    <i class="fa fa-calendar"></i>
                                     <p>
-                                        <i class="fa fa-trash"></i>
+                                        Schedule
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('trash.index') }}" class="nav-link">
+                                    <i class="fa fa-trash"></i>
+                                    <p>
                                         Trash
                                     </p>
                                 </a>
@@ -140,9 +142,17 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('schedule.index') }}" class="nav-link">
+                                <a href="{{ route('department.index') }}" class="nav-link">
+                                    <i class="fa fa-building"></i>
                                     <p>
-                                        <i class="fa fa-calendar"></i>
+                                        Department
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('schedule.index') }}" class="nav-link">
+                                    <i class="fa fa-calendar"></i>
+                                    <p>
                                         Schedule
                                     </p>
                                 </a>
