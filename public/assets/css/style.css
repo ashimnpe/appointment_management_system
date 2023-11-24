@@ -17,3 +17,12 @@ textarea {
 ul{
     list-style-type: none;
 }
+
+
+.welcome{
+    background-color: #D7F3FF;
+}
+
+/* .patient-loginForm{
+    background-color: rgba(0, 0, 0, 0.2);
+} */

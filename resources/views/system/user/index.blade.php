@@ -5,9 +5,7 @@
         <h3 class="p-3 mb-0">Users</h3>
         <!-- Main content -->
         <section class="content">
-            <x-alerts-box>
-
-            </x-alerts-box>
+            @include('sweetalert::alert')
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -51,9 +49,10 @@
                                                 {{ $user->status == 1 ? 'Active' : 'Inactive' }}
                                             </td>
                                             <td class="d-flex">
-
-                                                <a href="{{ route('user.show', $user->id) }}" class="m-1">
-                                                    <button class="btn btn-success btn-sm"><i class="fa fa-eye"></i>
+                                                <a href="#" class="m-1">
+                                                    <button class="btn btn-success btn-sm" data-toggle="modal"
+                                                        data-target="#modal-default{{ $user->id }}"><i
+                                                            class="fa fa-eye"></i>
                                                         View</button>
                                                 </a>
 
@@ -72,6 +71,49 @@
                                                 </form>
                                             </td>
                                         </tr>
+                                        <div class="modal fade" id="modal-default{{ $user->id }}">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">User Profile</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div>
+                                                            <img src="{{ asset($user->doctor) }}" alt="">
+                                                        </div>
+                                                        <div>
+                                                            <label for="name">Name: </label> {{ $user->name }}
+                                                        </div>
+
+                                                        <div>
+                                                            <label for="name">Email: </label> {{ $user->email }}
+                                                        </div>
+                                                        <div>
+                                                            <label for="name">Role: </label>
+                                                            @if ($user->role == 1)
+                                                                Admin
+                                                            @elseif($user->role == 2)
+                                                                Doctor
+                                                            @else
+                                                                Superadmin
+                                                            @endif
+                                                        </div>
+                                                        <div>
+                                                            <label for="name">Status: </label>
+                                                            {{ $user->status == 1 ? 'Active' : 'Inactive' }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer justify-content-between">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                                <!-- /.modal-content -->
+                                            </div>
+                                            <!-- /.modal-dialog -->
+                                        </div>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -86,38 +128,9 @@
         </section>
         <!-- /.content -->
 
-        {{-- User Profile --}}
-        {{-- <div class="modal" id="viewProfile">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">User profile</h4>
-                    </div>
-                    <div class="modal-body">
-                            <div class="profile">
-                                <div>
-                                    <label for="name">Name: </label> {{ $user->name }}
-                                </div>
-                                <div>
-                                    <label for="name">Email: </label> {{ $user->email }}
-                                </div>
-                                <div>
-                                    <label for="name">Role: </label> {{ $user->role }}
-                                </div>
-                                <div>
-                                    <label for="name">Status: </label> {{ $user->status == 1 ? 'Active' : 'Inactive' }}
-                                </div>
-                            </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div> --}}
-
     </div>
-    <!-- ./wrapper -->
+
+
+
+
 @endsection

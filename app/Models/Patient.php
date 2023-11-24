@@ -17,4 +17,17 @@ class Patient extends Model
         'dob_ad',
         'gender'
     ];
+
+    public function schedule(){
+        return $this->belongsTo(Schedule::class);
+    }
+
+    public function booking(){
+        return $this->hasMany(Booking::class);
+    }
+
+
+    public function department(){
+        return $this->belongsTo(Department::class);
+    }
 }

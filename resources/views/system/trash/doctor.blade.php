@@ -5,9 +5,8 @@
         <h3 class="p-3 mb-0">Trash</h3>
         <!-- Main content -->
         <section class="content">
-            <x-alerts-box>
+            @include('sweetalert::alert')
 
-            </x-alerts-box>
             <div class="row">
                 <div class="col-12">
                     <div class="card">

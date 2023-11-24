@@ -11,15 +11,31 @@ class Booking extends Model
     protected $fillable = [
         'patient_id',
         'doctor_id',
+        'schedule_id',
         'book_date_bs',
         'book_date_ad',
-        'start_time',
-        'end_time',
         'remarks',
         'status'
     ];
 
     public function patient(){
-        return $this->hasMany(Patient::class);
+        return $this->belongsTo(Patient::class);
     }
+
+    public function doctor(){
+        return $this->belongsTo(Doctor::class);
+
+    }
+
+    public function schedule(){
+        return $this->belongsTo(Schedule::class);
+
+    }
+
+    public function toggleStatus()
+    {
+        $this->status = $this->status === 'booked' ? 'approved' : 'canceled';
+        $this->save();
+    }
+
 }

@@ -12,12 +12,11 @@ class Schedule extends Model
     protected $fillable = [
         'user_id',
         'doctor_id',
-        'date_bs',
-        'date_ad',
+        'book_date_bs',
+        'book_date_ad',
         'start_time',
         'end_time',
-        'limit',
-        'available_limit',
+        'status'
     ];
 
     public function doctor(){
@@ -27,5 +26,17 @@ class Schedule extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function department(){
+        return $this->belongsTo(Department::class);
+    }
+
+    public function booking(){
+        return $this->hasMany(Booking::class);
+    }
+
+
+
+
 
 }

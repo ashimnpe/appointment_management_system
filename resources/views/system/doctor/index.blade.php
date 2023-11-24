@@ -5,9 +5,7 @@
         <h3 class="p-3 mb-0">Doctors</h3>
         <!-- Main content -->
         <section class="content">
-            <x-alerts-box>
-
-            </x-alerts-box>
+            @include('sweetalert::alert')
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -53,23 +51,50 @@
                                             </td>
                                             <td>{{ $doctor->contact }}</td>
                                             <td>{{ $doctor->status == 1 ? 'Active' : 'Inactive' }}</td>
-                                            <td class="d-flex">
+                                            <td class="d-flex justify-content-around">
                                                 <a href="{{ route('doctor.show', $doctor->id) }}">
                                                     <button class="btn btn-success btn-sm m-1"><i class="fa fa-eye"></i>
                                                         View</button>
                                                 </a>
+
                                                 <a href="{{ route('doctor.edit', $doctor->id) }}">
                                                     <button class="btn btn-warning btn-sm m-1"><i class="fa fa-edit"></i>
                                                         Edit</button>
                                                 </a>
 
-                                                <form action="{{ route('doctor.destroy',$doctor->id) }}" method="POST" >
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-danger btn-sm m-1" onclick="return deleteConfirm('delete doctor')"><i class="fa fa-trash"></i>
-                                                        Delete
-                                                    </button>
-                                                </form>
+                                                    <button class="btn btn-danger btn-sm m-1" data-toggle="modal"
+                                                    data-target="#modal-delete{{ $doctor->id }}"><i class="fa fa-edit"></i>
+                                                        Delete</button>
+
+                                                        <div class="modal fade" id="modal-delete{{ $doctor->id }}">
+                                                            <div class="modal-dialog modal-delete">
+                                                                <form role="form" method="POST"
+                                                                    action="{{ route('doctor.destroy', $doctor->id) }}">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <button type="button" class="close"
+                                                                                data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body text-center">
+                                                                            <h4>Are you sure want to delete ?</h4>
+                                                                        </div>
+                                                                        <div class="modal-footer justify-content-between">
+                                                                            <button type="button" class="btn btn-default"
+                                                                                data-dismiss="modal">No</button>
+                                                                            <button class="btn btn-danger">Yes</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                                <!-- /.modal-content -->
+                                                            </div>
+                                                            <!-- /.modal-dialog -->
+                                                        </div>
+
+
                                             </td>
                                         </tr>
                                     @endforeach

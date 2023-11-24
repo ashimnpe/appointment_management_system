@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
-use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert as Alert;
 
 class TrashController extends Controller
 {
@@ -24,7 +24,8 @@ class TrashController extends Controller
             $doctor->restore();
 
         }
-        return redirect()->route('trash.index')->with('success','Doctor Restored Successfully');
+        Alert::success('Success!','Doctor Restored Successfully');
+        return redirect()->route('trash.index');
 
     }
 
@@ -34,7 +35,7 @@ class TrashController extends Controller
         if($doctor){
             $doctor->forceDelete();
         }
-
-        return redirect()->route('trash.index')->with('success','Doctor Deleted Successfully');
+        Alert::success('Success!','Doctor Deleted Permanently');
+        return redirect()->route('trash.index');
     }
 }

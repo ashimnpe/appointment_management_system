@@ -43,9 +43,9 @@
 
                                     <div class="col form-group">
                                         <label for="Role">Role</label><br>
-                                        <input type="radio" name="role" value="Admin"
+                                        <input type="radio" name="role" value="1"
                                             {{ $user->role == '1' ? 'checked' : '' }}> Admin
-                                        <input type="radio" name="role" value="Doctor"
+                                        <input type="radio" name="role" value="2"
                                             {{ $user->role == '2' ? 'checked' : '' }}> Doctor
                                     </div>
 

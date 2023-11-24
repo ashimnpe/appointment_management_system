@@ -1,8 +1,6 @@
 @extends('layout.app')
 @section('content')
-    <!-- Content Wrapper-->
     <div class="content-wrapper">
-        <!-- Content Header-->
         <section class="content-header pb-2">
             <div class="container-fluid">
                 <div class="row">
@@ -12,8 +10,7 @@
                 </div>
             </div>
         </section>
-        <!-- Content Header-->
-        <!-- Main content -->
+
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -134,7 +131,7 @@
                                                 <label for="Role">Role</label><br>
                                                 <input type="radio" name="role" value="1">
                                                 Admin
-                                                <input type="radio" name="role" value="2">
+                                                <input type="radio" name="role" value="2" checked>
                                                 Doctor
                                                 @error('role')
                                                     <p class="text-danger">{{ $message }}</p>
@@ -305,13 +302,13 @@
                                             {{-- 1st field --}}
                                             <div class="col form-group">
                                                 <label for="date">Completion Date</label>
-                                                <input type="text" class="form-control bscompletion_date" id="bscompletion_date_" name="completion_date[]"
+                                                <input type="text" class="form-control completion_date_bs" id="bscompletion_date_" name="completion_date[]"
                                                     placeholder="Completion Date">
                                                 @error('completion_date')
                                                     <p class="text-danger">{{ $message }}</p>
                                                 @enderror
                                             </div>
-                                            <div class="col form-group">
+                                            <div class="col form-group" hidden>
                                                 <input type="date" id="adcompletion_date_" name="adcompletion_date[]">
                                             </div>
 
@@ -468,7 +465,5 @@
                 </div>
             </div>
         </section>
-        <!-- Main content -->
     </div>
-    <!-- Content Wrapper-->
 @endsection

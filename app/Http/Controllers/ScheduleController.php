@@ -1,40 +1,58 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Requests\ScheduleRequest;
 use App\Models\Doctor;
 use App\Models\Schedule;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ScheduleController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role == 0 || auth()->user()->role == 1) {
-            $schedules = Schedule::get();
-            $doctors = Doctor::get();
-            return view('system.schedule.index', compact('schedules', 'doctors'));
-        } else if (auth()->user()->role == 2) {
-            $doctor = Doctor::where('user_id', auth()->user()->id)->first();
-            $schedules = Schedule::where('doctor_id', $doctor->id)->get();
-            return view('system.schedule.index', compact('schedules'));
-        }
+        $doctors = Doctor::all();
+        $schedules = Schedule::all();
+        return view('system.schedule.index', compact('schedules', 'doctors'));
     }
 
-    public function store(ScheduleRequest $request)
+    public function store(ScheduleRequest $req)
     {
+        $validate = $req->all();
         $user = auth()->user()->id;
-        $scheduleData = [
-            'user_id' => $user,
-            'doctor_id' => $request['doctor_id'],
-            'date_bs' => $request['date_bs'],
-            'date_ad' => $request['date_ad'],
-            'start_time' => $request['start_time'],
-            'end_time' => $request['end_time'],
-            'limit' => $request['limit'],
-            'available_limit' => $request['limit'],
-        ];
-        Schedule::create($scheduleData);
 
-        return redirect()->route('schedule.index')->with('success', 'Schedule Created Successfully');
+        if (auth()->user()->role == 1 || auth()->user()->role == 0) {
+            $doctor = $validate['doctor_id'];
+        } else {
+            $doctor =  auth()->user()->doctor->id;
+        }
+
+        foreach ($validate['start_time'] as $key => $item) {
+            $scheduleData[$key] = [
+                'user_id' => $user,
+                'doctor_id' => $doctor,
+                'book_date_bs' => $validate['book_date_bs'],
+                'book_date_ad' => $validate['book_date_ad'],
+                'start_time' => $validate['start_time'][$key],
+                'end_time' => $validate['end_time'][$key],
+            ];
+            Schedule::create($scheduleData[$key]);
+        }
+        Alert::success('Success!', 'Schedule Created Successfully');
+        return redirect()->route('schedule.index');
+    }
+
+    public function update(ScheduleRequest $request, $id)
+    {
+
+    }
+
+    public function destroy($id)
+    {
+        // dd($id);
+        $schedule = Schedule::findOrFail($id);
+        $schedule->delete();
+        Alert::success('Delete!', 'Schedule Deleted Successfully');
+        return redirect()->route('schedule.index');
     }
 }

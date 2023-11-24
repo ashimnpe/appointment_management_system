@@ -74,8 +74,8 @@
                                                 <div class="form-group">
                                                     <label for="department_id">Select Department</label>
                                                     <select name="department_id" id="department_id" class="form-control">
-                                                        @foreach ($departments as $department)
-                                                            <option value="{{ $department->id }}">
+                                                        @foreach ($departments as $department )
+                                                            <option value="{{ $department->id }}" @if ($doctor->department_id == $department->id) selected @endif>
                                                                 {{ $department->department_name }}</option>
                                                         @endforeach
 

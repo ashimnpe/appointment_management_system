@@ -17,10 +17,11 @@
 <script src="http://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/js/nepali.datepicker.v4.0.1.min.js"
     type="text/javascript"></script>
 
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('assets/js/doctorForm.js') }}"></script>
 <script src="{{ asset('assets/js/confirmation.js') }}"></script>
 <script src="{{ asset('assets/js/nepali.datepicker.v4.0.1.min.js') }}"></script>
+<script src="{{ asset('assets/js/schedule.js') }}"></script>
 
 
 {{-- <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>

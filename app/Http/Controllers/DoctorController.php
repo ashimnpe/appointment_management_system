@@ -9,26 +9,24 @@ use App\Models\Education;
 use App\Models\Experience;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DoctorController extends Controller
 {
 
-    // Doctor
-    public function index()
-    {
+    public function index(){
         $doctors = Doctor::all();
         return view('system.doctor.index', compact('doctors'));
     }
 
 
-    public function create()
-    {
+    public function create(){
         $departments = Department::all();
         return view('system.doctor.create', compact('departments'));
     }
 
-    public function store(DoctorRequest $request)
-    {
+
+    public function store(DoctorRequest $request){
         $validate = $request->all();
 
         $user = User::create([
@@ -38,6 +36,7 @@ class DoctorController extends Controller
             'role' => $validate['role'],
             'status' => $validate['status'],
         ]);
+
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image');
             $fileName = $imagePath->getClientOriginalName();
@@ -80,27 +79,25 @@ class DoctorController extends Controller
             Experience::create($experience[$key]);
         }
 
-        // Alert::succ`('success');
-        return redirect()->route('doctor.index')->with('create', 'doctor created successfully');
+        Alert::success('Success!', 'Doctor Created Successfully');
+        return redirect()->route('doctor.index');
     }
 
-    public function show($id)
-    {
+
+    public function show($id){
         $doctor = Doctor::findOrFail($id);
         return view('system.doctor.profile', compact('doctor'));
     }
 
 
-    public function edit($id)
-    {
+    public function edit($id){
         $departments = Department::all();
         $doctor = Doctor::findOrFail($id);
         return view('system.doctor.edit', compact('doctor', 'departments'));
     }
 
 
-    public function update(DoctorRequest $request, $id)
-    {
+    public function update(DoctorRequest $request, $id){
         $validate = $request->all();
         $validate['name'] =  $validate['first_name'] . ' ' . $validate['middle_name'] . ' ' . $validate['last_name'];
 
@@ -158,18 +155,17 @@ class DoctorController extends Controller
             $experience->job_description = $validate['job_description'][$key];
             $experience->save();
         }
-
+        Alert::success('Update!', 'Doctor Updated Successfully');
         return redirect()->route('doctor.index')->with('update', 'Doctor Updated Successfully');
     }
 
 
-    public function destroy($id)
-    {
+    public function destroy($id){
         // findOrFail() => 404 page
         // find() => error page
-
         $doctor = Doctor::findOrFail($id);
         $doctor->delete();
-        return redirect()->route('doctor.index')->with('delete', 'Doctor deleted successfully');
+        Alert::success('Delete!', 'Doctor deleted successfully');
+        return redirect()->route('doctor.index');
     }
 }

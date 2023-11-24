@@ -52,20 +52,31 @@ document.addEventListener("DOMContentLoaded", function () {
         var limit = 3;
         var i=1;
 
-        // var row = document.querySelector('.education-form');
-        // var dateRow = row.querySelector('.bscompletion_date');
-        // dateRow.id = `bscompletion_date_$asd`;
-        // console.log(dateRow.id)
+        var el = document.querySelector('.education-form')
+        var nepdate = el.querySelector('.nepali-datepicker')
+
+        nepdate.id = 'bscompletion_date_' + 1;
+
         document.getElementById("addEducation").addEventListener("click", function (e) {
             if(count < limit){
                 const newRow = document.querySelector(".education-form").cloneNode(true);
                 document.querySelector(".education-form").parentNode.appendChild(newRow);
 
+                i++;
+                var rowId = 'bscompletion_date_' + i;
+                var datePick = newRow.querySelector('.bscompletion_date')
+                datePick.id = rowId
 
-                const inputFields = newRow.querySelectorAll("input");
-                inputFields.forEach(function (input) {
-                    input.value = "";
-                });
+                dateConversion(newRow)
+                setInterval(() => {
+                    bsToAd(newRow)
+                  }, 30);
+
+
+                // const inputFields = newRow.querySelectorAll("input");
+                // inputFields.forEach(function (input) {
+                //     input.value = "";
+                // });
                 count++;
             }else{
                 alert('count limit is 4')
@@ -77,7 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 const rowDelete = e.target.closest(".education-form");
                 if (document.querySelectorAll(".education-form").length > 1) {
                     rowDelete.parentNode.removeChild(rowDelete);
-                    console.log("delete");
                     e.preventDefault();
                 }
             }
@@ -102,7 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const rowDelete = e.target.closest(".experience-form");
             if (document.querySelectorAll(".experience-form").length > 1) {
                 rowDelete.parentNode.removeChild(rowDelete);
-                console.log("delete");
                 e.preventDefault();
             }
         }
@@ -117,12 +126,14 @@ window.onload = function () {
     var mainInput = document.getElementById("nepali_date");
     mainInput.nepaliDatePicker();
 
-    var nepaliDate = document.querySelector(".bscompletion_date");
+    var nepaliDate = document.getElementById("bscompletion_date_");
     nepaliDate.nepaliDatePicker();
-};
+
+    // var modalDate = document.getElementById("modal_nepali_date");
+    // modalDate.nepaliDatePicker();
+}
 
 function bsToAd() {
-    // date of birth
     var bsDate = document.getElementById("nepali_date").value;
     var englishdate = document.getElementById("english_date");
     var adDate = NepaliFunctions.BS2AD(bsDate);
@@ -130,19 +141,24 @@ function bsToAd() {
 }
 
 
-function dateConversion(newRow){
-    // for(var i=0; i<newRow; i++){
+function dateConversion(){
         var bsDate = document.getElementById("bscompletion_date_").value;
         var englishdate = document.getElementById("adcompletion_date_");
         var adDate = NepaliFunctions.BS2AD(bsDate);
         englishdate.value = adDate;
-    // }
 }
 
+// function modalBsToAd(){
+//     var bsDate = document.getElementById("modal_nepali_date").value;
+//     var englishdate = document.getElementById("modal_english_date");
+//     var adDate = NepaliFunctions.BS2AD(bsDate);
+//     englishdate.value = adDate;
+// }
 
 setInterval(() => {
     bsToAd();
     dateConversion();
+    // modalBsToAd();
 }, 30);
 
 /* --------------------------------------------------------------------------------------------- */

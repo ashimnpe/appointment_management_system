@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DepartmentRequest;
 use App\Models\Department;
-use App\Models\Doctor;
-use App\Models\Experience;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DepartmentController extends Controller
 {
@@ -26,7 +25,8 @@ class DepartmentController extends Controller
         Department::create([
             'department_name'  => $request['department_name']
         ]);
-        return redirect()->route('department.index')->with('create', 'Department Created Successfully');
+        Alert::success('Success!','Department Created Successfully');
+        return redirect()->route('department.index');
     }
 
     public function edit($id){
@@ -40,13 +40,15 @@ class DepartmentController extends Controller
         $dept->update([
             'department_name' => $request->department_name,
         ]);
+        Alert::success('Update!','Department Updated Successfully');
 
-        return redirect()->route('department.index')->with('success','Department Created Successfully');
+        return redirect()->route('department.index');
     }
 
     public function destroy($id){
         $dept  = Department::findOrFail($id);
         $dept->delete();
-        return redirect()->route('department.index')->with('delete','Department Deleted Successfully');
+        Alert::success('Delete!','Department Deleted Successfully');
+        return redirect()->route('department.index');
     }
 }

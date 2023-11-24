@@ -1,0 +1,40 @@
+body{
+    background-image: url("../img/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.nav-link{
+    color: #747b81;
+    font-weight: 700;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.steps{
+    height: 480px;
+    position: relative;
+    top: 650px;
+    background-color: #e9f1f1;
+}
+
+.appointment{
+    height: auto;
+    background-color: red;
+    position: relative;
+    top: 650px;
+}
+
+.bookus{
+    text-align: center;
+    padding: 10px;
+}
+
+.num{
+    font-size: 70px;
+}
+
+.process{
+    border-bottom-right-radius: 20% !important;
+    height: 300px !important;
+}

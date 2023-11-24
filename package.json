@@ -16,6 +16,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@sajanm/nepali-date-picker": "^4.0.1",
         "sweetalert2": "^11.9.0"
     }
 }

@@ -15,9 +15,9 @@
                                 </div>
                                 <div class="card-body">
                                     <div>
-                                        {{-- <div class="text-center mb-3">
-                                            <img src="{{ asset($doctor->image) }}" alt="profile" class="profile-pic">
-                                        </div> --}}
+                                        <div class="mb-3">
+                                            <img src="{{ asset(auth()->user()->image) }}" alt="profile" class="profile-pic"  style="width: 100px">
+                                        </div>
                                         <div>
                                             <label for="name">Name: </label> {{ $users->name }}
                                         </div>

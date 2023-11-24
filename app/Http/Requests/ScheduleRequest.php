@@ -26,11 +26,10 @@ class ScheduleRequest extends FormRequest
         return [
             'user_id' => 'nullable',
             'doctor_id' => 'required',
-            'date_bs' => 'required',
-            'date_ad' => 'required',
+            'book_date_bs' => 'required',
+            'book_date_ad' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
-            'limit' => 'required',
         ];
     }
 }

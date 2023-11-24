@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
-use Illuminate\Console\View\Components\Alert;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert as Alert;
 
 class UserController extends Controller
 {
@@ -30,17 +29,27 @@ class UserController extends Controller
     }
 
 
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
+        $validatedData = $request->all();
+
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image');
+        $fileName = uniqid() . '_' . $imagePath->getClientOriginalName();
+        $imagePath->storeAs('public/img', $fileName);
+        $image = 'storage/img/' . $fileName;
+    }
+
         User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'role' => $request['role'],
-            'status' => $request['status'],
-            'password' => Hash::make($request['password']),
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'role' => $validatedData['role'],
+            'status' => $validatedData['status'],
+            'image' => $image ?? null,
+            'password' => Hash::make($validatedData['password']),
         ]);
 
-        // Alert::success('Success!','User Created Successfully');
+        Alert::success('Success!','User Created Successfully');
         return redirect()->route('user.index')->with('create', 'User Created Successfully');
     }
 
@@ -61,6 +70,7 @@ class UserController extends Controller
             'role' => $request->role,
             'status' => $request->status,
         ]);
+        Alert::success('Edit!','User Updated Successfully');
         return redirect()->route('user.index')->with('update', 'User Updated Successfully');
     }
 
@@ -69,6 +79,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
+        Alert::success('Delete!','User Deleted Successfully');
         return redirect()->route('user.index')->with('delete', 'User deleted successfully');
     }
 }
