@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('dob_bs');
             $table->string('dob_ad');
             $table->enum('gender',['male','female','others']);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

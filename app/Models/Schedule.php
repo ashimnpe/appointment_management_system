@@ -4,10 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Schedule extends Model
+class Schedule extends Model implements Auditable
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes,Notifiable;
+    use \OwenIt\Auditing\Auditable;
+
 
     protected $fillable = [
         'user_id',
@@ -16,6 +21,8 @@ class Schedule extends Model
         'book_date_ad',
         'start_time',
         'end_time',
+        'limit',
+        'available_limit',
         'status'
     ];
 

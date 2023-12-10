@@ -14,7 +14,7 @@
             </div>
         </section>
         <!-- Content Header -->
-
+        {{ $errors }}
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -26,7 +26,7 @@
                                 <h3 class="card-title">Edit User</h3>
                             </div>
                             <!-- form start -->
-                            <form role="form" method="POST" action="{{ route('user.update',$user->id) }}">
+                            <form role="form" method="POST" action="{{ route('user.update', $user->id) }}">
                                 @csrf
                                 @method('PUT')
                                 <div class="card-body">
@@ -71,11 +71,34 @@
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button class="btn btn-primary btn-sm float-right"
-                                        onclick="return editConfirm('edit user')">Edit</button>
+                                    <button class="btn btn-primary btn-sm float-right">Edit</button>
                                 </div>
                             </form>
 
+                            {{-- ------------------------------------ Modal Box to Edit Schedule --------------------------------------------- --}}
+                            {{-- <div class="modal fade" id="modal-edit-user{{ $user->id }}">
+                                <div class="modal-dialog modal-edit">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            Are you sure want to Edit?
+                                        </div>
+                                        <form action="{{ route('user.update', $user->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">No</button>
+                                                <button class="btn btn-success btn-sm m-1"><i class="fa fa-trash"></i>
+                                                    Yes
+                                                </button>
+                                            </div>
+                                        </form>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div> --}}
+                            {{-- -------------------------------------------------------------------------------------------------------------- --}}
 
                         </div>
                         {{-- Card --}}

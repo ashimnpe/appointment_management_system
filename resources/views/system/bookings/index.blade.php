@@ -8,74 +8,75 @@
     <title>{{ env('APP_NAME') }}</title>
 
     <link rel="stylesheet" href="{{ asset('assets/css/book.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
     <link href="http://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/css/nepali.datepicker.v4.0.1.min.css"
         rel="stylesheet" type="text/css" />
 
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link href="{{ asset('assets/front/css/theme.css') }}" rel="stylesheet" />
+
+    <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
 
 </head>
 
 <body>
-    {{-- Navbar --}}
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light">
-        <div class="container">
-            @include('sweetalert::alert')
+    @include('sweetalert::alert')
 
-            {{-- left nav --}}
-            <div>
-                <ul class="navbar-nav">
-                    <li>
-                        <a class="navbar-brand" href="/">AMS</a>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 d-block"
+        data-navbar-on-scroll="data-navbar-on-scroll">
+        <div class="container"><a class="navbar-brand text-dark" href="/">{{ env('APP_NAME') }}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon">
+                </span></button>
+            <div class="collapse navbar-collapse border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto pt-2 pt-lg-0 font-base">
+                    <li class="nav-item px-2"><a class="nav-link" href="/">Departments</a></li>
+                    <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="/">About
+                            Us</a>
                     </li>
-                    <li class="nav-item d-none d-sm-inline-block">
-                        <a href="/" class="nav-link ">Home</a>
-                    </li>
-                    <li class="nav-item d-none d-sm-inline-block">
-                        <a href="{{ route('booking.index') }}" class="nav-link active">Book Appointment</a>
+                    <li class="nav-item px-2"><a class="nav-link" href="{{ route('booking.index') }}">Appointment</a>
                     </li>
                 </ul>
-            </div>
-
-            {{-- right nav --}}
-            <div class="admin-login">
-                <ul class="navbar-nav">
-                    <li>
-                        <a href="{{ route('login') }}" class="nav-link">Login</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('register') }}" class="nav-link">Register</a>
-                    </li>
-                </ul>
-
+                <a class="btn btn-bg btn-outline-primary rounded-pill order-1 order-lg-0 ms-lg-4"
+                    href="{{ route('login') }}">Sign In</a>
+                <a class="btn btn-bg btn-outline-primary rounded-pill order-1 order-lg-0 ms-lg-4"
+                    href="{{ route('register') }}">Register</a>
             </div>
         </div>
     </nav>
+    </div>
+    {{-- </nav> --}}
 
-    <div class="dept">
-        <div class="container p-3">
-            <h2>Departments</h2>
-            <div class="row mt-4">
-                @foreach ($departments as $department)
-                    <div class="col-md-4">
-                        <a href="{{ route('booking.show', $department->id) }}">
-                            <div class="card">
-                                <div class="card-header ">
-                                    <div class="card-title">
-                                        <h4>{{ $department->department_name }}</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <h1 class="text-center">{{ $department->doctor_count }}</h1>
+
+    <section class="mt-0" id="">
+        <div class="bg-holder bg-size"
+            style="background-image:url('../assets/front/img/gallery/hero-bg.png');background-size:cover;">
+        </div>
+        <div class="dept">
+            <div class="container p-3">
+                <h2>Departments</h2>
+                <div class="row mt-4">
+                    @foreach ($departments as $department)
+                        <div class="col-md-4">
+                            <a href="{{ route('booking.show', $department->id) }}">
+                                <div class="card">
+                                    <div class="card-header ">
+                                        <div class="card-title">
+                                            <h4>{{ $department->department_name }}</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <h1 class="text-center">{{ $department->doctor_count }}</h1>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                @endforeach
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
-    </div>
 
+    </section>
     <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>

@@ -11,7 +11,7 @@ class DepartmentController extends Controller
 {
     public function index()
     {
-        $departments = Department::all();
+        $departments = Department::withCount('doctor')->get();
         return view('system.department.index', compact('departments'));
     }
 

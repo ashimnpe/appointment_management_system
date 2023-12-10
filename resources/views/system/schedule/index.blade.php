@@ -1,5 +1,5 @@
 @extends('layout.app')
-
+@inject('doctor_helper', 'App\Helpers\DoctorHelper')
 @section('content')
     <div class="content-wrapper">
         <h3 class="p-3 mb-0">Schedule</h3>
@@ -18,7 +18,6 @@
                                 </button>
                             </div>
                         </div>
-
                         {{-- ------------------------------------ Modal Box to Create Schedule --------------------------------------------- --}}
                         <div class="modal fade" id="modal-create">
                             <div class="modal-dialog modal-default">
@@ -36,10 +35,11 @@
                                             <div class="scheduleForm">
                                                 <div class="row mb-2">
                                                     @if (auth()->user()->role == 0 || auth()->user()->role == 1)
-                                                        <div class="col group-form">
-                                                            <label for="doctor_id">Select
-                                                                Doctor</label>
-                                                            <select name="doctor_id" id="doctor_id" class="form-control">
+                                                    <div class="col group-form">
+                                                        <label for="doctor_id">Select
+                                                            Doctor</label>
+                                                            {!! Form::select('doctor_id', $doctor_helper->list(), null, ['class' => 'form-control','placeholder'=>'select doctor']) !!}
+                                                            {{-- <select name="doctor_id" id="doctor_id" class="form-control">
                                                                 <option value="">Select Doctor
                                                                 </option>
                                                                 @foreach ($doctors as $doctor)
@@ -47,14 +47,16 @@
                                                                         {{ $doctor->first_name . ' ' . $doctor->middle_name . ' ' . $doctor->last_name }}
                                                                     </option>
                                                                 @endforeach
-                                                            </select>
+                                                            </select> --}}
                                                         </div>
                                                     @elseif(auth()->user()->doctor()->first()->id)
                                                         <input type="hidden"
                                                             value="{{ auth()->user()->doctor()->first()->id }}"
                                                             name="doctor_id">
                                                     @endif
+                                                </div>
 
+                                                <div class="row">
                                                     <div class="col group-form">
                                                         <div class="form-group">
                                                             <label for="date">Date</label>
@@ -70,18 +72,13 @@
                                                     </div>
                                                 </div>
 
-                                                <div>
-                                                    <a href="#" class="btn btn-sm btn-dark" id="addTime"><i
-                                                            class="fa fa-plus"></i></a>
-                                                </div>
-
-                                                <div class="row time-form">
+                                                <div class="row">
                                                     <div class="col group-form">
                                                         <div class="form-group">
                                                             <label for="start_time">Start
                                                                 Time</label>
                                                             <input type="time" class="form-control" id="start_time"
-                                                                name="start_time[]" value="10:00">
+                                                                name="start_time" value="10:00">
                                                             @error('start_time')
                                                                 <p class="text-danger">
                                                                     {{ $message }}</p>
@@ -93,17 +90,12 @@
                                                             <label for="end_time">End
                                                                 Time</label>
                                                             <input type="time" class="form-control" id="end_time"
-                                                                name="end_time[]" value="16:00">
+                                                                name="end_time" value="16:00">
                                                             @error('end_time')
                                                                 <p class="text-danger">
                                                                     {{ $message }}</p>
                                                             @enderror
                                                         </div>
-                                                    </div>
-                                                    <div>
-                                                        <a href="#"
-                                                            class="btn btn-sm btn-danger removeTime float-right"
-                                                            id="removeTime"><i class="fa fa-trash"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -131,10 +123,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    @php
-                                        $serialNumber = 1;
-                                    @endphp
                                     @foreach ($doctors as $doctor)
                                         @if (auth()->user()->role == 0 || auth()->user()->role == 1)
                                             @foreach ($doctor->schedule->groupBy('book_date_bs') as $date => $schedulesByDate)
@@ -149,7 +137,8 @@
                                                             <td rowspan="{{ count($schedulesByDate) }}">
                                                                 {{ $schedule->book_date_bs }}</td>
                                                         @endif
-                                                        <td>{{ $schedule->start_time . ' - ' . $schedule->end_time }}</td>
+                                                        <td>
+                                                            {{ $schedule->start_time . ' - ' . $schedule->end_time }}</td>
                                                         <td class="d-flex">
                                                             <a href="#">
                                                                 <button class="btn btn-danger btn-sm m-1"
@@ -158,130 +147,6 @@
                                                                         class="fa fa-trash"></i>
                                                                     Delete</button>
                                                             </a>
-
-
-                                                            {{-- ------------------------------------ Modal Box to Edit Schedule --------------------------------------------- --}}
-                                                            <div class="modal fade"
-                                                                id="modal-edit-schedule{{ $schedule->id }}">
-                                                                <div class="modal-dialog modal-edit">
-                                                                    <form role="form" method="POST"
-                                                                        action="{{ route('schedule.update', $schedule->id) }}">
-                                                                        @csrf
-                                                                        @method('PUT')
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h4 class="modal-title modal-primary">Edit
-                                                                                    Schedule
-                                                                                </h4>
-                                                                                <button type="button" class="close"
-                                                                                    data-dismiss="modal"
-                                                                                    aria-label="Close">
-                                                                                    <span aria-hidden="true">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <div class="scheduleForm">
-                                                                                    <div class="row mb-2">
-                                                                                        <div class="col group-form">
-                                                                                            <label for="doctor_id">Select
-                                                                                                Doctor</label>
-                                                                                            <select name="doctor_id"
-                                                                                                id="doctor_id"
-                                                                                                class="form-control">
-                                                                                                <option value="">
-                                                                                                    Select
-                                                                                                    Doctor</option>
-                                                                                                @foreach ($doctors as $doctor)
-                                                                                                    <option
-                                                                                                        value="{{ $doctor->id }}"
-                                                                                                        @if ($doctor->id == $schedule->doctor_id) selected @endif>
-                                                                                                        {{ $doctor->first_name . ' ' . $doctor->middle_name . ' ' . $doctor->last_name }}
-                                                                                                    </option>
-                                                                                                @endforeach
-                                                                                            </select>
-                                                                                        </div>
-                                                                                        <div class="col group-form">
-                                                                                            <div class="form-group">
-                                                                                                <label
-                                                                                                    for="date">Date</label>
-                                                                                                <input type="text"
-                                                                                                    class="form-control"
-                                                                                                    id="nepali_date"
-                                                                                                    name="book_date_bs"
-                                                                                                    value="{{ $schedule->book_date_bs }}"
-                                                                                                    placeholder="Date">
-                                                                                            </div>
-                                                                                            <input type="date"
-                                                                                                class="form-control"
-                                                                                                id="english_date"
-                                                                                                name="book_date_ad"
-                                                                                                placeholder="Date" hidden>
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                    <div>
-                                                                                        <a href="#"
-                                                                                            class="btn btn-sm btn-dark"
-                                                                                            id="addTime"><i
-                                                                                                class="fa fa-plus"></i></a>
-                                                                                    </div>
-
-                                                                                    <div class="row time-form">
-                                                                                        <div class="col group-form">
-                                                                                            <div class="form-group">
-                                                                                                <label
-                                                                                                    for="start_time">Start
-                                                                                                    Time</label>
-                                                                                                <input type="time"
-                                                                                                    class="form-control"
-                                                                                                    id="start_time"
-                                                                                                    name="start_time[]"
-                                                                                                    value="{{ $schedule->start_time }}">
-                                                                                                @error('start_time')
-                                                                                                    <p class="text-danger">
-                                                                                                        {{ $message }}</p>
-                                                                                                @enderror
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col group-form">
-                                                                                            <div class="form-group">
-                                                                                                <label for="end_time">End
-                                                                                                    Time</label>
-                                                                                                <input type="time"
-                                                                                                    class="form-control"
-                                                                                                    id="end_time"
-                                                                                                    name="end_time[]"
-                                                                                                    value="{{ $schedule->end_time }}">
-                                                                                                @error('end_time')
-                                                                                                    <p class="text-danger">
-                                                                                                        {{ $message }}</p>
-                                                                                                @enderror
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div>
-                                                                                            <a href="#"
-                                                                                                class="btn btn-sm btn-danger removeTime float-right"
-                                                                                                id="removeTime"><i
-                                                                                                    class="fa fa-trash"></i></a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div
-                                                                                class="modal-footer justify-content-between">
-                                                                                <button type="button"
-                                                                                    class="btn btn-default"
-                                                                                    data-dismiss="modal">Close</button>
-                                                                                <button
-                                                                                    class="btn btn-success">Edit</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-                                                                    <!-- /.modal-content -->
-                                                                </div>
-                                                                <!-- /.modal-dialog -->
-                                                            </div>
-                                                            {{-- -------------------------------------------------------------------------------------------------------------- --}}
 
                                                             {{-- ------------------------------------ Modal Box to Delete Schedule --------------------------------------------- --}}
                                                             <div class="modal fade"
@@ -334,6 +199,7 @@
                                                                 {{ $schedule->book_date_bs }}</td>
                                                         @endif
                                                         <td>{{ $schedule->start_time . ' - ' . $schedule->end_time }}</td>
+
                                                         <td class="d-flex">
                                                             <a href="#">
                                                                 <button class="btn btn-danger btn-sm m-1"
@@ -342,130 +208,6 @@
                                                                         class="fa fa-trash"></i>
                                                                     Delete</button>
                                                             </a>
-
-
-                                                            {{-- ------------------------------------ Modal Box to Edit Schedule --------------------------------------------- --}}
-                                                            <div class="modal fade"
-                                                                id="modal-edit-schedule{{ $schedule->id }}">
-                                                                <div class="modal-dialog modal-edit">
-                                                                    <form role="form" method="POST"
-                                                                        action="{{ route('schedule.update', $schedule->id) }}">
-                                                                        @csrf
-                                                                        @method('PUT')
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h4 class="modal-title modal-primary">Edit
-                                                                                    Schedule
-                                                                                </h4>
-                                                                                <button type="button" class="close"
-                                                                                    data-dismiss="modal"
-                                                                                    aria-label="Close">
-                                                                                    <span aria-hidden="true">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <div class="scheduleForm">
-                                                                                    <div class="row mb-2">
-                                                                                        <div class="col group-form">
-                                                                                            <label for="doctor_id">Select
-                                                                                                Doctor</label>
-                                                                                            <select name="doctor_id"
-                                                                                                id="doctor_id"
-                                                                                                class="form-control">
-                                                                                                <option value="">
-                                                                                                    Select
-                                                                                                    Doctor</option>
-                                                                                                @foreach ($doctors as $doctor)
-                                                                                                    <option
-                                                                                                        value="{{ $doctor->id }}"
-                                                                                                        @if ($doctor->id == $schedule->doctor_id) selected @endif>
-                                                                                                        {{ $doctor->first_name . ' ' . $doctor->middle_name . ' ' . $doctor->last_name }}
-                                                                                                    </option>
-                                                                                                @endforeach
-                                                                                            </select>
-                                                                                        </div>
-                                                                                        <div class="col group-form">
-                                                                                            <div class="form-group">
-                                                                                                <label
-                                                                                                    for="date">Date</label>
-                                                                                                <input type="text"
-                                                                                                    class="form-control"
-                                                                                                    id="nepali_date"
-                                                                                                    name="book_date_bs"
-                                                                                                    value="{{ $schedule->book_date_bs }}"
-                                                                                                    placeholder="Date">
-                                                                                            </div>
-                                                                                            <input type="date"
-                                                                                                class="form-control"
-                                                                                                id="english_date"
-                                                                                                name="book_date_ad"
-                                                                                                placeholder="Date" hidden>
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                    <div>
-                                                                                        <a href="#"
-                                                                                            class="btn btn-sm btn-dark"
-                                                                                            id="addTime"><i
-                                                                                                class="fa fa-plus"></i></a>
-                                                                                    </div>
-
-                                                                                    <div class="row time-form">
-                                                                                        <div class="col group-form">
-                                                                                            <div class="form-group">
-                                                                                                <label
-                                                                                                    for="start_time">Start
-                                                                                                    Time</label>
-                                                                                                <input type="time"
-                                                                                                    class="form-control"
-                                                                                                    id="start_time"
-                                                                                                    name="start_time[]"
-                                                                                                    value="{{ $schedule->start_time }}">
-                                                                                                @error('start_time')
-                                                                                                    <p class="text-danger">
-                                                                                                        {{ $message }}</p>
-                                                                                                @enderror
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="col group-form">
-                                                                                            <div class="form-group">
-                                                                                                <label for="end_time">End
-                                                                                                    Time</label>
-                                                                                                <input type="time"
-                                                                                                    class="form-control"
-                                                                                                    id="end_time"
-                                                                                                    name="end_time[]"
-                                                                                                    value="{{ $schedule->end_time }}">
-                                                                                                @error('end_time')
-                                                                                                    <p class="text-danger">
-                                                                                                        {{ $message }}</p>
-                                                                                                @enderror
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div>
-                                                                                            <a href="#"
-                                                                                                class="btn btn-sm btn-danger removeTime float-right"
-                                                                                                id="removeTime"><i
-                                                                                                    class="fa fa-trash"></i></a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div
-                                                                                class="modal-footer justify-content-between">
-                                                                                <button type="button"
-                                                                                    class="btn btn-default"
-                                                                                    data-dismiss="modal">Close</button>
-                                                                                <button
-                                                                                    class="btn btn-success">Edit</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </form>
-                                                                    <!-- /.modal-content -->
-                                                                </div>
-                                                                <!-- /.modal-dialog -->
-                                                            </div>
-                                                            {{-- -------------------------------------------------------------------------------------------------------------- --}}
 
                                                             {{-- ------------------------------------ Modal Box to Delete Schedule --------------------------------------------- --}}
                                                             <div class="modal fade"

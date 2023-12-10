@@ -1,8 +1,10 @@
 <div class="wrapper">
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <a href="{{ route('dashboard') }}" class="brand-link">
-            <span class="brand-text text-bold brand">
-                Appointment Management System
+    <aside class="main-sidebar sidebar-dark-primary">
+        <a href="{{ route('dashboard') }}" class="text-white">
+            <span class="brand-text">
+                <div class="p-3 text-bold text-center">
+                    {{ env('APP_NAME') }}
+                </div>
             </span>
         </a>
 
@@ -17,16 +19,23 @@
                                 <div class="image">
                                     <img src="{{ asset(auth()->user()->image) }}" class="img-circle elevation-2" alt="profile">
                                   </div>
-                                <div class="info">
-                                    <a href="{{ route('user.show', auth()->user()->id) }}"
-                                        class="d-block">{{ auth()->user()->name }}</a>
-                                </div>
+                                  <div class="info text-white">
+                                    {{ auth()->user()->name }}
+                                  </div>
                             </div>
                             <li class="nav-item has-treeview">
                                 <a href="{{ route('dashboard') }}" class="nav-link">
                                     <i class="fa fa-tachograph-digital"></i>
                                     <p>
                                         Dashboard
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('pages.index') }}" class="nav-link">
+                                    <i class="fa fa-page"></i>
+                                    <p>
+                                        Pages
                                     </p>
                                 </a>
                             </li>
@@ -89,10 +98,9 @@
                                 <div class="image">
                                     <img src="{{ asset(auth()->user()->doctor()->first()->image) }}" class="img-circle elevation-2" alt="User Image">
                                   </div>
-                                <div class="info">
-                                    <a href="{{ route('doctor.show',auth()->user()->doctor()->first()->id) }}"
-                                        class="d-block">{{ auth()->user()->name }}</a>
-                                </div>
+                                  <div class="info text-white">
+                                    {{ auth()->user()->name }}
+                                  </div>
                             </div>
                             <li class="nav-item has-treeview">
                                 <a href="{{ route('dashboard') }}" class="nav-link">

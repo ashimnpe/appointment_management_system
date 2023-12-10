@@ -7,11 +7,23 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Patients</h3>
+                        <div class="card-header bg-secondary">
+                            <h3 class="card-title p-2">
+                                Patients
+                            </h3>
+                            <form action="{{ route('patient.search') }}">
+                                <div class="input-group float-right w-25">
+                                    {{-- @csrf --}}
+                                    <input type="search" class="form-control" name="search" id="search"
+                                        placeholder="Search Patient" />
+                                    <button class="btn btn-primary btn-sm">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
 
-                        <div class="card-body">
+                        <div class="card-body p-0">
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -33,6 +45,7 @@
                                                     {{ $booking->patient->name }}
                                                 </td>
                                                 <td>
+                                                    {{-- {{ dd($booking) }} --}}
                                                     {{ $booking->doctor->first_name }}
                                                 </td>
                                                 <td>
@@ -42,24 +55,23 @@
                                                     {{ $booking->schedule->start_time . ' - ' . $booking->schedule->end_time }}
                                                 </td>
                                                 <td>
-                                                    <form method="POST" action="{{ route('toggleStatus', $booking->id) }}">
-                                                        @csrf
-                                                        @method('PUT')
-
-                                                        @if ($booking->status == 'booked')
-                                                            <button type="submit"
-                                                                class="btn btn-sm btn-primary">{{ $booking->status }}</button>
-                                                        @elseif($booking->status == 'approved')
-                                                            <button type="submit"
-                                                                class="btn btn-sm btn-success">{{ $booking->status }}</button>
-                                                        @else
-                                                            <button type="submit" class="btn btn-sm btn-danger"
-                                                                disabled>{{ $booking->status }}</button>
-                                                        @endif
-
-
-
-                                                    </form>
+                                                    @if ($booking->status == 'booked')
+                                                        <a
+                                                            href="{{ route('appointment.edit', ['appointment' => $booking->id, 'status' => 'approved']) }}">
+                                                            <input type="radio" name="status" value="Approve">
+                                                            Approve
+                                                        </a>
+                                                        <a
+                                                            href="{{ route('appointment.edit', ['appointment' => $booking->id, 'status' => 'canceled']) }}">
+                                                            <input type="radio" name="status" value="Cancel"> Cancel
+                                                        </a>
+                                                    @elseif($booking->status == 'approved')
+                                                        <span style="color: green;">Approved<i class="fa fa-check pl-3"
+                                                                aria-hidden="true"></i></span>
+                                                    @elseif($booking->status == 'canceled')
+                                                        <span style="color: red;">Canceled<i class="fa fa-times pl-4"
+                                                                aria-hidden="true"></i></span>
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     <a href="#">
@@ -70,6 +82,7 @@
                                                     </a>
                                                 </td>
                                             </tr>
+
                                             <div class="modal fade" id="modal-view{{ $booking->id }}">
                                                 <div class="modal-dialog modal-edit">
                                                     <div class="modal-content">
@@ -137,18 +150,8 @@
                                                                         {{ $booking->remarks }}
                                                                     </div>
                                                                     <div>
-                                                                        <label for="">Status</label>
-                                                                        @if ($booking->status == 'booked')
-                                                                            <button type="submit"
-                                                                                class="btn btn-sm btn-primary">{{ $booking->status }}</button>
-                                                                        @elseif($booking->status == 'approved')
-                                                                            <button type="submit"
-                                                                                class="btn btn-sm btn-success">{{ $booking->status }}</button>
-                                                                        @else
-                                                                            <button type="submit"
-                                                                                class="btn btn-sm btn-danger"
-                                                                                disabled>{{ $booking->status }}</button>
-                                                                        @endif
+                                                                        <label for="">Status: </label>
+                                                                        {{ $booking->status }}
 
                                                                     </div>
                                                                 </div>
@@ -163,7 +166,9 @@
                                                 </div>
                                                 <!-- /.modal-dialog -->
                                             </div>
-                                        @elseif($booking->doctor_id === auth()->user()->doctor()->first()->id)
+                                        @elseif(
+                                            $booking->doctor_id ===
+                                                auth()->user()->doctor()->first()->id)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
@@ -179,25 +184,25 @@
                                                     {{ $booking->schedule->start_time . ' - ' . $booking->schedule->end_time }}
                                                 </td>
                                                 <td>
-                                                    <form method="POST"
-                                                        action="{{ route('toggleStatus', $booking->id) }}">
-                                                        @csrf
-                                                        @method('PUT')
-
-                                                        @if ($booking->status == 'booked')
-                                                            <button type="submit"
-                                                                class="btn btn-sm btn-primary">{{ $booking->status }}</button>
-                                                        @elseif($booking->status == 'approved')
-                                                            <button type="submit"
-                                                                class="btn btn-sm btn-success">{{ $booking->status }}</button>
-                                                        @else
-                                                            <button type="submit" class="btn btn-sm btn-danger"
-                                                                disabled>{{ $booking->status }}</button>
-                                                        @endif
-
-
-
-                                                    </form>
+                                                    @if ($booking->status == 'booked')
+                                                        <a
+                                                            href="{{ route('appointment.edit', ['appointment' => $booking->id, 'status' => 'approved']) }}">
+                                                            <input type="radio" name="status" value="Approve"
+                                                                onclick="submitForm()"> Approve
+                                                        </a>
+                                                        <a
+                                                            href="{{ route('appointment.edit', ['appointment' => $booking->id, 'status' => 'canceled']) }}">
+                                                            <input type="radio" name="status" value="Cancel"
+                                                                data-toggle="modal"
+                                                                data-target="#modal-view{{ $booking->id }}"> Cancel
+                                                        </a>
+                                                    @elseif($booking->status == 'approved')
+                                                        <span style="color: green;">Approved<i class="fa fa-check pl-3"
+                                                                aria-hidden="true"></i></span>
+                                                    @elseif($booking->status == 'canceled')
+                                                        <span style="color: red;">Canceled<i class="fa fa-times pl-4"
+                                                                aria-hidden="true"></i></span>
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     <a href="#">
@@ -271,23 +276,12 @@
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <div>
-                                                                        <label for="">Remarks</label>
+                                                                        <label for="">Remarks: </label>
                                                                         {{ $booking->remarks }}
                                                                     </div>
                                                                     <div>
-                                                                        <label for="">Status</label>
-                                                                        @if ($booking->status == 'booked')
-                                                                            <button type="submit"
-                                                                                class="btn btn-sm btn-primary">{{ $booking->status }}</button>
-                                                                        @elseif($booking->status == 'approved')
-                                                                            <button type="submit"
-                                                                                class="btn btn-sm btn-success">{{ $booking->status }}</button>
-                                                                        @else
-                                                                            <button type="submit"
-                                                                                class="btn btn-sm btn-danger"
-                                                                                disabled>{{ $booking->status }}</button>
-                                                                        @endif
-
+                                                                        <label for="">Status: </label>
+                                                                        {{ $booking->status }}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -302,10 +296,18 @@
                                                 <!-- /.modal-dialog -->
                                             </div>
                                         @endif
+                                        <script>
+                                            function submitForm() {
+                                                document.getElementById('statusForm').submit();
+                                            }
+                                        </script>
                                     @endforeach
-                                </tbody>
 
+
+                                </tbody>
                             </table>
+                        </div>
+                        <div class="card-footer">
                         </div>
                     </div>
                 </div>

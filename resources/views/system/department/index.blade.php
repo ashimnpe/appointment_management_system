@@ -40,7 +40,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $dept->department_name }}</td>
                                             <td>
-                                                {{ $dept->doctor->count() }}
+                                                {{ $dept->doctor_count }}
                                             </td>
                                             @if (auth()->user()->role == 0 || auth()->user()->role == 1)
                                                 <td class="d-flex">

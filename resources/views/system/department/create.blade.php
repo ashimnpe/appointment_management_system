@@ -34,20 +34,16 @@
                                     </div>
                                 </div>
 
+                                <div class="g-recaptcha recaptcha-container" data-sitekey={{config('services.recaptcha.key')}}></div>
+
                                 <div class="card-footer">
                                     <button class="btn btn-info btn-sm float-right">Create</button>
                                 </div>
                             </form>
-                            {{-- Form End --}}
-
                         </div>
-                        {{-- card end --}}
                     </div>
                 </div>
-                {{-- row end --}}
             </div>
         </section>
-        <!-- Main content End -->
     </div>
-        <!-- Content Wrapper End -->
 @endsection

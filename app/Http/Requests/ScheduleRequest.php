@@ -30,6 +30,8 @@ class ScheduleRequest extends FormRequest
             'book_date_ad' => 'required',
             'start_time' => 'required',
             'end_time' => 'required',
+            'limit' => 'nullable',
+            'available_limit' => 'nullable'
         ];
     }
 }

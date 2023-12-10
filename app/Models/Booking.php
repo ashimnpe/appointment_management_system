@@ -4,10 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Booking extends Model
+
+class Booking extends Model implements Auditable
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes, Notifiable;
+    use \OwenIt\Auditing\Auditable;
+
     protected $fillable = [
         'patient_id',
         'doctor_id',
@@ -24,18 +30,10 @@ class Booking extends Model
 
     public function doctor(){
         return $this->belongsTo(Doctor::class);
-
     }
 
     public function schedule(){
         return $this->belongsTo(Schedule::class);
 
     }
-
-    public function toggleStatus()
-    {
-        $this->status = $this->status === 'booked' ? 'approved' : 'canceled';
-        $this->save();
-    }
-
 }

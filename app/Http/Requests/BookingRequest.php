@@ -31,10 +31,8 @@ class BookingRequest extends FormRequest
             'dob_bs' => 'required',
             'dob_ad' => 'required',
             'gender' => 'required',
-            // 'book_date_bs' => 'required',
-            // 'book_date_ad' => 'required',
-            // 'remarks' => 'nullable',
-            // 'status' => 'nullable'
+            'remarks' => 'nullable',
+            'g-recaptcha-response' => 'required|recaptcha'
         ];
     }
 }

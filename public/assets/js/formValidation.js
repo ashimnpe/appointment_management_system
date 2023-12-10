@@ -1,15 +1,15 @@
 function infovalidation() {
-    var check = false;
     var license_no = document.getElementById("license_no").value;
     var first_name = document.getElementById("first_name").value;
-    var middle_name = document.getElementById("middle_name").value;
     var last_name = document.getElementById("last_name").value;
     var department_id = document.getElementById("department_id").value;
     var specialization = document.getElementById("specialization").value;
-    var nepali_dob = document.getElementById("nepali_dob").value;
+    var nepali_dob = document.getElementById("nepali_date").value;
     var contact = document.getElementById("contact").value;
-    var role = document.getElementsByName("role").value;
-    var gender = document.getElementsByName("gender");
+
+    var role = document.querySelector('input[name="role"]:checked');
+    var gender = document.querySelector('input[name="gender"]:checked');
+
     var status = document.getElementById("status").value;
     var selectImage = document.getElementById("selectImage").value;
     var province = document.getElementById("province").value;
@@ -20,65 +20,97 @@ function infovalidation() {
     var municipality = document.getElementById("municipality").value;
 
     if (
-        license_no == "" && first_name == "" && middle_name == "" && last_name == "" && department_id == "" && specialization == "" &&
-        nepali_dob == "" &&
-        role == "" &&
-        gender == "" &&
-        contact == "" &&
-        status == "" &&
-        selectImage == "" &&
-        province == "" &&
-        district == "" &&
-        city == "" &&
-        ward == "" &&
-        tole == "" &&
-        municipality == ""
+        license_no === "" ||
+        first_name === "" ||
+        last_name === "" ||
+        department_id === "" ||
+        specialization === "" ||
+        nepali_dob === "" ||
+        (role ===  null)  ||
+        (gender === null) ||
+        contact === "" ||
+        status === "" ||
+        selectImage === "" ||
+        province === "" ||
+        district === "" ||
+        city === "" ||
+        ward === "" ||
+        tole === "" ||
+        municipality === ""
     ) {
-        check = true;
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Doctor Information Required!',
+        });
+        return false;
     } else {
-        check = false;
-    }
-    for (var i = 0; i < gender.length; i++) {
-        if (gender[i].checked) {
-        }
-        {
-            check = true;
-            break;
-        }
+        toggleFormOne();
+        return true;
     }
 }
+
 
 function educationValidation() {
     var institution = document.getElementById("institution").value;
     var board = document.getElementById("board").value;
     var level = document.getElementById("level").value;
     var marks = document.getElementById("marks").value;
-    var completion_date = document.getElementById("completion_date").value;
+    var completion_date = document.querySelector(".completion_date_bs").value;
     if (
-        institution == "" &&
-        board == "" &&
-        level == "" &&
-        marks == "" &&
-        completion_date == ""
+        institution === "" ||
+        board === "" ||
+        level === "" ||
+        marks === "" ||
+        completion_date === ""
     ) {
-        alert("education required");
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Education Required!',
+        });
+        return false;
     } else {
+        toggleFormTwo();
     }
 }
 
 function experienceValidation() {
     var organization_name = document.getElementById("organization_name").value;
     var position = document.getElementById("position").value;
-    var start_date = document.getElementById("start_date").value;
-    var end_date = document.getElementById("end_date").value;
+    var start_date = document.querySelector(".start_date").value;
+    var end_date = document.querySelector(".end_date").value;
     var job_description = document.getElementById("job_description").value;
     if (
-        organization_name == "" &&
-        position == "" &&
-        start_date == "" &&
-        end_date == "" &&
-        job_description == ""
+        organization_name === "" ||
+        position === "" ||
+        start_date === "" ||
+        end_date === "" ||
+        job_description === ""
     ) {
-        alert("experiennce required");
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Experience Required!',
+        });
+        return false;
     }
+        toggleFormThree();
+}
+
+function loginValidation(){
+ var email = document.getElementById('email').value;
+ var password = document.getElementById('password').value;
+ var confirmpassword = document.getElementById('confirmpassword').value;
+
+ if(email === '' || password === '' || confirmpassword === ''){
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Credentials Required!',
+    });
+    return false;
+ }else{
+    return true;
+ }
 }

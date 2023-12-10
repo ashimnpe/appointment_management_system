@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('completion_date');
             $table->string('adcompletion_date');
             $table->double('marks');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

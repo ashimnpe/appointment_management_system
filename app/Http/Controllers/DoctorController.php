@@ -8,6 +8,8 @@ use App\Models\Doctor;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\User;
+use App\Notifications\BookingNotification;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -74,6 +76,8 @@ class DoctorController extends Controller
                 'position' => $validate['position'][$key],
                 'start_date' => $validate['start_date'][$key],
                 'end_date' => $validate['end_date'][$key],
+                'start_date_ad' => $validate['start_date_ad'][$key],
+                'end_date_ad' => $validate['end_date_ad'][$key],
                 'job_description' => $validate['job_description'][$key],
             ];
             Experience::create($experience[$key]);
@@ -86,7 +90,11 @@ class DoctorController extends Controller
 
     public function show($id){
         $doctor = Doctor::findOrFail($id);
-        return view('system.doctor.profile', compact('doctor'));
+
+        $dob = $doctor->english_dob;
+        $age = Carbon::parse($dob)->age;
+
+        return view('system.doctor.profile', compact('doctor','age'));
     }
 
 
@@ -123,46 +131,48 @@ class DoctorController extends Controller
         $doctor->update($validate);
 
         // Education update
-        $del_education = Doctor::findOrFail($doctor->id);
-        if ($del_education) {
+        if ($doctor->id) {
             Education::where('doctor_id', $doctor->id)->delete();
-        }
 
-        foreach ($validate['institution'] as $key => $item) {
-            $education = new Education();
-            $education->doctor_id = $doctor->id;
-            $education->level = $validate['level'][$key];
-            $education->institution = $validate['institution'][$key];
-            $education->board = $validate['board'][$key];
-            $education->marks = $validate['marks'][$key];
-            $education->completion_date = $validate['completion_date'][$key];
-            $education->adcompletion_date = $validate['adcompletion_date'][$key];
-            $education->save();
+
+            foreach ($validate['institution'] as $key => $item) {
+                $education = new Education();
+                $education->doctor_id = $doctor->id;
+                $education->level = $validate['level'][$key];
+                $education->institution = $validate['institution'][$key];
+                $education->board = $validate['board'][$key];
+                $education->marks = $validate['marks'][$key];
+                $education->completion_date = $validate['completion_date'][$key];
+                $education->adcompletion_date = $validate['adcompletion_date'][$key];
+                $education->save();
+            }
         }
 
         // Experience update
-        $del_experience = Doctor::findOrFail($doctor->id);
-        if ($del_experience) {
+        if ($doctor->id) {
             Experience::where('doctor_id', $doctor->id)->delete();
+
+            foreach ($validate['organization_name'] as $key => $item) {
+                $experience = new Experience();
+                $experience->doctor_id = $doctor->id;
+                $experience->organization_name = $validate['organization_name'][$key];
+                $experience->position = $validate['position'][$key];
+                $experience->start_date = $validate['start_date'][$key];
+                $experience->end_date = $validate['end_date'][$key];
+                $experience->start_date_ad = $validate['start_date_ad'][$key];
+                $experience->end_date_ad = $validate['end_date_ad'][$key];
+                $experience->job_description = $validate['job_description'][$key];
+                $experience->save();
+            }
         }
-        foreach ($validate['organization_name'] as $key => $item) {
-            $experience = new Experience();
-            $experience->doctor_id = $doctor->id;
-            $experience->organization_name = $validate['organization_name'][$key];
-            $experience->position = $validate['position'][$key];
-            $experience->start_date = $validate['start_date'][$key];
-            $experience->end_date = $validate['end_date'][$key];
-            $experience->job_description = $validate['job_description'][$key];
-            $experience->save();
-        }
+
+
         Alert::success('Update!', 'Doctor Updated Successfully');
         return redirect()->route('doctor.index')->with('update', 'Doctor Updated Successfully');
     }
 
 
     public function destroy($id){
-        // findOrFail() => 404 page
-        // find() => error page
         $doctor = Doctor::findOrFail($id);
         $doctor->delete();
         Alert::success('Delete!', 'Doctor deleted successfully');

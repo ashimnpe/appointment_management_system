@@ -1,202 +1,253 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US" dir="ltr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ env('APP_NAME') }}</title>
 
-    <link rel="stylesheet" href="{{ asset('assets/css/index.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
-    <link href="http://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/css/nepali.datepicker.v4.0.1.min.css"
-        rel="stylesheet" type="text/css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicons/favicon.ico">
+    <link rel="manifest" href="assets/img/favicons/manifest.json">
+    <meta name="msapplication-TileImage" content="assets/img/favicons/mstile-150x150.png">
+    <meta name="theme-color" content="#ffffff">
 
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link href="{{ asset('assets/front/css/theme.css') }}" rel="stylesheet" />
 
 </head>
 
 <body>
-    {{-- Navbar --}}
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light">
-        <div class="container">
-            {{-- left nav --}}
-            <ul class="navbar-nav">
-                <li>
-                    <a class="navbar-brand" href="/">AMS</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="/" class="nav-link active">Home</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ route('booking.index') }}" class="nav-link">Book Appointment</a>
-                </li>
-            </ul>
-
-            {{-- right nav --}}
-            <div class="admin-login">
-                <ul class="navbar-nav">
-                    <li>
-                        <a href="{{ route('login') }}" class="nav-link">Login</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('register') }}" class="nav-link">Register</a>
-                    </li>
-                </ul>
-
+    <main class="main" id="top">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 d-block"
+            data-navbar-on-scroll="data-navbar-on-scroll">
+            <div class="container"><a class="navbar-brand text-primary" href="/">{{ env('APP_NAME') }}</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon">
+                    </span></button>
+                <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto pt-2 pt-lg-0 font-base">
+                        <li class="nav-item px-2"><a class="nav-link"
+                                href="#departments">Departments</a></li>
+                        <li class="nav-item px-2"><a class="nav-link" aria-current="page" href="#about">About Us</a>
+                        </li>
+                        <li class="nav-item px-2"><a class="nav-link"
+                                href="{{ route('booking.index') }}">Appointment</a></li>
+                    </ul><a class="btn btn-sm btn-outline-primary rounded-pill order-1 order-lg-0 ms-lg-4"
+                        href="/login">Sign In</a>
+                        <a class="btn btn-sm btn-outline-primary rounded-pill order-1 order-lg-0 ms-lg-4"
+                        href="{{ route('register') }}">Register</a>
+                </div>
             </div>
-        </div>
-    </nav>
-    @include('sweetalert::alert')
+        </nav>
 
-    <div class="steps" id="steps">
-        <div class="container">
-            <h2 class="text-center py-4">How we works?</h2>
-            <div class="row" style="display: ">
-                <div class="col-md-4">
-                    <div class="card process">
-                        <div class="card-body">
-                            <h1 class="num">1</h1>
-                            <h4>Registration</h4>
-                            <p>Patient can do registration from here with basic information.</p>
-                        </div>
+        <section class="py-xxl-10 pb-0" id="home">
+            <div class="bg-holder bg-size"
+                style="background-image:url('../assets/front/img/gallery/hero-bg.png');background-position:top center;background-size:cover;">
+            </div>
+            <div class="container">
+                <div class="row min-vh-xl-100 min-vh-xxl-25">
+                    <div class="col-md-5 col-xl-6 col-xxl-7 order-0 order-md-1 text-end"><img class="pt-7 pt-md-0 w-100"
+                            src="{{ asset('assets/front/img/gallery/hero.png') }}" alt="hero-header" /></div>
+                    <div class="col-md-75 col-xl-6 col-xxl-5 text-md-start text-center py-6">
+                        <h1 class="fw-light font-base fs-6 fs-xxl-7">We're <strong>determined
+                            </strong>for<br />your&nbsp;<strong>better life.</strong></h1>
+                        <p class="fs-1 mb-5">You can get the care you need 24/7 – be it online or in <br />person. You
+                            will be treated by caring specialist doctors. </p><a
+                            class="btn btn-lg btn-primary rounded-pill" href="{{ route('booking.index') }}"
+                            role="button">Book Appointment</a>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card process">
-                        <div class="card-body">
-                            <h1 class="num">2</h1>
-                            <h4>Make an Appointment</h4>
-                            <p>Patient can book an appointment with doctor from landing page or from his login panel.
+            </div>
+        </section>
+
+        <section class="py-5" id="departments">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 py-3">
+                        <div class="bg-holder bg-size"
+                            style="background-image:url('../assets/front/img/gallery/bg-departments.png'); background-position:top-center; background-size:contain;">
+                        </div>
+                        <h1 class="text-center">OUR DEPARTMENTS</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-0">
+            <div class="container">
+                <div class="row py-5 align-items-center justify-content-center justify-content-lg-evenly">
+                    @foreach ($departments as $department)
+                        <div class="col-auto col-md-4 col-lg-auto text-xl-start">
+                            <div class="d-flex flex-column align-items-center">
+                                <p class="fs-1 fs-xxl-2 text-center">{{ $department->department_name }}</p>
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-secondary">
+
+            <div class="bg-holder"
+                style="background-image:url('../assets/front/img/gallery/bg-eye-care.png');background-position:center;background-size:contain;">
+            </div>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-5 col-xxl-6"><img class="img-fluid"
+                            src="{{ asset('assets/front/img/gallery/eye-care.png') }}" alt="..." /></div>
+
+                    <div class="col-md-7 col-xxl-6 text-center text-md-start">
+                        <h2 class="fw-bold text-light mb-4 mt-4 mt-lg-0">Health Care with Top Professionals<br
+                                class="d-none d-sm-block" />and In Budget.</h2>
+                        <p class="text-light">We've built a healthcare system that puts your needs first.<br
+                                class="d-none d-sm-block" />For us, there is nothing more important than the health of
+                            <br class="d-none d-sm-block" />you and your loved ones.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pb-0" id="about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 py-3">
+                        <div class="bg-holder bg-size"
+                            style="background-image:url('../assets/front/img/gallery/about-us.png');background-position:top center;background-size:contain;">
+                        </div>
+                        <h1 class="text-center">ABOUT US</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pb-0" id="about">
+
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 order-lg-1 mb-5 mb-lg-0"><img class="fit-cover rounded-circle w-100"
+                            src="{{ asset('assets/front/img/gallery/health-care.png') }}" alt="..."></div>
+                    <div class="col-md-6 text-center text-md-start">
+                        <h2 class="fw-bold mb-4">We are developing a healthcare <br class="d-none d-sm-block">system
+                            around you</h2>
+                        <p>We think that everyone should have easy access to excellent <br
+                                class="d-none d-sm-block">healthcare. Our aim is to make the procedure as simple as <br
+                                class="d-none d-sm-block">possible for our patients and to offer treatment no matter<br
+                                class="d-none d-sm-block">where they are — in person or at their convenience. </p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 py-3">
+                        <div class="bg-holder bg-size"
+                            style="background-image:url('../assets/front/img/gallery/app-bg.jpeg');background-position:top center;background-size:contain;">
+                        </div>
+                        <h1 class="text-center">APPOINTMENT</h1>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="py-8">
+            <div class="container">
+                <div class="row">
+                    <div class="bg-holder bg-size"
+                        style="background-image:url(../assets/front/img/gallery/dot-bg.png);background-position:bottom right;background-size:auto;">
+                    </div>
+                    <!--/.bg-holder-->
+
+                    <div class="col-lg-6 z-index-2"><img class="w-100"
+                            src="{{ asset('assets/front/img/gallery/appointment.png') }}" alt="..." /></div>
+                    <div class="col-lg-6 z-index-2">
+                        <form class="row g-3 ">
+                            <div class="col-12">
+                                <div class="d-grid">
+                                    <button class="btn btn-outline-primary rounded-pill mt-5" type="submit">Book Appointment Now </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-0 bg-secondary">
+            <div class="bg-holder opacity-25"
+                style="background-image:url('../assets/front/img/gallery/dot-bg.png');background-position:top left;margin-top:-3.125rem;background-size:auto;">
+            </div>
+
+            <div class="container">
+                <div class="row py-8">
+                    <div class="col-12 col-sm-12 col-lg-6 mb-4 order-0 order-sm-0  text-light"><a
+                            class="text-decoration-none" href="#">
+                            <h1>Young Minds Creation</h1>
+                        </a>
+                        <p class="text-light my-4">The world's most trusted company.</p>
+                    </div>
+                    <div class="col">
+                        <h5 class="lh-lg fw-bold mb-1 text-light font-sans-serif">Useful Links</h5>
+                        <ul class="list-unstyled mb-md-4 mb-lg-0">
+                            <li class=""><a class="footer-link" href="{{ route('booking.index') }}">Departments</li>
+                            <li class=""><a class="footer-link" href="/login">Login</a></li>
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <h5 class="lh-lg fw-bold mb-1 text-light font-sans-serif">Contact Info</h5>
+                        <ul class="list-unstyled mb-md-4 mb-lg-0">
+                            <li class=""><a class="footer-link" href="#!">Young Minds Tower, Prayag Chowk, Shantinagar</li>
+                            <li class=""><a class="footer-link" href="#!">Kathmandu, Nepal</a></li>
+                            <li class=""><a class="footer-link" href="#!">https://www.youngminds.com.np</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <section class="py-0 bg-primary">
+                <div class="container">
+                    <div class="row justify-content-md-between justify-content-evenly py-4">
+                        <div class="col-12 col-sm-8 col-md-6 col-lg-auto text-center text-md-start">
+                            <p class="fs--1 my-2 fw-bold text-200">All rights Reserved &copy; Young Minds Creation Pvt. Ltd. 2023</p>
+                        </div>
+                        <div class="col-12 col-sm-8 col-md-6">
+                            <p class="fs--1 my-2 text-center text-md-end text-200"> Made with&nbsp;
+                                <svg class="bi bi-suit-heart-fill" xmlns="http://www.w3.org/2000/svg" width="12"
+                                    height="12" fill="#F95C19" viewBox="0 0 16 16">
+                                    <path
+                                        d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z">
+                                    </path>
+                                </svg>&nbsp;by&nbsp;<a class="fw-bold text-info" href="#">Y.M.C. </a>
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card process">
-                        <div class="card-body">
-                            <h1 class="num">3</h1>
-                            <h4>Take Treatment</h4>
-                            <p>Doctors can interact with patients and do related treatment.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            </section>
+        </section>
+    </main>
 
+    {{-- <script src="vendors/@popperjs/popper.min.js"></script> --}}
+    <script src="vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="vendors/is/is.min.js"></script>
+    <script src="https://scripts.sirv.com/sirvjs/v3/sirv.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="{{ asset('assets/front/js/theme.js') }}"></script>
 
-
-    <div id="appointment" class="appointment">
-        <div class="container">
-            <div class="bookus">
-                <a href="{{ route('booking.index') }}"><button type="button" class="btn btn-primary btn-lg"> Book An
-                        Appointment
-                    </button></a>
-            </div>
-        </div>
-    </div>
-
-    {{-- modal patient --}}
-    {{-- <div class="modal fade" id="modal-lg">
-        <div class="modal-dialog modal-lg">
-            <form role="form" method="POST" action="{{ route('patient.store') }}">
-                @csrf
-                <div class="modal-content">
-                    <div class="patient-loginForm">
-                        <div class="modal-title text-center">
-                            <h3 class="mt-2">Book Us Now !!!</h3>
-                        </div>
-                        <div class="modal-body">
-                            <form action="{{ route('patient.store') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <label for="name">Name</label>
-                                        <input type="text" placeholder="Full Name" class="form-control"
-                                            name="name" required>
-                                    </div>
-                                    @error('name')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <label for="email">Email</label>
-                                        <input type="email" placeholder="Email" class="form-control" name="email">
-                                    </div>
-                                    @error('email')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <label for="dob">Date of Birth</label>
-                                        <input type="text" class="form-control" placeholder="Date of Birth"
-                                            name="dob_bs" id="nepali_date">
-                                    </div>
-                                    @error('dob_bs')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                    <div class="col form-group" hidden>
-                                        <label for="dob">English DOB</label>
-                                        <input type="date" class="form-control" name="dob_ad" id="english_date">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <label for="gender">Gender</label> <br>
-                                        <input type="radio" name="gender" id="male" value="Male"> Male
-                                        <input type="radio" name="gender" id="female" value="Female"> Female
-                                        <input type="radio" name="gender" id="others" value="Others"> Others
-                                        @error('gender')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <label for="contact">Mobile Number</label>
-                                        <input type="text" placeholder="Mobile Number" class="form-control"
-                                            name="contact">
-                                    </div>
-                                    @error('contact')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <label for="address">Address</label>
-                                        <input type="text" placeholder="Address" class="form-control"
-                                            name="address">
-                                    </div>
-                                    @error('address')
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                                <div class="row">
-                                    <div class="col text-center">
-                                        <button class="btn btn-success btn-sm">Submit</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div> --}}
-    {{-- modal end patient --}}
-
-    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
-    <script src="{{ asset('assets/js/nepali.datepicker.v4.0.1.min.js') }}"></script>
-    <script src="{{ asset('assets/js/doctorForm.js') }}"></script>
-    <script src="http://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/js/nepali.datepicker.v4.0.1.min.js"
-        type="text/javascript"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fjalla+One&amp;family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100&amp;display=swap"
+        rel="stylesheet">
 </body>
 
 </html>

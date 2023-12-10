@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('book_date_ad');
             $table->longText('remarks')->nullable();
             $table->enum('status',['booked','approved','canceled']);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

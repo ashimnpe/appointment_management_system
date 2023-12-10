@@ -24,6 +24,7 @@
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
+
                                 {{-- Doctor Form --}}
                                 <div class="doctorForm" id="basicinfo" style="display: block">
                                     <div class="card-header">
@@ -74,8 +75,9 @@
                                                 <div class="form-group">
                                                     <label for="department_id">Select Department</label>
                                                     <select name="department_id" id="department_id" class="form-control">
-                                                        @foreach ($departments as $department )
-                                                            <option value="{{ $department->id }}" @if ($doctor->department_id == $department->id) selected @endif>
+                                                        @foreach ($departments as $department)
+                                                            <option value="{{ $department->id }}"
+                                                                @if ($doctor->department_id == $department->id) selected @endif>
                                                                 {{ $department->department_name }}</option>
                                                         @endforeach
 
@@ -93,8 +95,8 @@
                                         <div class="row">
                                             <div class="col form-group">
                                                 <label for="date">Date of Birth</label>
-                                                <input type="text" class="form-control" id="nepali_date" name="nepali_dob"
-                                                    value="{{ $doctor->nepali_dob }}">
+                                                <input type="text" class="form-control" id="nepali_date"
+                                                    name="nepali_dob" value="{{ $doctor->nepali_dob }}">
 
                                             </div>
                                             <div class="col form-group">
@@ -199,7 +201,8 @@
                                             </div>
                                         </div>
 
-                                        <img id="preview" src="{{ asset($doctor->image) }}" alt="profile" class="mt-3"/>
+                                        <img id="preview" src="{{ asset($doctor->image) }}" alt="profile"
+                                            class="mt-3" />
                                     </div>
                                     <div class="card-footer float-right">
                                         <a href="#" class="btn btn-info btn-sm" onclick="toggleFormOne()"
@@ -207,54 +210,60 @@
                                     </div>
                                 </div>
 
-                                {{-- Education Form --}}
                                 <div class="educationForm" id="education" style="display: none">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Education</h3>
-                                        <a href="#" id="addEducation" class="btn btn-primary btn-sm float-right">
+                                    <div class="card-header ">
+                                        <h3 class="card-title mt-1">Education</h3>
+
+                                        <a href="#" id="addEducation"
+                                            class="btn btn-light text-dark btn-sm float-right">
                                             <i class="fa fa-plus"></i>
                                         </a>
+
                                     </div>
-                                    @foreach ($doctor->education as $item)
-                                        <div class="card-body">
+                                    <div class="card-body">
+                                        @foreach ($doctor->education as $education)
                                             <div class="row education-form">
-                                                <div class="col roup-form">
+                                                <div class="col group-form">
                                                     <div class="form-group">
                                                         <label for="institution">Institution</label>
                                                         <input type="text" class="form-control" id="institution"
-                                                            name="institution[]" value="{{ $item->institution }}">
+                                                            name="institution[]" value="{{ $education->institution }}" />
+                                                        @error('institution')
+                                                            <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
+
                                                     </div>
                                                 </div>
                                                 <div class="col group-form">
                                                     <div class="form-group">
                                                         <label for="board">Board/University</label>
                                                         <input type="text" class="form-control" id="board"
-                                                            name="board[]" value="{{ $item->board }}">
+                                                            name="board[]" value="{{ $education->board }}">
+                                                        @error('board')
+                                                            <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col group-form">
                                                     <div class="form-group">
                                                         <label>Level</label>
                                                         <select class="form-control" name='level[]'>
-                                                            @if ($item->level == 'SEE')
+                                                            @if ($education->level == 'SEE')
                                                                 <option value="SEE">SEE</option>
                                                                 <option value="+2">+2</option>
                                                                 <option value="Bachelor">Bachelor</option>
                                                                 <option value="Master">Master</option>
-                                                            @endif
-                                                            @if ($item->level == '+2')
+                                                            @elseif ($education->level == '+2')
                                                                 <option value="+2">+2</option>
                                                                 <option value="SEE">SEE</option>
                                                                 <option value="Bachelor">Bachelor</option>
                                                                 <option value="Master">Master</option>
-                                                            @endif
-                                                            @if ($item->level == 'Bachelor')
+                                                            @elseif ($education->level == 'Bachelor')
                                                                 <option value="Bachelor">Bachelor</option>
                                                                 <option value="SEE">SEE</option>
                                                                 <option value="+2">+2</option>
                                                                 <option value="Master">Master</option>
-                                                            @endif
-                                                            @if ($item->level == 'Master')
+                                                            @elseif ($education->level == 'Master')
                                                                 <option value="Master">Master</option>
                                                                 <option value="SEE">SEE</option>
                                                                 <option value="+2">+2</option>
@@ -262,41 +271,49 @@
                                                             @endif
                                                         </select>
                                                     </div>
-
                                                 </div>
                                                 <div class="col group-form">
                                                     <div class="form-group">
                                                         <label for="marks">Marks</label>
                                                         <input type="text" class="form-control" id="marks"
-                                                            name="marks[]" value="{{ $item->marks }}">
-                                                    </div>
-                                                </div>
-                                                <div class="col group-form">
-                                                    <div class="form-group">
-                                                        <label for="completion_date">Completion Date</label>
-                                                        <input type="text" class="form-control bscompletion_date" id="bscompletion_date_" name="completion_date[]" value="{{ $item->completion_date }}">
-                                                    </div>
-                                                </div>
-                                                <div class="col form-group">
-                                                    <input type="date" id="adcompletion_date_" name="adcompletion_date[]">
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <a href="#"
-                                                            class="btn btn-danger btn-sm removeEducation">
-                                                            <i class="fa fa-trash"></i>
-                                                        </a>
+                                                            name="marks[]" value="{{ $education->marks }}">
+                                                        @error('marks')
+                                                            <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
                                                     </div>
                                                 </div>
 
+                                                <div class="col group-form">
+                                                    <label for="date">Completion Date</label>
+                                                    <input type="text" class="form-control completion_date_bs"
+                                                        name="completion_date[]" readonly
+                                                        value="{{ $education->completion_date }}">
+                                                    @error('completion_date')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                                <div class="col group-form" hidden>
+                                                    <input type="date" class="completion_date_ad"
+                                                        name="adcompletion_date[]"
+                                                        value="{{ $education->adcompletion_date }}">
+                                                </div>
+
+                                                <div>
+                                                    <a href="#" id="removeEducation"
+                                                        class="btn btn-danger btn-sm removeEducation">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endforeach
-                                    <div class="card-footer ">
+                                        @endforeach
+                                    </div>
+                                    <div class="card-footer">
                                         <a href="#" class="btn btn-secondary btn-sm" onclick="toggleFormOne()"
                                             id="toggleFormOne">Previous</a>
-                                        <a href="#" class="btn btn-info btn-sm float-right"
-                                            onclick="toggleFormTwo()" id="toggleFormTwo">Next</a>
+
+                                        <a href="#" @disabled(true)
+                                            class="btn btn-info btn-sm float-right " onclick="toggleFormTwo()"
+                                            id="toggleFormTwo">Next</a>
                                     </div>
                                 </div>
 
@@ -308,10 +325,10 @@
                                             <i class="fa fa-plus"></i>
                                         </a>
                                     </div>
-                                    @foreach ($doctor->experience as $item2)
-                                        <div class="card-body">
+                                    <div class="card-body">
+                                        @foreach ($doctor->experience as $item2)
                                             <div class="row experience-form">
-                                                <div class="col">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="organization_name">Organization Name</label>
                                                         <input type="text" class="form-control" id="organization_name"
@@ -322,48 +339,59 @@
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="col">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="position">Position</label>
                                                         <input type="text" class="form-control" id="position"
                                                             name="position[]" value="{{ $item2->position }}">
                                                     </div>
                                                 </div>
-                                                <div class="col">
+
+                                                <div class="col-md-4 form-group">
+                                                    <label for="date">Start Date</label>
+                                                    <input type="text" class="form-control start_date"
+                                                        name="start_date[]" readonly value="{{ $item2->start_date }}">
+                                                    @error('start_date')
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                                <div class="col group-form" hidden>
+                                                    <input type="date" class="start_date_ad" name="start_date_ad[]"
+                                                        value="{{ $item2->start_date_ad }}">
+                                                </div>
+
+                                                <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="start_date">Start date</label>
-                                                        <input type="month" class="form-control" id="start_date"
-                                                            name="start_date[]" value="{{ $item2->start_date }}">
-                                                        @error('start_date')
+                                                        <label for="end_date">End date</label>
+                                                        <input type="text" class="form-control end_date"
+                                                            name="end_date[]" value="{{ $item2->end_date }}" readonly>
+                                                        @error('end_date')
                                                             <p class="text-danger">{{ $message }}</p>
                                                         @enderror
                                                     </div>
                                                 </div>
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label for="end_date">End date</label>
-                                                        <input type="month" class="form-control" id="end_date"
-                                                            name="end_date[]" value="{{ $item2->end_date }}">
-                                                    </div>
+
+                                                <div class="col group-form" hidden>
+                                                    <input type="date" class="end_date_ad" name="end_date_ad[]"
+                                                        value="{{ $item2->end_date_ad }}">
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
+                                                <div class="col-md-7">
                                                     <div class="form-group">
                                                         <label for="level">Job Description</label><br>
-                                                        <textarea name="job_description[]" id="job_description" rows="2">
-                                                            {{ $item2->job_description }}
-                                                        </textarea>
+                                                        <textarea name="job_description[]" id="job_description" rows="2">{{ $item2->job_description }}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <div class="form-group mt-5 text-right">
+                                                        <label for=""></label>
+                                                        <a href="#" class="btn btn-danger btn-sm removeExperience ">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <a href="#" class="btn btn-danger btn-sm removeExperience">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    </div>
                                     <div class="card-footer">
                                         <a href="#" class="btn btn-secondary btn-sm" onclick="toggleFormTwo()"
                                             id="toggleFormTwo">Previous</a>

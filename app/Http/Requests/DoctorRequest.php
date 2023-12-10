@@ -63,6 +63,8 @@ class DoctorRequest extends FormRequest
                 'job_description' => 'required|max:255',
                 'start_date' => 'required',
                 'end_date' => 'required',
+                'start_date_ad' => 'required',
+                'end_date_ad' => 'required',
             ];
         }
         return [
@@ -94,54 +96,14 @@ class DoctorRequest extends FormRequest
             'board' => 'required',
             'marks' => 'required',
 
-            'organization_name' => 'required|',
+            'organization_name' => 'required',
             'position' => 'required|',
             'job_description' => 'required|max:255',
             'start_date' => 'required',
+            'start_date_ad' => 'required',
             'end_date' => 'required',
+            'end_date_ad' => 'required',
         ];
     }
 }
-
-    // old request for doctor
-    // $rules = [
-    //     'first_name' => 'required|string',
-    //     'middle_name' => 'nullable|string',
-    //     'last_name' => 'required|string',
-    //     'image' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
-    //     'email' => 'required|email|unique:users',
-    //     'password' => 'required|confirmed',
-    //     'license_no' => 'required|integer',
-    //     'nepali_dob'=> 'required',
-    //     'english_dob'=> 'required',
-    //     'specialization'=> 'required|string',
-    //     'province'=> 'required|string',
-    //     'district'=> 'required|string',
-    //     'municipality'=> 'required|string',
-    //     'ward'=> 'integer|string',
-    //     'city'=> 'required|string',
-    //     'tole'=> 'required|string',
-    //     'contact'=> 'required|integer',
-    //     'role' => 'required',
-    //     'gender' => 'required',
-    //     'status' => 'required',
-    //     'level' => 'required',
-    //     'institution' => 'required|string',
-    //     'completion_date' => 'required',
-    //     'board' => 'required|string',
-    //     'marks' => 'required|string',
-    //     'organization_name' => 'required|string',
-    //     'position' => 'required|string',
-    //     'job_description' => 'required|string',
-    //     'start_date' => 'required',
-    //     'end_date' => 'required',
-    // ];
-
-    // if (!$this->isMethod('PUT')) {
-    //     // Remove the 'password' rule for non-POST requests (editing)
-    //     // unset($rules['password']);
-    //     unset($rules['image']);
-    // }
-
-    // return $rules;
 

@@ -17,11 +17,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('doctor_id')->constrained('doctors');
+
             $table->string('book_date_bs');
             $table->string('book_date_ad');
             $table->time('start_time');
             $table->time('end_time');
+            $table->integer('limit')->nullable();
+            $table->integer('available_limit')->nullable();
             $table->enum('status',['pending','booked']);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

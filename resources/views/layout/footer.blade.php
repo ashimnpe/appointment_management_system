@@ -1,18 +1,9 @@
-<!-- jQuery -->
-<!-- jQuery -->
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Bootstrap 4 -->
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- AdminLTE App -->
 <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{ asset('assets/dist/js/demo.js') }}"></script>
-{{-- CKNeditor --}}
 <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-
-<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
 
 <script src="http://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/js/nepali.datepicker.v4.0.1.min.js"
     type="text/javascript"></script>
@@ -21,20 +12,10 @@
 <script src="{{ asset('assets/js/doctorForm.js') }}"></script>
 <script src="{{ asset('assets/js/confirmation.js') }}"></script>
 <script src="{{ asset('assets/js/nepali.datepicker.v4.0.1.min.js') }}"></script>
-<script src="{{ asset('assets/js/schedule.js') }}"></script>
+<script src="{{ asset('assets/js/formValidation.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script async src="https://www.google.com/recaptcha/api.js">
 
-
-{{-- <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
-<script src="{{ asset('assets/plugins/fullcalendar/main.min.js') }}"></script>
-<script src="{{ asset('assets/plugins/fullcalendar-daygrid/main.min.js') }}"></script>
-<script src="{{ asset('assets/plugins/fullcalendar-timegrid/main.min.js') }}"></script>
-<script src="{{ asset('assets/plugins/fullcalendar-interaction/main.min.js') }}"></script>
-<script src="{{ asset('assets/plugins/fullcalendar-bootstrap/main.min.js') }}"></script> --}}
-
-
-<script>
-
-</script>
 </body>
 
 </html>
