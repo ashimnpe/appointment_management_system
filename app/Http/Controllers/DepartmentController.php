@@ -9,9 +9,14 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class DepartmentController extends Controller
 {
+    private $departments;
+    public function __construct(Department $departments)
+    {
+        $this->departments = $departments;
+    }
     public function index()
     {
-        $departments = Department::withCount('doctor')->get();
+        $departments = $this->departments->withCount('doctor')->get();
         return view('system.department.index', compact('departments'));
     }
 
@@ -22,7 +27,7 @@ class DepartmentController extends Controller
 
     public function store(DepartmentRequest $request)
     {
-        Department::create([
+        $this->departments->create([
             'department_name'  => $request['department_name']
         ]);
         Alert::success('Success!','Department Created Successfully');
@@ -30,13 +35,13 @@ class DepartmentController extends Controller
     }
 
     public function edit($id){
-        $dept = Department::findOrFail($id);
+        $dept = $this->departments->findOrFail($id);
         return view('system.department.edit',compact('dept'));
 
     }
 
     public function update(Request $request, $id){
-        $dept = Department::findOrFail($id);
+        $dept = $this->departments->findOrFail($id);
         $dept->update([
             'department_name' => $request->department_name,
         ]);
@@ -46,7 +51,7 @@ class DepartmentController extends Controller
     }
 
     public function destroy($id){
-        $dept  = Department::findOrFail($id);
+        $dept  = $this->departments->findOrFail($id);
         $dept->delete();
         Alert::success('Delete!','Department Deleted Successfully');
         return redirect()->route('department.index');

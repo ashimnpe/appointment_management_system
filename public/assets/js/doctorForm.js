@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var i = 1;
     const oldRow = document.querySelector(".education-form");
     const oldRowDate = oldRow.querySelector(".completion_date_bs");
+
     oldRowDate.id = "completionDate_" + 1;
 
     function addEducation() {
@@ -74,6 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
             nepValue.id = "completionDate_" + i;
 
             initDatePicker(newRow);
+
             function rowDateConversion(newRow) {
                 var bsDate = newRow.querySelector(".completion_date_bs").value;
                 var englishdate = newRow.querySelector(".completion_date_ad");
@@ -114,6 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     const limit = 4;
     var count = 0;
+
     var i = 1;
 
     const oldExperienceRow = document.querySelector(".experience-form");
@@ -137,9 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (count < limit) {
             const originalRow = document.querySelector(".experience-form");
             const newRow = originalRow.cloneNode(true);
-            document
-                .querySelector(".experience-form")
-                .parentNode.appendChild(newRow);
+            document.querySelector(".experience-form").parentNode.appendChild(newRow);
 
             i++;
 
@@ -159,6 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
             end_nepValue.id = "end_date_" + i;
 
             initDatePicker1(newRow);
+
             function rowDateExpConversion(newRow) {
                 var bsDate = newRow.querySelector(".start_date").value;
                 var bsDate2 = newRow.querySelector(".end_date").value;

@@ -30,6 +30,7 @@
                                         <th>Sn</th>
                                         <th>Patient Name</th>
                                         <th>Doctor</th>
+                                        <th>Department</th>
                                         <th>Booked Date</th>
                                         <th>Booked Time</th>
                                         <th>Status</th>
@@ -45,8 +46,10 @@
                                                     {{ $booking->patient->name }}
                                                 </td>
                                                 <td>
-                                                    {{-- {{ dd($booking) }} --}}
                                                     {{ $booking->doctor->first_name }}
+                                                </td>
+                                                <td>
+                                                    {{ $booking->doctor->department->department_name }}
                                                 </td>
                                                 <td>
                                                     {{ $booking->book_date_bs }}

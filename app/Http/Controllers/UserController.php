@@ -9,9 +9,15 @@ use RealRashid\SweetAlert\Facades\Alert as Alert;
 
 class UserController extends Controller
 {
+    private $user;
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
     public function index()
     {
-        $users = User::all();
+        $users = $this->user->all();
         return view('system.user.index', compact('users'));
     }
 
@@ -23,7 +29,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $users = User::findOrFail($id);
+        $users = $this->user->findOrFail($id);
         return view('system.user.profile', ['users' => $users]);
     }
 
@@ -39,7 +45,7 @@ class UserController extends Controller
         $image = 'storage/img/' . $fileName;
     }
 
-        User::create([
+        $this->user->create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'role' => $validatedData['role'],
@@ -55,14 +61,14 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = $this->user->findOrFail($id);
         return view('system.user.edit', compact('user'));
     }
 
 
     public function update(UserRequest $request, $id)
     {
-        $user = User::findOrFail($id);
+        $user = $this->user->findOrFail($id);
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
@@ -76,7 +82,7 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
+        $user = $this->user->findOrFail($id);
         $user->delete();
         Alert::success('Delete!','User Deleted Successfully');
         return redirect()->route('user.index')->with('delete', 'User deleted successfully');

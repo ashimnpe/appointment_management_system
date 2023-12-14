@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'image' => '',
             'role' => 0,
-            'status' => 1
+            'status' => 0
         ],
         [
             'name' => 'Admin',
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'image' => '',
             'role' => 1,
-            'status' => 1
+            'status' => 0
         ]];
 
         DB::table('users')->insert($users);

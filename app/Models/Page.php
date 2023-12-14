@@ -16,4 +16,8 @@ class Page extends Model
         'title' => 'json',
         'description' => 'json',
     ];
+
+    public function menu(){
+        return $this->hasMany(Menu::class);
+    }
 }

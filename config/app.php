@@ -184,6 +184,7 @@ return [
         OwenIt\Auditing\AuditingServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
 		Barryvdh\Debugbar\ServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -214,6 +215,8 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
 		'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ])->toArray(),
 
 ];

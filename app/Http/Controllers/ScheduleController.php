@@ -10,10 +10,17 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class ScheduleController extends Controller
 {
+    private $schedule, $doctors;
+    public function __construct(Schedule $schedule, Doctor $doctors)
+    {
+        $this->schedule = $schedule;
+        $this->doctors = $doctors;
+    }
+
     public function index()
     {
-        $schedules = Schedule::all();
-        $doctors = Doctor::with(['schedule' => function ($res) {
+        $schedules = $this->schedule->all();
+        $doctors =$this->doctors->with(['schedule' => function ($res) {
             $res->orderBy('book_date_bs', 'asc');
         }])->get();
 
@@ -59,7 +66,7 @@ class ScheduleController extends Controller
                 'start_time' => $time_slot,
                 'end_time' => $end_slot,
             ];
-            Schedule::create($scheduleData);
+            $this->schedule->create($scheduleData);
 
             $time_slots[] = $time_slot;
             $start->addMinutes($interval);
@@ -72,7 +79,7 @@ class ScheduleController extends Controller
 
     public function destroy($id)
     {
-        $schedule = Schedule::findOrFail($id);
+        $schedule = $this->schedule->findOrFail($id);
         $schedule->delete();
         Alert::success('Delete!', 'Schedule Deleted Successfully');
         return redirect()->route('schedule.index');

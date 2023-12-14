@@ -10,9 +10,14 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class AppointmentController extends Controller
 {
-    public function index(){
-        $bookings = Booking::orderBy('book_date_ad', 'asc')->get();
+    private $bookings, $patients;
+    public function __construct(Booking $bookings, Patient $patients){
+        $this->bookings = $bookings;
+        $this->patients = $patients;
+    }
 
+    public function index(){
+        $bookings = $this->bookings->orderBy('book_date_ad', 'asc')->get();
         $days=[];
         foreach($bookings as $book){
             $bookDay = $book->book_date_ad;
@@ -25,12 +30,12 @@ class AppointmentController extends Controller
 
     public function searchPatient(Request $request){
         $query = $request->input('search');
-        $bookings = Booking::all();
+        $bookings = $this->bookings->all();
 
         if($query){
-            $patients = Patient::where('name', 'LIKE', "%$query%")->get();
+            $patients = $this->patients->where('name', 'LIKE', "%$query%")->get();
             if($patients->isNotEmpty()){
-                $bookings = Booking::whereIn('patient_id', $patients->pluck('id'))->get();
+                $bookings = $this->bookings->whereIn('patient_id', $patients->pluck('id'))->get();
                 return view('system.appointment.index',compact('patients','bookings'));
 
             }else{
@@ -46,24 +51,24 @@ class AppointmentController extends Controller
     public function show(int $id)
     {
         $doctor_id = $id;
-        $appointment = Booking::where('doctor_id', $doctor_id)->get();
+        $appointment = $this->bookings->where('doctor_id', $doctor_id)->get();
         return view('system.appointment.index',['appointment' => $appointment]);
     }
 
 
     public function edit(Request $request, $id){
         $updatedstatus = $request->input('status');
-        $booking = Booking::find($id);
+        $bookings = $this->bookings->find($id);
 
-        $schedule = $booking->schedule;
+        $schedule = $bookings->schedule;
 
-        $booking->status = $updatedstatus;
-        $booking->save();
+        $bookings->status = $updatedstatus;
+        $bookings->save();
 
-        if($booking->status == 'approved'){
+        if($bookings->status == 'approved'){
             Alert::success('Success!','Status Approved Sucessfully!');
         }else{
-            // Mail::send('emails.appointmentCanceled', ['booking' => $booking], function ($message) {
+            // Mail::send('emails.appointmentCanceled', ['booking' => $bookings], function ($message) {
             //     $message->to('ashimnpe@gmail.com', 'Ashim Neupane')
             //     ->subject('Appointment Canceled');
             // });

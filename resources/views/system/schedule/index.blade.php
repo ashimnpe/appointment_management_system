@@ -36,8 +36,8 @@
                                                 <div class="row mb-2">
                                                     @if (auth()->user()->role == 0 || auth()->user()->role == 1)
                                                     <div class="col group-form">
-                                                        <label for="doctor_id">Select
-                                                            Doctor</label>
+                                                        {!! Form::label('proince', 'Select Province') !!}
+
                                                             {!! Form::select('doctor_id', $doctor_helper->list(), null, ['class' => 'form-control','placeholder'=>'select doctor']) !!}
                                                             {{-- <select name="doctor_id" id="doctor_id" class="form-control">
                                                                 <option value="">Select Doctor

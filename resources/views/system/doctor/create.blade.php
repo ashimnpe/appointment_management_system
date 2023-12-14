@@ -130,8 +130,6 @@
                                         <div class="row">
                                             <div class="col form-group">
                                                 <label for="Role">Role</label><br>
-                                                <input type="radio" name="role" value="1">
-                                                Admin
                                                 <input type="radio" name="role" value="2" checked>
                                                 Doctor
                                                 @error('role')
@@ -355,6 +353,7 @@
                                                     @enderror
                                                 </div>
                                             </div>
+
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="position">Position</label>
@@ -366,7 +365,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col group-form">
+                                            <div class="col-md-4 group-form">
                                                 <label for="date">Start Date</label>
                                                 <input type="text" class="form-control start_date" name="start_date[]" readonly
                                                     placeholder="Start Date">

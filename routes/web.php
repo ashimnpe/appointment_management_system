@@ -5,6 +5,9 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PasswordController;
@@ -37,7 +40,12 @@ Route::resource('booking', BookingController::class);
 Route::get('/forgot', [PasswordController::class, 'showForgot'])->name('password.forgot');
 Route::post('/forgot', [PasswordController::class, 'forgotPassword'])->name('generate.email');
 
-Route::get('/dashboard',[DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');;
+Route::get('/dashboard',[DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('contact',[FeedbackController::class, 'view'])->name('contact');
+Route::post('contact',[FeedbackController::class, 'storeContact'])->name('contact.store');
+
+Route::get('/dynamic/{id}',[ViewController::class, 'dynamicView'])->name('dynamic');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -51,8 +59,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('schedule', ScheduleController::class);
     Route::resource('appointment', AppointmentController::class);
     Route::resource('pages', PageController::class);
+    Route::resource('menu', MenuController::class);
+    Route::resource('faq', FaqController::class);
+    Route::resource('feedback',FeedbackController::class);
 
-    Route::put('/notifications', [NotificationController::class, 'showNotifications'])->name('notifications');
+    // Route::put('/notifications', [NotificationController::class, 'showNotifications'])->name('notifications');
 
     Route::get('/patient/search', [AppointmentController::class, 'searchPatient'])->name('patient.search');
 

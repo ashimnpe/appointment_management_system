@@ -9,10 +9,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements Auditable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasRoles;
     use \OwenIt\Auditing\Auditable;
 
 

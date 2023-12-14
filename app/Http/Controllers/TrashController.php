@@ -7,19 +7,20 @@ use RealRashid\SweetAlert\Facades\Alert as Alert;
 
 class TrashController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $doctor;
+    public function __construct(Doctor $doctor)
+    {
+        $this->doctor = $doctor;
+    }
+
     public function index()
     {
-        $doctors = Doctor::onlyTrashed()->get();
+        $doctors =  $this->doctor->onlyTrashed()->get();
         return view('system.trash.doctor',compact('doctors'));
     }
 
     public function restore($id){
-        $doctor = Doctor::onlyTrashed()->find($id);
+        $doctor =  $this->doctor->onlyTrashed()->find($id);
         if($doctor){
             $doctor->restore();
 
@@ -31,7 +32,7 @@ class TrashController extends Controller
 
     public function destroy($id)
     {
-        $doctor = Doctor::onlyTrashed()->find($id);
+        $doctor =  $this->doctor->onlyTrashed()->find($id);
         if($doctor){
             $doctor->forceDelete();
         }

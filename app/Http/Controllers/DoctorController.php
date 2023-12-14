@@ -8,22 +8,31 @@ use App\Models\Doctor;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\User;
-use App\Notifications\BookingNotification;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class DoctorController extends Controller
 {
+    private $users, $education,$experience, $departments, $doctors;
+    public function __construct(User $users,Education $education,Experience $experience, Department $departments, Doctor $doctors)
+    {
+        $this->users = $users;
+        $this->departments = $departments;
+        $this->doctors = $doctors;
+        $this->education = $education;
+        $this->experience = $experience;
+    }
+
 
     public function index(){
-        $doctors = Doctor::all();
+        $doctors = $this->doctors->all();
         return view('system.doctor.index', compact('doctors'));
     }
 
 
     public function create(){
-        $departments = Department::all();
+        $departments = $this->departments->all();
         return view('system.doctor.create', compact('departments'));
     }
 
@@ -31,7 +40,7 @@ class DoctorController extends Controller
     public function store(DoctorRequest $request){
         $validate = $request->all();
 
-        $user = User::create([
+        $user = $this->users->create([
             'name' => $validate['first_name'] . ' ' . $validate['middle_name'] . ' ' . $validate['last_name'],
             'email' => $validate['email'],
             'password' => Hash::make($validate['password']),
@@ -49,10 +58,10 @@ class DoctorController extends Controller
         $validate['user_id'] = $user->id;
 
         // Doctor create
-        $doctor = Doctor::create($validate);
+        $doctor = $this->doctors->create($validate);
 
         // Education create
-        $education = Education::where('doctor_id', $doctor->id)->get();
+        $education = $this->education->where('doctor_id', $doctor->id)->get();
 
         foreach ($validate['institution'] as $key => $item) {
             $education[$key] = [
@@ -64,11 +73,11 @@ class DoctorController extends Controller
                 'adcompletion_date' => $validate['adcompletion_date'][$key],
                 'marks' => $validate['marks'][$key],
             ];
-            Education::create($education[$key]);
+            $this->education->create($education[$key]);
         }
 
         // Experience create
-        $experience = Experience::where('doctor_id', $doctor->id)->get();
+        $experience = $this->experience->where('doctor_id', $doctor->id)->get();
         foreach ($validate['organization_name'] as $key => $item) {
             $experience[$key] = [
                 'doctor_id' => $doctor->id,
@@ -80,7 +89,7 @@ class DoctorController extends Controller
                 'end_date_ad' => $validate['end_date_ad'][$key],
                 'job_description' => $validate['job_description'][$key],
             ];
-            Experience::create($experience[$key]);
+            $this->experience->create($experience[$key]);
         }
 
         Alert::success('Success!', 'Doctor Created Successfully');
@@ -89,7 +98,7 @@ class DoctorController extends Controller
 
 
     public function show($id){
-        $doctor = Doctor::findOrFail($id);
+        $doctor = $this->doctors->findOrFail($id);
 
         $dob = $doctor->english_dob;
         $age = Carbon::parse($dob)->age;
@@ -99,8 +108,8 @@ class DoctorController extends Controller
 
 
     public function edit($id){
-        $departments = Department::all();
-        $doctor = Doctor::findOrFail($id);
+        $departments = $this->departments->all();
+        $doctor = $this->doctors->findOrFail($id);
         return view('system.doctor.edit', compact('doctor', 'departments'));
     }
 
@@ -109,9 +118,9 @@ class DoctorController extends Controller
         $validate = $request->all();
         $validate['name'] =  $validate['first_name'] . ' ' . $validate['middle_name'] . ' ' . $validate['last_name'];
 
-        $doctor = Doctor::findOrFail($id);
+        $doctor = $this->doctors->findOrFail($id);
         $u_id = $doctor->user_id;
-        $user = User::findOrFail($u_id);
+        $user = $this->users->findOrFail($u_id);
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image');
@@ -132,7 +141,7 @@ class DoctorController extends Controller
 
         // Education update
         if ($doctor->id) {
-            Education::where('doctor_id', $doctor->id)->delete();
+            $this->education->where('doctor_id', $doctor->id)->delete();
 
 
             foreach ($validate['institution'] as $key => $item) {
@@ -150,7 +159,7 @@ class DoctorController extends Controller
 
         // Experience update
         if ($doctor->id) {
-            Experience::where('doctor_id', $doctor->id)->delete();
+            $this->experience->where('doctor_id', $doctor->id)->delete();
 
             foreach ($validate['organization_name'] as $key => $item) {
                 $experience = new Experience();
@@ -173,7 +182,7 @@ class DoctorController extends Controller
 
 
     public function destroy($id){
-        $doctor = Doctor::findOrFail($id);
+        $doctor = $this->doctors->findOrFail($id);
         $doctor->delete();
         Alert::success('Delete!', 'Doctor deleted successfully');
         return redirect()->route('doctor.index');

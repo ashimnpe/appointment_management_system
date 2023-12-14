@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\Patient;
@@ -10,11 +11,20 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
+    private $users, $patients, $departments, $doctors;
+    public function __construct(User $users,Patient $patients, Department $departments, Doctor $doctors)
+    {
+        $this->users = $users;
+        $this->patients = $patients;
+        $this->departments = $departments;
+        $this->doctors = $doctors;
+    }
+
     public function index(){
-        $users = User::count();
-        $departments = Department::count();
-        $doctors = Doctor::count();
-        $patients = Patient::count();
+        $users = $this->users->count();
+        $departmentCount = $this->departments->count();
+        $doctors = $this->doctors->count();
+        $patients = $this->patients->count();
 
         $notifications = [];
         $user = auth()->user();
@@ -28,7 +38,7 @@ class DashboardController extends Controller
 
         $data = [
             'userCount' => $users,
-            'deptCount' => $departments,
+            'deptCount' => $departmentCount,
             'doctorCount' => $doctors,
             'patientCount' => $patients,
             'notificationCount' => $notify,
@@ -39,7 +49,6 @@ class DashboardController extends Controller
             'labels' => ['Doctor', 'Patient'],
             'data' => [$data['doctorCount'], $data['patientCount']],
         ];
-
 
         return view('dashboard',compact('data','chartData'));
     }

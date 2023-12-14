@@ -27,8 +27,12 @@
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
+                                    <b>Status: </b> {{ $doctor->user->status == 1 ? 'Active' : 'Inactive' }}
+                                </li>
+                                <li class="list-group-item">
                                     <b>License No:</b> {{ $doctor->license_no }}
                                 </li>
+
                                 <li class="list-group-item">
                                     <b>Email:</b> {{ $doctor->email }}
                                 </li>

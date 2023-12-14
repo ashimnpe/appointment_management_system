@@ -15,7 +15,6 @@
 
     <link href="http://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/css/nepali.datepicker.v4.0.1.min.css" rel="stylesheet" type="text/css"/>
 
-
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">

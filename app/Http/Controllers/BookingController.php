@@ -6,9 +6,9 @@ use App\Http\Requests\BookingRequest;
 use App\Models\Booking;
 use App\Models\Department;
 use App\Models\Doctor;
+use App\Models\Menu;
 use App\Models\Patient;
 use App\Models\Schedule;
-use App\Models\User;
 use App\Notifications\BookNotification;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -16,18 +16,31 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class BookingController extends Controller
 {
+    private $menus, $patients, $departments, $doctors, $schedule, $booking;
+    public function __construct(Menu $menus, Patient $patients, Department $departments, Doctor $doctors, Schedule $schedule, Booking $booking)
+    {
+        $this->menus = $menus;
+        $this->patients = $patients;
+        $this->departments = $departments;
+        $this->doctors = $doctors;
+        $this->schedule = $schedule;
+        $this->booking = $booking;
+    }
+
     public function index()
     {
-        $departments = Department::withCount('doctor')->get();
-        return view('system.bookings.index', compact('departments'));
+
+        $menus = $this->menus->orderBy('order','ASC')->get();
+        $departments = $this->departments->withCount('doctor')->get();
+        return view('system.bookings.index', compact('menus','departments'));
     }
 
 
 
     public function show($id){
-        $departments = Department::findOrFail($id);
-
-        $doctors = Doctor::with(['schedule' => function ($res) {
+        $departments = $this->departments->findOrFail($id);
+        $menus = $this->menus->orderBy('order','ASC')->get();
+        $doctors =  $this->doctors->with(['schedule' => function ($res) {
             $res->orderBy('book_date_bs', 'asc');
         }])
         ->where('department_id', $departments->id)
@@ -51,19 +64,19 @@ class BookingController extends Controller
         ];
 
 
-        return view('system.bookings.show',compact('doctors','departments','dateFormat'));
+        return view('system.bookings.show',compact('menus','doctors','departments','dateFormat'));
     }
 
 
     public function store(BookingRequest $request){
-        $patientDetail = Patient::create($request->all());
-        $scheduleData = Schedule::findOrFail($request->schedule_id);
+        $patientDetail = $this->patients->create($request->all());
+        $scheduleData =  $this->schedule->findOrFail($request->schedule_id);
 
         $request['doctor_id'] = $scheduleData->doctor_id;
         $request['patient_id'] = $patientDetail->id;
 
 
-        $bookingDetail = Booking::create($request->only([
+        $bookingDetail = $this->booking->create($request->only([
             'book_date_bs',
             'book_date_ad',
             'schedule_id',
@@ -76,12 +89,12 @@ class BookingController extends Controller
         $scheduleData->end_time =  Carbon::parse($scheduleData->end_time)->format('h:i A');
         $scheduleData->start_time = Carbon::parse($scheduleData->start_time)->format('h:i A');
 
-        // Mail::send('emails.appointmentCreated', ['scheduleData' => $scheduleData,'bookingDetail' => $bookingDetail, 'patientDetail' => $patientDetail ], function ($message) use ($patientDetail) {
-            //     $message->to($patientDetail->email, $patientDetail->name)
-            //     ->subject('Appointment Booked');
-        // });
+        Mail::send('emails.appointmentCreated', ['scheduleData' => $scheduleData,'bookingDetail' => $bookingDetail, 'patientDetail' => $patientDetail ], function ($message) use ($patientDetail) {
+                $message->to($patientDetail->email, $patientDetail->name)
+                ->subject('Appointment Booked');
+        });
 
-        $doctor = Doctor::where('id', $bookingDetail->doctor->id)->first();
+        $doctor =  $this->doctors->where('id', $bookingDetail->doctor->id)->first();
         $doctor->notify(new BookNotification($bookingDetail));
 
         $bookingDetail->schedule()->update(['status' => 'booked']);

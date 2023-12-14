@@ -17,25 +17,18 @@
                         <div>
                             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                                 <div class="image">
-                                    <img src="{{ asset(auth()->user()->image) }}" class="img-circle elevation-2" alt="profile">
-                                  </div>
-                                  <div class="info text-white">
+                                    <img src="{{ asset(auth()->user()->image) }}" class="img-circle elevation-2"
+                                        alt="profile">
+                                </div>
+                                <div class="info text-white">
                                     {{ auth()->user()->name }}
-                                  </div>
+                                </div>
                             </div>
                             <li class="nav-item has-treeview">
                                 <a href="{{ route('dashboard') }}" class="nav-link">
                                     <i class="fa fa-tachograph-digital"></i>
                                     <p>
                                         Dashboard
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('pages.index') }}" class="nav-link">
-                                    <i class="fa fa-page"></i>
-                                    <p>
-                                        Pages
                                     </p>
                                 </a>
                             </li>
@@ -55,8 +48,6 @@
                                     </p>
                                 </a>
                             </li>
-
-
                             <li class="nav-item">
                                 <a href="{{ route('doctor.index') }}" class="nav-link">
                                     <i class="fa-solid fa-user-doctor"></i>
@@ -81,6 +72,49 @@
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-copy"></i>
+                                    <p>
+                                        Dynamic Pages
+                                        <i class="fas fa-angle-right right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('pages.index') }}" class="nav-link">
+                                            <i class="fa fa-file"></i>
+                                            <p>
+                                                Pages
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('menu.index') }}" class="nav-link">
+                                            <i class="fa fa-list"></i>
+                                            <p>
+                                                Menu
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('feedback.index') }}" class="nav-link">
+                                            <i class="fa fa-list"></i>
+                                            <p>
+                                                Feedback
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('faq.index') }}" class="nav-link">
+                                            <i class="fa fa-question"></i>
+                                            <p>
+                                                FAQ
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li class="nav-item">
                                 <a href="{{ route('trash.index') }}" class="nav-link">
                                     <i class="fa fa-trash"></i>
@@ -96,11 +130,12 @@
                         <div>
                             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                                 <div class="image">
-                                    <img src="{{ asset(auth()->user()->doctor()->first()->image) }}" class="img-circle elevation-2" alt="User Image">
-                                  </div>
-                                  <div class="info text-white">
+                                    <img src="{{ asset(auth()->user()->doctor()->first()->image) }}"
+                                        class="img-circle elevation-2" alt="User Image">
+                                </div>
+                                <div class="info text-white">
                                     {{ auth()->user()->name }}
-                                  </div>
+                                </div>
                             </div>
                             <li class="nav-item has-treeview">
                                 <a href="{{ route('dashboard') }}" class="nav-link">

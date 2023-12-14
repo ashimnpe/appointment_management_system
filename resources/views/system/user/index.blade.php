@@ -44,7 +44,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            {{ $user->status == 1 ? 'Active' : 'Inactive' }}
+                                            {!! $user->status == 1 ? 'Active' : 'Inactive' !!}
                                         </td>
                                         <td class="d-flex">
                                             <a href="#" class="m-1">

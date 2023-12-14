@@ -11,7 +11,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">List of all Doctors</h3>
-                            <div class="">
+                            <div>
                                 <a href="{{ route('doctor.create') }}">
                                     <button class="btn btn-primary btn-sm float-right"><i class="fa fa-plus"></i> Add
                                         New</button>
@@ -51,7 +51,7 @@
                                                 @endif
                                             </td>
                                             <td>{{ $doctor->contact }}</td>
-                                            <td>{{ $doctor->status == 1 ? 'Active' : 'Inactive' }}</td>
+                                            <td>{{ $doctor->user->status == 1 ? 'Active' : 'Inactive' }}</td>
                                             <td class="d-flex justify-content-around">
                                                 <a href="{{ route('doctor.show', $doctor->id) }}">
                                                     <button class="btn btn-success btn-sm m-1"><i class="fa fa-eye"></i>

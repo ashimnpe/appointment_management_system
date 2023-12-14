@@ -13,6 +13,7 @@
 <script src="{{ asset('assets/js/confirmation.js') }}"></script>
 <script src="{{ asset('assets/js/nepali.datepicker.v4.0.1.min.js') }}"></script>
 <script src="{{ asset('assets/js/formValidation.js') }}"></script>
+<script src="{{ asset('assets/js/dynamicPage.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script async src="https://www.google.com/recaptcha/api.js">
 
