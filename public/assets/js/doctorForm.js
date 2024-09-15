@@ -58,7 +58,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (count < limit) {
             const originalRow = document.querySelector(".education-form");
             const newRow = originalRow.cloneNode(true);
-            document.querySelector(".education-form").parentNode.appendChild(newRow);
+            document
+                .querySelector(".education-form")
+                .parentNode.appendChild(newRow);
 
             const optionField = newRow.querySelector("select");
             optionField.value = "";
@@ -94,20 +96,25 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-        function attachEventListeners(row) {
-            const removeButton = row.querySelector("#removeEducation");
-            if (removeButton) {
-                removeButton.addEventListener("click", function (e) {
-                    const rowDelete = e.target.closest(".education-form");
-                    if (rowDelete && document.querySelectorAll(".education-form").length > 1) {
-                        rowDelete.parentNode.removeChild(rowDelete);
-                        e.preventDefault();
-                    }
-                });
-            }
+    function attachEventListeners(row) {
+        const removeButton = row.querySelector("#removeEducation");
+        if (removeButton) {
+            removeButton.addEventListener("click", function (e) {
+                const rowDelete = e.target.closest(".education-form");
+                if (
+                    rowDelete &&
+                    document.querySelectorAll(".education-form").length > 1
+                ) {
+                    rowDelete.parentNode.removeChild(rowDelete);
+                    e.preventDefault();
+                }
+            });
         }
+    }
 
-    document.getElementById("addEducation").addEventListener("click", addEducation);
+    document
+        .getElementById("addEducation")
+        .addEventListener("click", addEducation);
     attachEventListeners(document.querySelector(".education-form"));
 });
 /* -------------------------------------------------------------------------------------------------------- */
@@ -140,7 +147,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (count < limit) {
             const originalRow = document.querySelector(".experience-form");
             const newRow = originalRow.cloneNode(true);
-            document.querySelector(".experience-form").parentNode.appendChild(newRow);
+            document
+                .querySelector(".experience-form")
+                .parentNode.appendChild(newRow);
 
             i++;
 

@@ -26,8 +26,8 @@ function infovalidation() {
         department_id === "" ||
         specialization === "" ||
         nepali_dob === "" ||
-        (role ===  null)  ||
-        (gender === null) ||
+        role === null ||
+        gender === null ||
         contact === "" ||
         status === "" ||
         selectImage === "" ||
@@ -39,9 +39,9 @@ function infovalidation() {
         municipality === ""
     ) {
         Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Doctor Information Required!',
+            icon: "error",
+            title: "Oops...",
+            text: "Doctor Information Required!",
         });
         return false;
     } else {
@@ -73,9 +73,9 @@ function educationValidation() {
         completion_date === ""
     ) {
         Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Education Required!',
+            icon: "error",
+            title: "Oops...",
+            text: "Education Required!",
         });
         return false;
     } else {
@@ -97,28 +97,28 @@ function experienceValidation() {
         job_description === ""
     ) {
         Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Experience Required!',
+            icon: "error",
+            title: "Oops...",
+            text: "Experience Required!",
         });
         return false;
     }
-        toggleFormThree();
+    toggleFormThree();
 }
 
-function loginValidation(){
- var email = document.getElementById('email').value;
- var password = document.getElementById('password').value;
- var confirmpassword = document.getElementById('confirmpassword').value;
+function loginValidation() {
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+    var confirmpassword = document.getElementById("confirmpassword").value;
 
- if(email === '' || password === '' || confirmpassword === ''){
-    Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Credentials Required!',
-    });
-    return false;
- }else{
-    return true;
- }
+    if (email === "" || password === "" || confirmpassword === "") {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Credentials Required!",
+        });
+        return false;
+    } else {
+        return true;
+    }
 }

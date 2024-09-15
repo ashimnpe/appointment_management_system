@@ -75,16 +75,16 @@ class DoctorRequest extends FormRequest
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
             'license_no' => 'required|integer',
-            'nepali_dob'=> 'required',
-            'english_dob'=> 'required',
-            'specialization'=> 'required|string',
-            'province'=> 'required|string',
-            'district'=> 'required|string',
-            'municipality'=> 'required|string',
-            'ward'=> 'integer',
-            'city'=> 'required|string',
-            'tole'=> 'required|string',
-            'contact'=> 'required',
+            'nepali_dob' => 'required',
+            'english_dob' => 'required',
+            'specialization' => 'required|string',
+            'province' => 'required|string',
+            'district' => 'required|string',
+            'municipality' => 'required|string',
+            'ward' => 'integer',
+            'city' => 'required|string',
+            'tole' => 'required|string',
+            'contact' => 'required',
             'role' => 'required',
             'gender' => 'required',
             'status' => 'required',
@@ -106,4 +106,3 @@ class DoctorRequest extends FormRequest
         ];
     }
 }
-

@@ -29,7 +29,7 @@
                                         href="{{ $item->module->title }}">{{ $item->name }}</a></li>
                             @elseif($item->type == '2')
                                 <li class="nav-item px-2"><a class="nav-link"
-                                        href="{{ route('dynamic',$item->id)}}">{{ $item->name }}</a></li>
+                                        href="{{ route('dynamic', $item->id) }}">{{ $item->name }}</a></li>
                             @else
                                 <li class="nav-item px-2"><a class="nav-link"
                                         href="{{ $item->external_link }}">{{ $item->name }}</a></li>

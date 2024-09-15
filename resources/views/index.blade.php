@@ -1,7 +1,6 @@
 @extends('front.app')
 @section('content')
-
-@include('sweetalert::alert')
+    @include('sweetalert::alert')
 
 
     <section class="py-xxl-10 pb-0" id="home">
@@ -168,33 +167,31 @@
         <div class="container">
             <h1 class="text-center">FAQ's</h1>
 
-            <div class="row align-items-center">
-                @foreach ($faq as $key => $item)
-                    <div class="col-lg-6">
-                        <div class="accordion" id="accordionExample">
-                            <div class="accordion-item m-2">
-                                <h2 class="accordion-header ">
-                                    <button class="accordion-button bg-warning text-white p-2" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapse{{ $key }}" aria-expanded="false"
-                                        aria-controls="collapse{{ $key }}">
-                                        {{ $item->question }}
-                                    </button>
-                                </h2>
-                                <div id="collapse{{ $key }}" class="accordion-collapse collapse"
-                                    data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <p>
-                                            {{ $item->answer }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-
+            @foreach ($faq as $item)
+    <div class="col-lg-6">
+        <div class="card m-2">
+            <div class="card-header bg-warning text-white">
+                <h2 class="mb-0">
+                    <button class="btn btn-link text-white" type="button" data-toggle="collapse" data-target="#collapse{{ $item->id }}">
+                        {{ $item->question }}
+                    </button>
+                </h2>
             </div>
+
+            <div id="collapse{{ $item->id }}" class="collapse" data-parent="#accordionExample">
+                <div class="card-body">
+                    <p>
+                        {{ $item->answer }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
+
+
+
+
         </div>
     </section>
 @endsection
-

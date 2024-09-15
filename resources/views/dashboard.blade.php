@@ -96,7 +96,8 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header bg-primary">
-                            Notifications <span class="float-right badge bg-secondary text-md">{{ $data['notificationCount'] }}</span>
+                            Notifications <span
+                                class="float-right badge bg-secondary text-md">{{ $data['notificationCount'] }}</span>
                         </div>
 
                         @if ($data['notificationCount'] != 0)
@@ -155,5 +156,3 @@
         });
     });
 </script>
-
-

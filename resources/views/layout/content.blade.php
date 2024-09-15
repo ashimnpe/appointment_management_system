@@ -1,12 +1,8 @@
 @extends('layout.app')
 @section('content')
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
 
- <!-- Content Wrapper. Contains page content -->
- <div class="content-wrapper">
-
-</div>
-<!-- ./wrapper -->
-
-
-
+    </div>
+    <!-- ./wrapper -->
 @endsection

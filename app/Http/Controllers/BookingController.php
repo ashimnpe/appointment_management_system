@@ -30,21 +30,22 @@ class BookingController extends Controller
     public function index()
     {
 
-        $menus = $this->menus->orderBy('order','ASC')->get();
+        $menus = $this->menus->orderBy('order', 'ASC')->get();
         $departments = $this->departments->withCount('doctor')->get();
-        return view('system.bookings.index', compact('menus','departments'));
+        return view('system.bookings.index', compact('menus', 'departments'));
     }
 
 
 
-    public function show($id){
+    public function show($id)
+    {
         $departments = $this->departments->findOrFail($id);
-        $menus = $this->menus->orderBy('order','ASC')->get();
+        $menus = $this->menus->orderBy('order', 'ASC')->get();
         $doctors =  $this->doctors->with(['schedule' => function ($res) {
             $res->orderBy('book_date_bs', 'asc');
         }])
-        ->where('department_id', $departments->id)
-        ->get();
+            ->where('department_id', $departments->id)
+            ->get();
 
         foreach ($doctors as $doctor) {
             foreach ($doctor->schedule as $schedule) {
@@ -64,11 +65,12 @@ class BookingController extends Controller
         ];
 
 
-        return view('system.bookings.show',compact('menus','doctors','departments','dateFormat'));
+        return view('system.bookings.show', compact('menus', 'doctors', 'departments', 'dateFormat'));
     }
 
 
-    public function store(BookingRequest $request){
+    public function store(BookingRequest $request)
+    {
         $patientDetail = $this->patients->create($request->all());
         $scheduleData =  $this->schedule->findOrFail($request->schedule_id);
 
@@ -89,8 +91,8 @@ class BookingController extends Controller
         $scheduleData->end_time =  Carbon::parse($scheduleData->end_time)->format('h:i A');
         $scheduleData->start_time = Carbon::parse($scheduleData->start_time)->format('h:i A');
 
-        Mail::send('emails.appointmentCreated', ['scheduleData' => $scheduleData,'bookingDetail' => $bookingDetail, 'patientDetail' => $patientDetail ], function ($message) use ($patientDetail) {
-                $message->to($patientDetail->email, $patientDetail->name)
+        Mail::send('emails.appointmentCreated', ['scheduleData' => $scheduleData, 'bookingDetail' => $bookingDetail, 'patientDetail' => $patientDetail], function ($message) use ($patientDetail) {
+            $message->to($patientDetail->email, $patientDetail->name)
                 ->subject('Appointment Booked');
         });
 

@@ -32,7 +32,7 @@ class BookingRequest extends FormRequest
             'dob_ad' => 'required',
             'gender' => 'required',
             'remarks' => 'nullable',
-            'g-recaptcha-response' => 'required|recaptcha'
+            // 'g-recaptcha-response' => 'required|recaptcha'
         ];
     }
 }

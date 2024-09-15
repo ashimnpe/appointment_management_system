@@ -43,7 +43,8 @@
                                     <b>Specialization: </b> {{ $doctor->specialization }}
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Age: </b> {{ $age }}
+                                    <b>Age: </b>
+                                    {{ $age['ty'] . ' years ' . $age['tm'] . ' month ' . $age['td'] . ' day' }}
                                 </li>
                                 <li class="list-group-item">
                                     <b>Date of Birth(BS): </b> {{ $doctor->nepali_dob }}
@@ -152,7 +153,6 @@
 
                         <div class="card-footer text-right">
                             @if (auth()->user()->role == 0 || auth()->user()->role == 1)
-
                             @endif
                         </div>
                     </div>

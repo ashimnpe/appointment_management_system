@@ -38,12 +38,12 @@ class UserController extends Controller
     {
         $validatedData = $request->all();
 
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image');
-        $fileName = uniqid() . '_' . $imagePath->getClientOriginalName();
-        $imagePath->storeAs('public/img', $fileName);
-        $image = 'storage/img/' . $fileName;
-    }
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image');
+            $fileName = uniqid() . '_' . $imagePath->getClientOriginalName();
+            $imagePath->storeAs('public/img', $fileName);
+            $image = 'storage/img/' . $fileName;
+        }
 
         $this->user->create([
             'name' => $validatedData['name'],
@@ -54,7 +54,7 @@ class UserController extends Controller
             'password' => Hash::make($validatedData['password']),
         ]);
 
-        Alert::success('Success!','User Created Successfully');
+        Alert::success('Success!', 'User Created Successfully');
         return redirect()->route('user.index')->with('create', 'User Created Successfully');
     }
 
@@ -75,7 +75,7 @@ class UserController extends Controller
             'role' => $request->role,
             'status' => $request->status,
         ]);
-        Alert::success('Edit!','User Updated Successfully');
+        Alert::success('Edit!', 'User Updated Successfully');
         return redirect()->route('user.index')->with('update', 'User Updated Successfully');
     }
 
@@ -84,7 +84,7 @@ class UserController extends Controller
     {
         $user = $this->user->findOrFail($id);
         $user->delete();
-        Alert::success('Delete!','User Deleted Successfully');
+        Alert::success('Delete!', 'User Deleted Successfully');
         return redirect()->route('user.index')->with('delete', 'User deleted successfully');
     }
 }

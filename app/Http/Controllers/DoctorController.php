@@ -78,6 +78,7 @@ class DoctorController extends Controller
 
         // Experience create
         $experience = $this->experience->where('doctor_id', $doctor->id)->get();
+
         foreach ($validate['organization_name'] as $key => $item) {
             $experience[$key] = [
                 'doctor_id' => $doctor->id,
@@ -101,7 +102,31 @@ class DoctorController extends Controller
         $doctor = $this->doctors->findOrFail($id);
 
         $dob = $doctor->english_dob;
-        $age = Carbon::parse($dob)->age;
+        $data = Carbon::parse($dob)->age;
+        $start_date = Carbon::parse($dob);
+        $current = Carbon::now();
+            $difference = $current->diff($start_date);
+
+            $totalYears = $difference->y;
+            $totalMonths = $difference->m;
+            $totalDays = $difference->d;
+
+            $age = [
+                'ty' => $totalYears,
+                'tm' => $totalMonths,
+                'td' => $totalDays,
+            ];
+
+// dd([
+//     'totalYears' => $totalYears,
+//     'totalMonths' => $totalMonths,
+//     'totalDays' => $totalDays,
+// ]);
+
+
+        foreach($doctor->experience as $key){
+            $start_date = $key->start_date;
+        }
 
         return view('system.doctor.profile', compact('doctor','age'));
     }

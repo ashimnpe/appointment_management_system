@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Booking;
 use App\Models\Department;
 use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {

@@ -1,8 +1,5 @@
 @extends('layout.app')
 @section('content')
-
-
-
     <div class="content-wrapper">
         <section class="content-header pb-2">
             <div class="container-fluid">
@@ -106,8 +103,8 @@
                                         <div class="row">
                                             <div class="col form-group">
                                                 <label for="date">Date of Birth</label>
-                                                <input type="text" class="form-control" id="nepali_date" name="nepali_dob" readonly
-                                                    placeholder="Date of Birth">
+                                                <input type="text" class="form-control" id="nepali_date"
+                                                    name="nepali_dob" readonly placeholder="Date of Birth">
                                                 @error('nepali_dob')
                                                     <p class="text-danger">{{ $message }}</p>
                                                 @enderror
@@ -258,7 +255,8 @@
                                             <div class="col group-form">
                                                 <div class="form-group">
                                                     <label for="institution">Institution</label>
-                                                    <input type="text" class="form-control" id="institution" name="institution[]" placeholder="Enter Institution Name" />
+                                                    <input type="text" class="form-control" id="institution"
+                                                        name="institution[]" placeholder="Enter Institution Name" />
                                                     @error('institution')
                                                         <p class="text-danger">{{ $message }}</p>
                                                     @enderror
@@ -278,7 +276,7 @@
                                             <div class="col group-form">
                                                 <div class="form-group">
                                                     <label for="level">Level</label>
-                                                    <select name="level[]" id="level" class="form-control" >
+                                                    <select name="level[]" id="level" class="form-control">
                                                         <option value="">Select</option>
                                                         <option value="SEE">SEE</option>
                                                         <option value="+2">+2</option>
@@ -303,14 +301,15 @@
 
                                             <div class="col group-form">
                                                 <label for="date">Completion Date</label>
-                                                <input type="text" class="form-control completion_date_bs"  name="completion_date[]" readonly
-                                                    placeholder="Completion Date">
+                                                <input type="text" class="form-control completion_date_bs"
+                                                    name="completion_date[]" readonly placeholder="Completion Date">
                                                 @error('completion_date')
                                                     <p class="text-danger">{{ $message }}</p>
                                                 @enderror
                                             </div>
                                             <div class="col group-form" hidden>
-                                                <input type="date" class="completion_date_ad" name="adcompletion_date[]">
+                                                <input type="date" class="completion_date_ad"
+                                                    name="adcompletion_date[]">
                                             </div>
 
                                             <div>
@@ -367,8 +366,8 @@
 
                                             <div class="col-md-4 group-form">
                                                 <label for="date">Start Date</label>
-                                                <input type="text" class="form-control start_date" name="start_date[]" readonly
-                                                    placeholder="Start Date">
+                                                <input type="text" class="form-control start_date" name="start_date[]"
+                                                    readonly placeholder="Start Date">
                                                 @error('start_date')
                                                     <p class="text-danger">{{ $message }}</p>
                                                 @enderror
@@ -380,8 +379,8 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="end_date">End date</label>
-                                                    <input type="text" class="form-control end_date"
-                                                        name="end_date[]" placeholder="End Date" readonly>
+                                                    <input type="text" class="form-control end_date" name="end_date[]"
+                                                        placeholder="End Date" readonly>
                                                     @error('end_date')
                                                         <p class="text-danger">{{ $message }}</p>
                                                     @enderror
@@ -464,7 +463,8 @@
                                     <div class="card-footer text-right">
                                         <a href="#" class="btn btn-secondary btn-sm float-left"
                                             onclick="toggleFormThree()" id="toggleFormTwo">Previous</a>
-                                        <button class="btn btn-info btn-sm" id="submitForm" onclick="return loginValidation()">Submit</button>
+                                        <button class="btn btn-info btn-sm" id="submitForm"
+                                            onclick="return loginValidation()">Submit</button>
                                     </div>
                                 </div>
                             </form>

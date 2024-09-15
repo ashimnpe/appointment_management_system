@@ -35,10 +35,13 @@
                                             <div class="scheduleForm">
                                                 <div class="row mb-2">
                                                     @if (auth()->user()->role == 0 || auth()->user()->role == 1)
-                                                    <div class="col group-form">
-                                                        {!! Form::label('proince', 'Select Province') !!}
+                                                        <div class="col group-form">
+                                                            {!! Form::label('proince', 'Select Province') !!}
 
-                                                            {!! Form::select('doctor_id', $doctor_helper->list(), null, ['class' => 'form-control','placeholder'=>'select doctor']) !!}
+                                                            {!! Form::select('doctor_id', $doctor_helper->list(), null, [
+                                                                'class' => 'form-control',
+                                                                'placeholder' => 'select doctor',
+                                                            ]) !!}
                                                             {{-- <select name="doctor_id" id="doctor_id" class="form-control">
                                                                 <option value="">Select Doctor
                                                                 </option>
@@ -166,8 +169,7 @@
                                                                                 <button type="button"
                                                                                     class="btn btn-default"
                                                                                     data-dismiss="modal">Close</button>
-                                                                                <button
-                                                                                    class="btn btn-danger btn-sm m-1"><i
+                                                                                <button class="btn btn-danger btn-sm m-1"><i
                                                                                         class="fa fa-trash"></i>
                                                                                     Delete
                                                                                 </button>

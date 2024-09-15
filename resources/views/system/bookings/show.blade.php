@@ -237,8 +237,7 @@
 
                                                                     <div class="col form-group">
                                                                         <label for="address">Address: </label>
-                                                                        <input type="text"
-                                                                            placeholder="Address"
+                                                                        <input type="text" placeholder="Address"
                                                                             class="form-control" name="address">
                                                                         @error('address')
                                                                             <p class="text-danger">
@@ -282,12 +281,12 @@
                                                                     </div>
                                                                 </div>
 
-                                                                @if (config('services.recaptcha.key'))
+                                                                {{-- @if (config('services.recaptcha.key'))
                                                                     <div class="g-recaptcha" name="g-recaptcha"
                                                                         data-sitekey="{{ config('services.recaptcha.key') }}">
                                                                         {{ config('services.recaptcha.key') }}
                                                                     </div>
-                                                                @endif
+                                                                @endif --}}
 
                                                             </div>
 
@@ -366,7 +365,9 @@
         type="text/javascript"></script>
     <script src="{{ asset('assets/js/nepali.datepicker.v4.0.1.min.js') }}"></script>
 
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    {{-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> --}}
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
 
 
 </body>
