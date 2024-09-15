@@ -5,7 +5,6 @@
             <h3 class=>Profile</h3>
             <div class="row">
                 <div class="col-md-4">
-
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
@@ -28,8 +27,12 @@
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
+                                    <b>Status: </b> {{ $doctor->user->status == 1 ? 'Active' : 'Inactive' }}
+                                </li>
+                                <li class="list-group-item">
                                     <b>License No:</b> {{ $doctor->license_no }}
                                 </li>
+
                                 <li class="list-group-item">
                                     <b>Email:</b> {{ $doctor->email }}
                                 </li>
@@ -38,6 +41,10 @@
                                 </li>
                                 <li class="list-group-item">
                                     <b>Specialization: </b> {{ $doctor->specialization }}
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Age: </b>
+                                    {{ $age['ty'] . ' years ' . $age['tm'] . ' month ' . $age['td'] . ' day' }}
                                 </li>
                                 <li class="list-group-item">
                                     <b>Date of Birth(BS): </b> {{ $doctor->nepali_dob }}
@@ -139,11 +146,27 @@
                                     </div>
                                 </div>
                             </div>
+
+
                         </div>
                         <!-- /.card-body -->
+
+                        <div class="card-footer text-right">
+                            @if (auth()->user()->role == 0 || auth()->user()->role == 1)
+                            @endif
+                        </div>
                     </div>
                     <!-- /.nav-tabs-custom -->
                 </div>
+
+
+
+
+
+
+
+
+
                 <!-- /.col -->
             </div>
         </div>

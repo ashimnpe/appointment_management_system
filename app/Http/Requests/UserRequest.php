@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserRequest extends FormRequest
@@ -23,12 +24,30 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|confirmed',
-            'role' => 'required',
-            'status' => 'required'
-        ];
+        $user = $this->route('user');
+        if($this->method('PUT')){
+
+            return [
+                'name' => 'required|string',
+                'email' => [
+                    'required',
+                    Rule::unique('users')->ignore($user),
+                ],
+                'image' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
+                'role' => 'required',
+                'status' => 'required'
+            ];
+        }
+        else{
+            return [
+                'name' => 'required|string',
+                'email' => 'required|string|email|unique:users',
+                'password' => 'required|confirmed',
+                'image' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
+                'role' => 'required',
+                'status' => 'required'
+            ];
+        }
     }
+
 }

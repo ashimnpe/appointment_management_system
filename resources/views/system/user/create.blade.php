@@ -27,7 +27,7 @@
                             </div>
 
                             {{-- Form Start --}}
-                            <form role="form" method="POST" action="{{ route('user.store') }}">
+                            <form role="form" method="POST" action="{{ route('user.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group">
@@ -89,6 +89,17 @@
                                             @enderror
                                         </div>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="image">Image</label>
+                                        <input type="file" name="image" id="selectImage">
+                                    </div>
+                                    @error('image')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+
+                                    <img id="preview" src="#" alt="profile" class="mt-3"
+                                        style="display:none;" />
                                 </div>
                                 <!-- /.card-body -->
 

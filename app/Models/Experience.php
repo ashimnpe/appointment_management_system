@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Experience extends Model
+class Experience extends Model implements Auditable
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory;
+    use \OwenIt\Auditing\Auditable;
+
 
     protected $fillable = [
         'doctor_id',
@@ -16,7 +18,9 @@ class Experience extends Model
         'position',
         'job_description',
         'start_date',
+        'start_date_ad',
         'end_date',
+        'end_date_ad',
     ];
 
     public function doctor(){

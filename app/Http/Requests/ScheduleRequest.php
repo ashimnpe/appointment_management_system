@@ -13,7 +13,7 @@ class ScheduleRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class ScheduleRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'user_id' => 'nullable',
+            'doctor_id' => 'required',
+            'book_date_bs' => 'required',
+            'book_date_ad' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required',
+            'limit' => 'nullable',
+            'available_limit' => 'nullable'
         ];
     }
 }

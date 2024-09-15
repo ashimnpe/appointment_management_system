@@ -1,139 +1,145 @@
 <div class="wrapper">
-
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="{{ route('dashboard') }}" class="brand-link">
-            <span class="brand-text text-bold brand">
-                Appointment Management System
+    <aside class="main-sidebar sidebar-dark-primary">
+        <a href="{{ route('dashboard') }}" class="text-white">
+            <span class="brand-text">
+                <div class="p-3 text-bold text-center">
+                    {{ env('APP_NAME') }}
+                </div>
             </span>
         </a>
 
-        <!-- Sidebar -->
         <div class="sidebar">
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
-                        alt="User Image">
-                </div>
-                <div class="info">
-                    <a href="{{ route('profile.show') }}" class="d-block">{{ auth()->user()->name }}</a>
-
-                </div>
-            </div>
-
-            <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                 with font-awesome or any other icon font library -->
-
-                        {{-- Super Admin --}}
-                    @if (auth()->user()->role == 0)
+                    {{-- Super Admin and Admin Sidebar --}}
+                    @if (auth()->user()->role == 0 || auth()->user()->role == 1)
                         <div>
+                            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                                <div class="image">
+                                    <img src="{{ asset(auth()->user()->image) }}" class="img-circle elevation-2"
+                                        alt="profile">
+                                </div>
+                                <div class="info text-white">
+                                    {{ auth()->user()->name }}
+                                </div>
+                            </div>
                             <li class="nav-item has-treeview">
                                 <a href="{{ route('dashboard') }}" class="nav-link">
-                                    <i class="fa fa-clock"></i>
+                                    <i class="fa fa-tachograph-digital"></i>
                                     <p>
                                         Dashboard
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('doctor.index') }}" class="nav-link">
-                                    <p>
-                                        <i class="fa fa-stethoscope"></i>
-                                        Doctors
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{{ route('user.index') }}" class="nav-link">
+                                    <i class="fa fa-user"></i>
                                     <p>
-                                        <i class="fa fa-user"></i>
                                         Users
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('department.index') }}" class="nav-link">
+                                    <i class="fa fa-building"></i>
                                     <p>
-                                        <i class="fa fa-building"></i>
                                         Department
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('doctor.index') }}" class="nav-link">
+                                    <i class="fa-solid fa-user-doctor"></i>
+                                    <p>
+                                        Doctors
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('schedule.index') }}" class="nav-link">
+                                    <i class="fa fa-calendar"></i>
                                     <p>
-                                        <i class="fa fa-calendar"></i>
                                         Schedule
                                     </p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('trash.index') }}" class="nav-link">
+                                <a href="{{ route('appointment.index') }}" class="nav-link">
+                                    <i class="fa fa-hospital-user"></i>
                                     <p>
-                                        <i class="fa fa-trash"></i>
-                                        Trash
+                                        Appointments
                                     </p>
                                 </a>
                             </li>
-                        </div>
-
-                        {{-- Admin --}}
-                    @elseif (auth()->user()->role == 1)
-                        <div>
                             <li class="nav-item has-treeview">
-                                <a href="{{ route('dashboard') }}" class="nav-link">
-                                    <i class="fa fa-clock"></i>
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-copy"></i>
                                     <p>
-                                        Dashboard
+                                        Dynamic Pages
+                                        <i class="fas fa-angle-right right"></i>
                                     </p>
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('doctor.index') }}" class="nav-link">
-                                    <p>
-                                        <i class="fa fa-stethoscope"></i>
-                                        Doctors
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('user.index') }}" class="nav-link">
-                                    <p>
-                                        <i class="fa fa-user"></i>
-                                        Users
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('department.index') }}" class="nav-link">
-                                    <p>
-                                        <i class="fa fa-building"></i>
-                                        Department
-                                    </p>
-                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('pages.index') }}" class="nav-link">
+                                            <i class="fa fa-file"></i>
+                                            <p>
+                                                Pages
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('menu.index') }}" class="nav-link">
+                                            <i class="fa fa-list"></i>
+                                            <p>
+                                                Menu
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('feedback.index') }}" class="nav-link">
+                                            <i class="fa fa-list"></i>
+                                            <p>
+                                                Feedback
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('faq.index') }}" class="nav-link">
+                                            <i class="fa fa-question"></i>
+                                            <p>
+                                                FAQ
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('trash.index') }}" class="nav-link">
+                                    <i class="fa fa-trash"></i>
                                     <p>
-                                        <i class="fa fa-trash"></i>
                                         Trash
                                     </p>
                                 </a>
                             </li>
                         </div>
 
-                        {{-- Doctor --}}
+                        {{-- Doctor Sidebar --}}
                     @else
                         <div>
+                            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                                <div class="image">
+                                    <img src="{{ asset(auth()->user()->doctor()->first()->image) }}"
+                                        class="img-circle elevation-2" alt="User Image">
+                                </div>
+                                <div class="info text-white">
+                                    {{ auth()->user()->name }}
+                                </div>
+                            </div>
                             <li class="nav-item has-treeview">
                                 <a href="{{ route('dashboard') }}" class="nav-link">
-                                    <i class="fa fa-clock"></i>
+                                    <i class="fa fa-tachograph-digital"></i>
                                     <p>
                                         Dashboard
                                     </p>
@@ -141,9 +147,17 @@
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('schedule.index') }}" class="nav-link">
+                                    <i class="fa fa-calendar"></i>
                                     <p>
-                                        <i class="fa fa-calendar"></i>
                                         Schedule
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('appointment.index') }}" class="nav-link">
+                                    <i class="fa fa-hospital-user"></i>
+                                    <p>
+                                        Appointments
                                     </p>
                                 </a>
                             </li>
@@ -151,7 +165,5 @@
                     @endif
                 </ul>
             </nav>
-            <!-- /.sidebar-menu -->
         </div>
-        <!-- /.sidebar -->
     </aside>

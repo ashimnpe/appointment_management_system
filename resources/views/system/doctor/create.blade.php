@@ -1,8 +1,6 @@
 @extends('layout.app')
 @section('content')
-    <!-- Content Wrapper-->
     <div class="content-wrapper">
-        <!-- Content Header-->
         <section class="content-header pb-2">
             <div class="container-fluid">
                 <div class="row">
@@ -12,8 +10,6 @@
                 </div>
             </div>
         </section>
-        <!-- Content Header-->
-        <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -35,8 +31,7 @@
                                                 <div class="form-group">
                                                     <label for="license">License No</label>
                                                     <input type="number" class="form-control" id="license_no"
-                                                        name="license_no" placeholder="Enter License Number"
-                                                        onchange="infoValidation()">
+                                                        name="license_no" placeholder="Enter License Number">
                                                     @error('license_no')
                                                         <p class="text-danger">{{ $message }}</p>
                                                     @enderror
@@ -108,8 +103,8 @@
                                         <div class="row">
                                             <div class="col form-group">
                                                 <label for="date">Date of Birth</label>
-                                                <input type="text" class="form-control" id="nepali_date" name="nepali_dob"
-                                                    placeholder="Date of Birth">
+                                                <input type="text" class="form-control" id="nepali_date"
+                                                    name="nepali_dob" readonly placeholder="Date of Birth">
                                                 @error('nepali_dob')
                                                     <p class="text-danger">{{ $message }}</p>
                                                 @enderror
@@ -132,9 +127,7 @@
                                         <div class="row">
                                             <div class="col form-group">
                                                 <label for="Role">Role</label><br>
-                                                <input type="radio" name="role" value="1">
-                                                Admin
-                                                <input type="radio" name="role" value="2">
+                                                <input type="radio" name="role" value="2" checked>
                                                 Doctor
                                                 @error('role')
                                                     <p class="text-danger">{{ $message }}</p>
@@ -241,18 +234,20 @@
                                     </div>
                                     <div class="card-footer">
                                         <a href="#" class="btn btn-info btn-sm float-right "
-                                            onclick="toggleFormOne()" id="toggleFormOne">Next</a>
+                                            onclick="return infovalidation()">Next</a>
                                     </div>
                                 </div>
 
                                 {{-- Education Form --}}
-                                <div class="educationForm " id="education" style="display: none">
+                                <div class="educationForm" id="education" style="display: none">
                                     <div class="card-header ">
                                         <h3 class="card-title mt-1">Education</h3>
+
                                         <a href="#" id="addEducation"
                                             class="btn btn-light text-dark btn-sm float-right">
                                             <i class="fa fa-plus"></i>
                                         </a>
+
                                     </div>
 
                                     <div class="card-body">
@@ -261,10 +256,11 @@
                                                 <div class="form-group">
                                                     <label for="institution">Institution</label>
                                                     <input type="text" class="form-control" id="institution"
-                                                        name="institution[]" placeholder="Enter Institution Name">
+                                                        name="institution[]" placeholder="Enter Institution Name" />
                                                     @error('institution')
                                                         <p class="text-danger">{{ $message }}</p>
                                                     @enderror
+
                                                 </div>
                                             </div>
                                             <div class="col group-form">
@@ -302,17 +298,18 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            {{-- 1st field --}}
-                                            <div class="col form-group">
+
+                                            <div class="col group-form">
                                                 <label for="date">Completion Date</label>
-                                                <input type="text" class="form-control bscompletion_date" id="bscompletion_date" name="completion_date[]"
-                                                    placeholder="Completion Date">
+                                                <input type="text" class="form-control completion_date_bs"
+                                                    name="completion_date[]" readonly placeholder="Completion Date">
                                                 @error('completion_date')
                                                     <p class="text-danger">{{ $message }}</p>
                                                 @enderror
                                             </div>
-                                            <div class="col form-group">
-                                                <input type="date" id="adcompletion_date" name="adcompletion_date[]">
+                                            <div class="col group-form" hidden>
+                                                <input type="date" class="completion_date_ad"
+                                                    name="adcompletion_date[]">
                                             </div>
 
                                             <div>
@@ -329,7 +326,7 @@
                                             id="toggleFormOne">Previous</a>
 
                                         <a href="#" @disabled(true)
-                                            class="btn btn-info btn-sm float-right " onclick="toggleFormTwo()"
+                                            class="btn btn-info btn-sm float-right " onclick="educationValidation()"
                                             id="toggleFormTwo">Next</a>
                                     </div>
                                 </div>
@@ -355,6 +352,7 @@
                                                     @enderror
                                                 </div>
                                             </div>
+
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="position">Position</label>
@@ -365,26 +363,34 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="start_date">Start date</label>
-                                                    <input type="month" class="form-control" id="start_date"
-                                                        name="start_date[]" placeholder="Enter First Name">
-                                                    @error('start_date')
-                                                        <p class="text-danger">{{ $message }}</p>
-                                                    @enderror
-                                                </div>
+
+                                            <div class="col-md-4 group-form">
+                                                <label for="date">Start Date</label>
+                                                <input type="text" class="form-control start_date" name="start_date[]"
+                                                    readonly placeholder="Start Date">
+                                                @error('start_date')
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @enderror
                                             </div>
+                                            <div class="col group-form" hidden>
+                                                <input type="date" class="start_date_ad" name="start_date_ad[]">
+                                            </div>
+
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="end_date">End date</label>
-                                                    <input type="month" class="form-control" id="end_date"
-                                                        name="end_date[]" placeholder="Enter First Name">
+                                                    <input type="text" class="form-control end_date" name="end_date[]"
+                                                        placeholder="End Date" readonly>
                                                     @error('end_date')
                                                         <p class="text-danger">{{ $message }}</p>
                                                     @enderror
                                                 </div>
                                             </div>
+
+                                            <div class="col group-form" hidden>
+                                                <input type="date" class="end_date_ad" name="end_date_ad[]">
+                                            </div>
+
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label for="level">Job Description</label><br>
@@ -410,7 +416,7 @@
                                             id="toggleFormTwo">Previous</a>
 
                                         <a href="#" @disabled(true)
-                                            class="btn btn-info btn-sm float-right " onclick="toggleFormThree()"
+                                            class="btn btn-info btn-sm float-right " onclick="experienceValidation()"
                                             id="toggleFormThree">Next</a>
                                     </div>
                                 </div>
@@ -457,7 +463,8 @@
                                     <div class="card-footer text-right">
                                         <a href="#" class="btn btn-secondary btn-sm float-left"
                                             onclick="toggleFormThree()" id="toggleFormTwo">Previous</a>
-                                        <button class="btn btn-info btn-sm" id="submitForm" onclick="success()">Submit</button>
+                                        <button class="btn btn-info btn-sm" id="submitForm"
+                                            onclick="return loginValidation()">Submit</button>
                                     </div>
                                 </div>
                             </form>
@@ -468,7 +475,5 @@
                 </div>
             </div>
         </section>
-        <!-- Main content -->
     </div>
-    <!-- Content Wrapper-->
 @endsection

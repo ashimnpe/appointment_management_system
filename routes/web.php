@@ -1,11 +1,21 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TrashController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,13 +29,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/login', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', [ViewController::class, 'index'])->name('/');
+
+Route::resource('booking', BookingController::class);
+
+Route::get('/forgot', [PasswordController::class, 'showForgot'])->name('password.forgot');
+Route::post('/forgot', [PasswordController::class, 'forgotPassword'])->name('generate.email');
+
+Route::get('/dashboard',[DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('contact',[FeedbackController::class, 'view'])->name('contact');
+Route::post('contact',[FeedbackController::class, 'storeContact'])->name('contact.store');
+
+Route::get('/dynamic/{id}',[ViewController::class, 'dynamicView'])->name('dynamic');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -37,10 +57,26 @@ Route::middleware('auth')->group(function () {
     Route::resource('doctor', DoctorController::class);
     Route::resource('department', DepartmentController::class);
     Route::resource('schedule', ScheduleController::class);
+    Route::resource('appointment', AppointmentController::class);
+    Route::resource('pages', PageController::class);
+    Route::resource('menu', MenuController::class);
+    Route::resource('faq', FaqController::class);
+    Route::resource('feedback',FeedbackController::class);
+
+    // Route::put('/notifications', [NotificationController::class, 'showNotifications'])->name('notifications');
+
+    Route::get('/patient/search', [AppointmentController::class, 'searchPatient'])->name('patient.search');
+
+    Route::put('/reset-password', [PasswordController::class, 'resetPassword'])->name('passwordreset');
+
+    Route::get('/change-password', [PasswordController::class, 'show'])->name('change_password.form');
+    Route::put('/change-password', [PasswordController::class, 'changePassword'])->name('change.password');
 
     Route::get('/trash', [TrashController::class, 'index'])->name('trash.index');
     Route::delete('/trash/delete/{id}', [TrashController::class, 'destroy'])->name('trash.destroy');
     Route::get('/trash/restore/{id}', [TrashController::class, 'restore'])->name('trash.restore');
 });
+
+
 
 require __DIR__ . '/auth.php';

@@ -2,91 +2,86 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
+use App\Http\Requests\ScheduleRequest;
 use App\Models\Doctor;
-use Illuminate\Http\Request;
+use App\Models\Schedule;
+use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ScheduleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $schedule, $doctors;
+    public function __construct(Schedule $schedule, Doctor $doctors)
+    {
+        $this->schedule = $schedule;
+        $this->doctors = $doctors;
+    }
+
     public function index()
     {
-        $doctors = Doctor::get();
-        return view('system.schedule.index',compact('doctors'));
+        $schedules = $this->schedule->all();
+        $doctors =$this->doctors->with(['schedule' => function ($res) {
+            $res->orderBy('book_date_bs', 'asc');
+        }])->get();
+
+        $serialNumber = 1;
+
+        foreach ($schedules as $schedule) {
+            $schedule->start_time = Carbon::parse($schedule->start_time)->format('h:i A');
+            $schedule->end_time = Carbon::parse($schedule->end_time)->format('h:i A');
+        }
+        return view('system.schedule.index', compact('schedules', 'doctors','serialNumber'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
+    public function store(ScheduleRequest $req)
     {
-        $departments = Department::all();
-        $selectedDepartmentId = $request->input('department');
-        $doctors = Doctor::when($selectedDepartmentId, function ($query) use ($selectedDepartmentId) {
-            $query->where('department_id', $selectedDepartmentId);
-        })->get();
-        return view('system.schedule.create',compact('departments','doctors'));
+        $validate = $req->all();
+        $user = auth()->user()->id;
+
+        if (auth()->user()->role == 1 || auth()->user()->role == 0) {
+            $doctor = $validate['doctor_id'];
+        } else {
+            $doctor =  auth()->user()->doctor->id;
+        }
+
+        $start_time = $req->start_time;
+        $end_time = $req->end_time;
+        $interval = 30;
+
+        $start = Carbon::parse($start_time);
+        $end = Carbon::parse($end_time);
+
+        $time_slots = [];
+
+        while ($start < $end) {
+            $time_slot = $start->toTimeString();
+            $end_slot = $start->clone()->addMinutes($interval)->toTimeString();
+
+
+            $scheduleData = [
+                'user_id' => $user,
+                'doctor_id' => $doctor,
+                'book_date_bs' => $validate['book_date_bs'],
+                'book_date_ad' => $validate['book_date_ad'],
+                'start_time' => $time_slot,
+                'end_time' => $end_slot,
+            ];
+            $this->schedule->create($scheduleData);
+
+            $time_slots[] = $time_slot;
+            $start->addMinutes($interval);
+        }
+
+        Alert::success('Success!', 'Schedule Created Successfully');
+        return redirect()->route('schedule.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $schedule = $this->schedule->findOrFail($id);
+        $schedule->delete();
+        Alert::success('Delete!', 'Schedule Deleted Successfully');
+        return redirect()->route('schedule.index');
     }
 }
